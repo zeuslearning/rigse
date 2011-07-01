@@ -1,12 +1,18 @@
-require 'spec_helper'
-#include ApplicationHelper
+require File.expand_path('../../spec_helper', __FILE__)#include ApplicationHelper
 
 describe InvestigationsController do
   integrate_views
 
   before(:each) do
-    generate_default_project_and_jnlps_with_mocks
-    Admin::Project.stub!(:default_project).and_return(@mock_project)
+    @current_project = mock(
+      :name => "test project",
+      :using_custom_css? => false,
+      :use_bitmap_snapshots? => false)
+    Admin::Project.stub!(:default_project).and_return(@current_project)
+    controller.stub(:before_render) {
+      response.template.stub(:net_logo_package_name).and_return("blah")
+      response.template.stub_chain(:current_project).and_return(@current_project);
+    }
 
     @admin_user = Factory.create(:user, { :email => "test@test.com", :password => "password", :password_confirmation => "password" })
     @admin_user.add_role("admin")
@@ -17,6 +23,7 @@ describe InvestigationsController do
       :name => "test investigation",
       :description => "new decription"
     })
+
     Investigation.stub!(:find).and_return(@investigation)
     Investigation.stub!(:published).and_return([@investigation])
   end
@@ -61,21 +68,23 @@ describe InvestigationsController do
       response.sending_file?.should be_true
       response.content_type.should eql "application/vnd.ms.excel"
     end
+
     it 'should return an XLS file for the global Details Report' do
       get :details_report
       response.sending_file?.should be_true
       response.content_type.should eql "application/vnd.ms.excel"
     end
+
     it 'should return an XLS file for the specific Usage Report' do
       get :usage_report, :id => @investigation.id
       response.sending_file?.should be_true
       response.content_type.should eql "application/vnd.ms.excel"
     end
+
     it 'should return an XLS file for the specific Details Report' do
       get :details_report, :id => @investigation.id
       response.sending_file?.should be_true
       response.content_type.should eql "application/vnd.ms.excel"
     end
   end
-
 end

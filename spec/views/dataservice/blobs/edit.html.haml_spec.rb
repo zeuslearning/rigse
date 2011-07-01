@@ -1,12 +1,11 @@
-require 'spec_helper'
+require File.expand_path('../../../../spec_helper', __FILE__)
 
 describe "/dataservice/blobs/edit.html.haml" do
   include Dataservice::BlobsHelper
 
   before(:each) do
-    generate_default_project_and_jnlps_with_mocks
-    logout_user
-    login_admin
+    # cut off the edit_menu_for helper which traverses lots of other code
+    template.stub!(:edit_menu_for).and_return("edit menu")
     assigns[:dataservice_blob] = @dataservice_blob = stub_model(Dataservice::Blob,
       :new_record? => false, :id => 1, :token => "8ad04a50ba96463d80407cd119173b86", :content => ""
     )

@@ -1,4 +1,4 @@
-require 'spec_helper'
+require File.expand_path('../../../spec_helper', __FILE__)
 
 describe Portal::GradesController do
 
@@ -12,7 +12,6 @@ describe Portal::GradesController do
     generate_default_project_and_jnlps_with_mocks
     generate_portal_resources_with_mocks
     login_admin
-    Admin::Project.should_receive(:default_project).and_return(@mock_project)
   end
 
   describe "GET index" do

@@ -1,12 +1,11 @@
-require 'spec_helper'
+require File.expand_path('../../../../spec_helper', __FILE__)
 
 describe "/embeddable/data_tables/edit.html.haml" do
   include Embeddable::DataTableHelper
 
   before(:each) do
-    generate_default_project_and_jnlps_with_mocks
-    logout_user
-    login_admin
+    # cut off the edit_menu_for helper which traverses lots of other code
+    template.stub!(:edit_menu_for).and_return("edit menu")
     assigns[:data_table] = @data_table = stub_model(Embeddable::DataTable,
       :new_record? => false, :id => 1, :name => "Data Table", :description => "Desc", :column_count => 4, :visible_rows => 9, :column_names => 'One,Two,Three,Four', :column_data => '', :data_collector_id => nil
     )
@@ -19,8 +18,4 @@ describe "/embeddable/data_tables/edit.html.haml" do
     end
   end
 
-  it "should have a way to select a linked data collector" do
-    render
-    response.should have_tag("select[name='embeddable_data_table[data_collector_id]']")
-  end
 end

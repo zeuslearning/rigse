@@ -1,9 +1,7 @@
-require 'spec_helper'
-
+require File.expand_path('../../spec_helper', __FILE__)
 describe AttachedFilesController do  
   before(:each) do
-    generate_default_project_and_jnlps_with_mocks
-    
+    Paperclip.options[:log] = false
     @attached_file = Factory.create(:attached_file)
     AttachedFile.stub!(:find).and_return(@attached_file)
   end

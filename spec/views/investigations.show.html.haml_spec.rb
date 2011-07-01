@@ -4,13 +4,11 @@ describe "/investigations/index.html.haml" do
   include InvestigationsHelper
 
   before(:each) do
-    generate_default_project_and_jnlps_with_mocks
-    logout_user
-    login_researcher
     @inv1 = Factory.create(:investigation)
     @inv2 = Factory.create(:investigation)
     @inv3 = Factory.create(:investigation)
     assigns[:investigations] = @investigations = [@inv3,@inv2,@inv1]
+    template.stub!(:current_user).and_return(Factory.next(:researcher_user))
   end
 
   it "should have a global usage report link" do
@@ -29,6 +27,9 @@ describe "/investigations/index.html.haml" do
   end
 
   it "should have a global details report link" do
+    # Jun 1, 2011: Global Details reports cause pain sometimes
+    # because they can eat a lot of memory... (NP)
+    pending("we are temporarily disabling details reports in RITES")
     render
     response.should have_tag("div[id=?]", "offering_list") do
       with_tag("div[class=?]", "action_menu") do

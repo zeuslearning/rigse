@@ -1,11 +1,6 @@
-require 'spec_helper'
+require File.expand_path('../../../spec_helper', __FILE__)
 
 describe Dataservice::ConsoleLoggersController do
-
-  before(:each) do
-    generate_default_project_and_jnlps_with_mocks
-    logout_user
-  end
 
   def mock_console_content(stubs={})
     stubs[:eportfolio] = Dataservice::ConsoleContent::EMPTY_EPORTFOLIO_BUNDLE

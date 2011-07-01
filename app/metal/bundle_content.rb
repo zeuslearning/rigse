@@ -12,10 +12,15 @@ class BundleContent
   POST_BODY = 'rack.input'.freeze unless defined?(POST_BODY)
   
   def self.call(env)
+    # uncomment this line to let the data_service/bundle_content controller handle this post
+    # return [404, { 'Content-Type' => 'text/html' }, ['Not Found']]
+
     bundle_logger_id = env[PATH_INFO][/\/dataservice\/bundle_loggers\/(\d+)\/bundle_contents\.bundle/, 1]
     if env[REQUEST_METHOD] == POST && bundle_logger_id && bundle_logger = ::Dataservice::BundleLogger.find(bundle_logger_id)
-      bundle_content = bundle_logger.bundle_contents.create(:body => env[POST_BODY].read)
-      digest = Digest::MD5.hexdigest(bundle_content.original_body ? bundle_content.original_body : bundle_content.body)
+      body = env[POST_BODY].read
+      bundle_logger.end_bundle( { :body => body} )
+      bundle_content = bundle_logger.bundle_contents.last
+      digest = Digest::MD5.hexdigest(body)
       [201, 
         { 'Content-Type' => 'text/xml', 
           'Last-Modified' => bundle_content.created_at.httpdate, 

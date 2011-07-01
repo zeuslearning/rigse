@@ -1,10 +1,8 @@
-require 'spec_helper'
+require File.expand_path('../../../spec_helper', __FILE__)
 
 describe Dataservice::BlobsController do
 
   before(:each) do
-    generate_default_project_and_jnlps_with_mocks
-    logout_user
     login_admin
   end
   
