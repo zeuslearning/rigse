@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110711220510) do
+ActiveRecord::Schema.define(:version => 20110713185042) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -370,6 +370,7 @@ ActiveRecord::Schema.define(:version => 20110711220510) do
     t.float    "time_limit_seconds"
     t.integer  "data_table_id"
     t.boolean  "is_digital_display",                       :default => false
+    t.integer  "dd_font_size"
   end
 
   create_table "embeddable_data_tables", :force => true do |t|
@@ -1835,21 +1836,6 @@ ActiveRecord::Schema.define(:version => 20110711220510) do
     t.boolean  "ignore"
   end
 
-  create_table "report_jobs", :force => true do |t|
-    t.datetime "requested_at"
-    t.datetime "started_at"
-    t.datetime "completed_at"
-    t.string   "url"
-    t.text     "error_message"
-    t.string   "status"
-    t.integer  "background_job_id"
-    t.integer  "owner_id"
-    t.string   "reportable_type"
-    t.integer  "reportable_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "resource_pages", :force => true do |t|
     t.integer  "user_id"
     t.string   "name"
@@ -2131,6 +2117,7 @@ ActiveRecord::Schema.define(:version => 20110711220510) do
     t.boolean  "site_admin",                               :default => false
     t.string   "type"
     t.integer  "external_user_domain_id"
+    t.string   "external_id"
   end
 
   add_index "users", ["login"], :name => "index_users_on_login", :unique => true
