@@ -23,6 +23,7 @@ class Embeddable::SoundGrapher < ActiveRecord::Base
   validates_inclusion_of :max_sample_time, :in => self.valid_max_sample_times
 
   acts_as_replicatable
+  send_update_events_to :investigations
 
   include Changeable
 
@@ -32,6 +33,14 @@ class Embeddable::SoundGrapher < ActiveRecord::Base
 
   def self.searchable_attributes
       @@searchable_attributes
+  end
+  
+  def investigations
+    invs = []
+    self.pages.each do |page|
+      inv = page.investigation
+      invs << inv if inv
+    end
   end
 
   default_value_for :name, "Sound Grapher"
