@@ -62,6 +62,7 @@ module SisImporter::DistrictImporterExampleHelpers
       :local_root_dir     => working_test_directory,
       :remote_root        => sis_test_data_dir,
       :skip_get_csv_files => false,
+      :default_school     => "imported non-nces school",
       :transport_class    => SisImporter::LocalFileTransport
     }
     opts = defaults.merge(opts)
@@ -272,6 +273,14 @@ describe SisImporter::DistrictImporter do
       end
     end
 
+    it "imported users are required to change their passwords" do
+      all_users = User.find(:all)
+      new_users = all_users - @initial_users
+      new_users.each do |user|
+        user.require_password_reset?.should be_true
+      end
+    end
+
     it "should create new courses" do
       Portal::Course.find(:all).should be_more_than(@initial_courses)
       courses = Portal::Course.find(:all) - @initial_courses
@@ -308,6 +317,54 @@ describe SisImporter::DistrictImporter do
       end
     end
 
+  end
+
+  describe "verifying that schools and districts without NCES data still get created" do
+    before(:each) do
+      Portal::Course.find(:all).each { |c| c.destroy() }
+      @initial_students = Portal::Student.find(:all)
+      @initial_clazzes = Portal::Clazz.find(:all)
+      @initial_schools = Portal::School.find(:all)
+      @initial_districts = Portal::District.find(:all)
+      Portal::Nces06District.stub!(:find => nil)
+      Portal::Nces06School.stub!(:find =>nil)
+      run_importer #FIXME: ExternalUserDomain::ExternalUserDomainError
+    end
+    it "should create new schools" do
+      Portal::School.find(:all).should be_more_than(@initial_schools)
+    end
+    
+    it "should create new districts" do
+      Portal::District.find(:all).should be_more_than(@initial_districts)
+    end
+
+    it "the new schools should have similar names indicating they are not nces" do
+      all_schools = Portal::School.find(:all)
+      new_schools = all_schools - @initial_schools
+      new_schools.each do |school|
+        school.name.should match /non-nces/i
+      end
+    end
+
+    it "the new districts should have names indicating they are not nces" do
+      all_districts = Portal::District.find(:all)
+      new_districts = all_districts - @initial_districts
+      new_districts.each do |district|
+        district.name.should match /non-nces/i
+      end
+
+    end
+
+    it "should create new students" do
+      Portal::Student.find(:all).should be_more_than(@initial_students)
+    end
+
+    it "new students should not be enrolled in valid NCES school" do
+      students = Portal::Student.find(:all) - @initial_students
+      students.each do |student|
+        student.should_not be_in_nces_school
+      end
+    end
   end
 
   describe "Import process should not produce duplicate data" do
@@ -414,7 +471,7 @@ describe SisImporter::DistrictImporter do
 
   describe "after an import, students must reset their passwords" do
     before(:each) do
-      Delorean.time_travel_to "5 minutes ago"
+      Delorean.time_travel_to "15 minutes ago"
       run_importer(:district => '01')
       Delorean.back_to_the_present
       @student = Portal::Student.last.user
@@ -450,9 +507,9 @@ describe SisImporter::DistrictImporter do
       end
     end
 
-    describe "teachers are not forced to reset their passwords after the import" do
-      it "will note require teachers to reset their password" do
-        @teacher.require_password_reset.should be_false
+    describe "teachers are also forced to reset their passwords after the import" do
+      it "will require teachers to reset their password" do
+        @teacher.require_password_reset.should be_true
       end
     end
 
