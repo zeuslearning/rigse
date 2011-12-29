@@ -49,7 +49,8 @@ source "http://rubygems.org"
   gem "nokogiri",             "~> 1.4.4"
   gem 'rdoc',                 "~> 3.6.1"
   gem 'json',                 "~> 1.5.1"
-  gem 'newrelic_rpm',          "~> 3.3.0"
+ # gem 'newrelic_rpm',          "~> 3.3.0"
+  gem 'newrelic_rpm',          "~> 3.3.0", :git => "git://github.com/concord-consortium/rpm.git"
   gem 'calendar_date_select'
 
 group :development do
