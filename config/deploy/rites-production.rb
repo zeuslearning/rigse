@@ -4,7 +4,7 @@
 
 set :deploy_to, "/web/production/rites"
 set :branch, "rites-production"
-
+set :gateway, "otto.concord.org"
 #############################################################
 #  Servers
 #############################################################
