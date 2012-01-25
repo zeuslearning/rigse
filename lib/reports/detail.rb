@@ -4,6 +4,8 @@ class Reports::Detail < Reports::Excel
     super(opts)
 
     @runnables = opts[:runnables] || Investigation.published
+    raise Reports::Errors::TooManySheetsError if @runnables.size > MAX_SHEETS
+
     @report_learners = opts[:report_learners] || report_learners_for_runnables(@runnables)
 
     # stud.id, class, school, user.id, username, student name, teachers, completed, %completed, last_run
@@ -20,7 +22,9 @@ class Reports::Detail < Reports::Excel
       Reports::ColumnDefinition.new(:title => "Last run",    :width => 20),
     ]
 
-    @reportable_embeddables = {} # keys will be runnables, and value will be an array of reportables for that runnable, in the correct order
+    # sanity check our sheets for # of cells
+    too_big = @runnables.detect{|r| ((r.reportable_elements.size + @common_columns.size) * @report_learners.size) > MAX_CELLS }
+    raise Reports::Errors::TooManyCellsError if too_big
   end
 
   def sorted_learners()
@@ -70,6 +74,12 @@ class Reports::Detail < Reports::Excel
       header_defs << Reports::ColumnDefinition.new(:title => container.name, :heading_row => 0, :col_index => reportable_header_counter)
       answer_defs << Reports::ColumnDefinition.new(:title => clean_text((r.respond_to?(:prompt) ? r.prompt : r.name)), :width => 25, :left_border => first)
       first = false
+
+      if r.respond_to?("correctable?") && r.correctable?
+        reportable_header_counter += 1
+        header_defs << Reports::ColumnDefinition.new(:title => container.name, :heading_row => 0, :col_index => reportable_header_counter)
+        answer_defs << Reports::ColumnDefinition.new(:title => "Correct?", :width => 12, :left_border => false)
+      end
     end # reportables
     return reportable_header_counter
   end
@@ -79,11 +89,11 @@ class Reports::Detail < Reports::Excel
     @runnable_sheet = {}
     @runnables.sort!{|a,b| a.name <=> b.name}
 
-    print "Creating #{@runnables.size} worksheets for report" if @verbose
-    @runnables.each do |runnable|
+    @book.create_worksheet :name => 'Empty' if @runnables.empty?
+
+    iterate_with_status(@runnables) do |runnable|
       setup_sheet_for_runnable(runnable)
     end # runnables
-    puts " done." if @verbose
 
     student_learners = sorted_learners.group_by {|l| l.student_id }
 
@@ -109,7 +119,11 @@ class Reports::Detail < Reports::Excel
         get_containers(runnable).each do |container|
           # <=================================================>
           reportables = container.reportable_elements.map {|re| re[:embeddable] }
-          answers = reportables.map{|r| l.answers["#{r.class.to_s}|#{r.id}"] || {:answered => false, :answer => "not answered"} }
+          answers = reportables.map{|r|
+            answer = l.answers["#{r.class.to_s}|#{r.id}"] || {:answered => false, :answer => "not answered"}
+            answer[:is_correct] = (answer[:is_correct] || "false").to_s if r.respond_to?("correctable?") && r.correctable?
+            answer
+          }
           #Bellow is bad, it gets the answers in the wrong order!
           #answers = @report_utils[l.offering].saveables(:learner => l, :embeddables => reportables )
           answered_answers = answers.select{|s| s[:answered] }
@@ -122,14 +136,16 @@ class Reports::Detail < Reports::Excel
               url = "#{@blobs_url}/#{blob[:id]}/#{blob[:token]}.#{blob[:file_extension]}"
               Spreadsheet::Link.new url, url
             else
-              ans[:answer]
+              ans[:is_correct].nil? ? ans[:answer] : [ans[:answer], ans[:is_correct]]
             end
-          }
+          }.flatten
         end
         row.concat all_answers
       end
     end
+    print "Writing xls data... " if @verbose
     @book.write stream_or_path
+    puts " done."
   end
 
   def get_containers(runnable)
