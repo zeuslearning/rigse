@@ -6,9 +6,11 @@ class Portal::Offering < ActiveRecord::Base
   belongs_to :clazz, :class_name => "Portal::Clazz", :foreign_key => "clazz_id"
   belongs_to :runnable, :polymorphic => true, :counter_cache => "offerings_count"
 
+  has_many :learners, :dependent => :destroy, :class_name => "Portal::Learner", :foreign_key => "offering_id"
+
   has_one :report_embeddable_filter, :dependent => :destroy, :class_name => "Report::EmbeddableFilter", :foreign_key => "offering_id"
 
-  has_many :learners, :dependent => :destroy, :class_name => "Portal::Learner", :foreign_key => "offering_id"
+  has_many :teacher_full_status, :dependent => :destroy, :class_name => "Portal::TeacherFullStatus", :foreign_key => "offering_id"
 
   [:name, :description].each { |m| delegate m, :to => :runnable }
 
@@ -96,6 +98,35 @@ class Portal::Offering < ActiveRecord::Base
     runnable.run_format
   end
   
+  def internal_report?
+    klass = runnable.class
+
+    # handle ExernalActivities that are backed by a reportable template
+    if klass == ExternalActivity
+      if runnable.template
+        klass = runnable.template.class
+      end
+    end
+
+    return [Investigation, Activity, Page].include? klass    
+  end
+
+  def reportable?
+    if internal_report?
+      true
+    else
+      runnable.class == ExternalActivity && !runnable.report_url.blank?
+    end
+  end
+
+  def individual_reportable?
+    internal_report?
+  end
+
+  def printable_report?
+    internal_report?
+  end
+
   def completed_students_count
     students = self.clazz.students 
     learners = self.learners
