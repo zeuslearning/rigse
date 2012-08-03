@@ -1,24 +1,26 @@
 %table.result_material{:cellpadding=>0,:cellspacing=>0}
   %tr
-    - counter = 0
     -if !params[:investigation].nil? && !params[:activity].nil?
       %td.material_type
         .material_thumbnail
         .material_type
           = type
     %td.material_list
-      - materials.each do |investigation|
+      - materials.each do |activity|
         .material_list_item
           %div
-            %div{:style=>'overflow:hidden'} 
+            %div{:style=>'overflow:hidden'}
               .material_header{:style=>'float:left'}
-                = investigation.name
+                = "#{activity.name}, "
+              %span
+                from 
+                = activity.parent.name
               .material_button{:style=>'float:right'}
                 =link_to 'Assign to class','',:class=>"button"
               .material_button{:style=>'float:right'}
-                = link_to "Preview", run_url_for(investigation, {}),:class=>"button"
+                = link_to "Preview", run_url_for(activity, {}),:class=>"button"
           .material_body
-            = investigation.description 
+            = activity.description 
             %i
-              Used in: #{investigation.offerings_count} classes.
-        
+              Used in: #{activity.offerings.length} classes.
+       
