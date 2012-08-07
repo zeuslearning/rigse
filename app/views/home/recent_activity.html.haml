@@ -1,7 +1,8 @@
+= javascript_include_tag "instructional_materials.js"
 %h1
   Recent activity
 = render :partial => "notice"
--if @clazz_offerings.length > 0  
+-if @clazz_offerings.length > 0
   .recent_activity_container
     %table{:width=>"100%"}
       %tr
@@ -30,6 +31,6 @@
 -else
   %br
   %br
-  .no_activity
-    No Recent Activity
- 
+  .no_recent_activity
+    = @no_recent_activity_msg.html_safe
+    

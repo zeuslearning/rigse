@@ -1,29 +1,41 @@
 class Admin::SiteNoticesController < ApplicationController
-  def new
+  before_filter :admin_or_manager, :except => [:toggle_notice_display, :dismiss_notice]
+  
+  protected
+  
+  def admin_or_manager
     unless current_user.has_role?('admin') or current_user.has_role?('manager')
       flash[:error] = "Please log in as an administrator or manager"
       redirect_to(:home)
-      return    
     end
+  end
+  
+  public
+  
+  def new
+    @all_roles_selected_by_default = true
+    @role_ids = []
+    @notice_html = ''
   end
 
   def create
-    unless current_user.has_role?('admin') or current_user.has_role?('manager')
-      flash[:notice] = "Please log in as an administrator or manager"
-      redirect_to(:home)
-      return    
+    error = nil
+    @notice_html = params[:notice_html] ? params[:notice_html] : ''
+    @role_ids = params[:role] ? params[:role] : []
+    @all_roles_selected_by_default = false
+    
+    unless ActionController::Base.helpers.strip_tags(@notice_html).gsub('&nbsp;', ' ').strip =~ /\S+/
+      error = "Notice text is blank"
     end
     
-    unless params[:notice_html] =~ /\S+/
-      flash[:error] = "Text cannot be blank"
-      respond_to do |format|
-          format.html { render :action => "new" }
-      end
-      return
+    if @role_ids.count == 0
+      error = error ? error + "<br>No role is selected</br>" : "" +  "No role is selected"
     end
     
-    if params[:role].nil?
-      flash[:error] = "Select atleast one role"
+    @role_ids.map!{|a| a.to_i }
+    
+    if error
+      flash[:error] = error.html_safe
       respond_to do |format|
         format.html { render :action => "new" }
       end
@@ -31,14 +43,14 @@ class Admin::SiteNoticesController < ApplicationController
     end
     
     site_notice = Admin::SiteNotice.new
-    site_notice.notice_html = params[:notice_html]
+    site_notice.notice_html = @notice_html
     site_notice.created_by = current_user.id
+    site_notice.updated_by = current_user.id
     site_notice.save!
     
     #storing all roles that should see this notice
     
-    roles = params[:role]
-    roles.each do |role_id|
+    @role_ids.each do |role_id|
       site_notice_role = Admin::SiteNoticeRole.new
       site_notice_role.notice_id = site_notice.id
       site_notice_role.role_id = role_id
@@ -49,62 +61,52 @@ class Admin::SiteNoticesController < ApplicationController
   end
   
   def index
-     unless current_user.has_role?('admin') or current_user.has_role?('manager')
-      flash[:notice] = "Please log in as an administrator or manager"
-      redirect_to(:home)
-      return
-     end
-     
      @all_notices = Admin::SiteNotice.find(:all,:order=> 'updated_at desc') 
   end
   
   def edit
-    unless current_user.has_role?('admin') or current_user.has_role?('manager')
-      flash[:notice] = "Please log in as an administrator or manager"
-      redirect_to(:home)
-      return
-    end
-    
     @notice = Admin::SiteNotice.find(params[:id])
+    @notice_html = @notice.notice_html
     @notice_roles = Admin::SiteNoticeRole.find_all_by_notice_id(params[:id])
     @notice_role_ids = @notice_roles.map{|notice_role| notice_role.role_id}
   end
   
   def update
-    #Storing new html for notice
     
     @notice = Admin::SiteNotice.find(params[:id])
     @notice_roles = Admin::SiteNoticeRole.find_all_by_notice_id(params[:id])
-    @notice_role_ids = @notice_roles.map{|notice_role| notice_role.role_id}
     
-    unless params[:notice_html] =~ /\S+/
-      flash[:error] = "Text cannot be blank"
+    @notice_html = params[:notice_html]
+    
+    @notice_role_ids = params[:role].nil? ? [] : params[:role]
+    @notice_role_ids.map! {|nr| nr.to_i}
+    
+    unless ActionController::Base.helpers.strip_tags(@notice_html).gsub('&nbsp;', ' ').strip =~ /\S+/
+      error = "Notice text is blank"
+    end
+    
+    if @notice_role_ids.count == 0
+      error = error ? error + "<br>No role is selected</br>" : "" +  "No role is selected"
+    end
+    
+    if error
+      flash[:error] = error.html_safe
       respond_to do |format|
-          format.html { render :action => "edit" }
+        format.html { render :action => "edit" }
       end
       return
     end
-   
-    if params[:role].nil?
-      flash[:error] = "Select atleast one role"
-      respond_to do |format|
-        format.html { render :action => "edit"}
-      end
-      return
-    end
-  
+    
     site_notice = @notice
-    site_notice.notice_html= params[:notice_html]
+    site_notice.notice_html= @notice_html
     site_notice.updated_by = current_user.id
     site_notice.save!
-      
-    #notice_roles = Admin::SiteNoticeRole.find_all_by_notice_id(params[:id])
+    
     notice_role_ids = @notice_roles.map {|nr| nr.id}
     Admin::SiteNoticeRole.delete(notice_role_ids)
     
     #Storing new roles
-    roles = params[:role]
-    roles.each do |role_id|
+    @notice_role_ids.each do |role_id|
       site_notice_role = Admin::SiteNoticeRole.new
       site_notice_role.notice_id = @notice.id
       site_notice_role.role_id = role_id
@@ -163,10 +165,9 @@ class Admin::SiteNoticesController < ApplicationController
   
   def dismiss_notice
     notice = Admin::SiteNotice.find(params[:id])
-    user_notice = Admin::SiteNoticeUser.new
-    user_notice.user_id = current_user.id
-    user_notice.notice_id = params[:id]
-    user_notice.notice_dismissed = 1
+    user_notice = Admin::SiteNoticeUser.find_or_create_by_notice_id_and_user_id(notice.id , current_user.id)
+    user_notice.notice_dismissed = true
+    user_notice.updated_at = DateTime.now
     user_notice.save!
     if request.xhr?
       render :update do |page|
@@ -181,7 +182,7 @@ class Admin::SiteNoticesController < ApplicationController
                 "
       end
       return
-    end    
-  end  
+    end
+  end
     
 end
