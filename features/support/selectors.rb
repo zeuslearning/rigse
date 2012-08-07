@@ -20,6 +20,8 @@ module HtmlSelectorsHelpers
       "table.materials"
     when "the first recent activity on the recent activity page"
       [:xpath, "//div[@class=\"recent_activity_container\"]/div[1]"]
+    when "the search suggestion"
+      [:xpath, "//div[@id='suggestions']"]
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
     #
