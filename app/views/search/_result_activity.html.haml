@@ -13,14 +13,13 @@
               %span.material_header
                 = "#{activity.name}, "
               %span
-                from 
+                from
                 = activity.parent.name
               .material_button{:style=>'float:right'}
                 =link_to 'Assign to class','',:class=>"button"
               .material_button{:style=>'float:right'}
-                = link_to "Preview", run_url_for(activity, {}),:class=>"button"
+                = link_to "Preview",'',:class=>"button"
           .material_body
-            = activity.description 
+            = activity.description
             %i
               Used in: #{activity.offerings.length} classes.
-       
