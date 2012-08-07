@@ -19,9 +19,8 @@
                 .material_button{:style=>'float:right'}
                   =link_to 'Assign to class','',:class=>"button"
                 .material_button{:style=>'float:right'}
-                  = link_to "Preview",'',:class=>"button"
+                = link_to "Preview", run_url_for(activity, {}),:class=>"button"
             .material_body
               = activity.description
               %i
                 Used in: #{activity.offerings.length} classes.
-
