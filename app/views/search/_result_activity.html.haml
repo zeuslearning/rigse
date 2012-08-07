@@ -7,19 +7,20 @@
           = type
     %td.material_list
       - materials.each do |activity|
-        .material_list_item
-          %div
-            %div{:style=>'overflow:hidden'}
-              %span.material_header
-                = "#{activity.name}, "
-              %span
-                from
-                = activity.parent.name
-              .material_button{:style=>'float:right'}
-                =link_to 'Assign to class','',:class=>"button"
-              .material_button{:style=>'float:right'}
-                = link_to "Preview",'',:class=>"button"
-          .material_body
-            = activity.description
-            %i
-              Used in: #{activity.offerings.length} classes.
+        - unless activity.parent.nil?
+          .material_list_item
+            %div
+              %div{:style=>'overflow:hidden'}
+                %span.material_header
+                  = "#{activity.name}, "
+                %span
+                  from
+                  = activity.parent.name
+                .material_button{:style=>'float:right'}
+                  =link_to 'Assign to class','',:class=>"button"
+                .material_button{:style=>'float:right'}
+                  = link_to "Preview",'',:class=>"button"
+            .material_body
+              = activity.description
+              %i
+                Used in: #{activity.offerings.length} classes.
