@@ -1,7 +1,5 @@
 - learner = learners.find_by_student_id(student.id) 
 %tr
-  %td.locked_left
-    =student.user.last_name + ", " + student.user.first_name
   - investigation.activities.each do |activity|
     %td
       - percentage = 0
@@ -9,6 +7,9 @@
         - report_learner_activities = learner.learner_activities
         - if !report_learner_activities.find_by_activity_id(activity.id).nil?
           - percentage = report_learner_activities.find_by_activity_id(activity.id).complete_percent
-      %div{:style=>"height:20px"}
-        .progressbar
-          .progress{:style=>"width:#{percentage}px"}
+      %div.progressbar_container
+        .progressbar{:title=>"#{percentage.round(1)}%"}
+          - if percentage == 100
+            .progress.completed{:style=>"width:#{percentage}%"}
+          - else
+            .progress{:style=>"width:#{percentage}%"}

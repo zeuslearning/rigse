@@ -1,4 +1,5 @@
 function showInstructionalMaterial(oMaterialTab){
+    setTableHeaders(1);
     var oSelectedTab = $$('.selected_tab')[0];
     if(oSelectedTab){
         oSelectedTab.removeClassName('selected_tab');
@@ -9,6 +10,8 @@ function showInstructionalMaterial(oMaterialTab){
     oMaterialTab.removeClassName('tab');
     oMaterialTab.addClassName('selected_tab');
     $(oMaterialTab.id + "_data").show();
+    
+    setTableHeaders();
 }
 
 function startScroll(direction,size){
@@ -51,6 +54,7 @@ function showHideActivityButtons(investigation_id, oLink){
 
 
 function showHideActivityDetails(investigation_id, oLink){
+    setTableHeaders(1);
     var bVisible = false;
     $$('.DivHideShowDetail'+investigation_id).each(function(oButtonContainer){
         oButtonContainer.toggle();
@@ -70,6 +74,7 @@ function showHideActivityDetails(investigation_id, oLink){
     
     $('oExpandCollapseText_'+investigation_id).update(strExpandCollapseText);
     oLink.update(strLinkText);
+    setTableHeaders();
 }
 
 
@@ -91,9 +96,32 @@ document.observe("dom:loaded", function() {
             showInstructionalMaterial(oTab);
         });
     });
+    setTableHeaders(1);
     if (arrTabs.length > 0)
     {
         var strTabID = arrTabs[0].id;
         setSelectedTab(strTabID);
     }
+
 });
+
+function setTableHeaders(iDefaultWidth)
+{
+    var iWidth;
+    $$("th.expand_collapse_text").each(function(oTitle){
+        var oChild = oTitle.childElements()[0];
+        if(oChild)
+        {
+            if(iDefaultWidth)
+                iWidth = iDefaultWidth;
+            else
+                iWidth = (oTitle.getStyle('display') == "none")? 1 : oTitle.offsetWidth*0.9;
+            oChild.setStyle({'display':'none'});
+            oChild.setStyle({'width':iWidth+'px'});
+        }
+    });
+    
+    $$("th.expand_collapse_text > div.progressbar_container").each(function(oTitle){
+        oTitle.setStyle({'display':''});
+    });
+}
