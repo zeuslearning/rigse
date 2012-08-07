@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120724110300) do
+ActiveRecord::Schema.define(:version => 20120803061559) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -30,6 +30,12 @@ ActiveRecord::Schema.define(:version => 20120724110300) do
   end
 
   add_index "activities", ["investigation_id", "position"], :name => "index_activities_on_investigation_id_and_position"
+
+  create_table "admin_notice_user_display_statuses", :force => true do |t|
+    t.integer  "user_id"
+    t.datetime "last_collapsed_at_time"
+    t.boolean  "collapsed_status"
+  end
 
   create_table "admin_project_vendor_interfaces", :force => true do |t|
     t.integer  "admin_project_id"
@@ -58,6 +64,29 @@ ActiveRecord::Schema.define(:version => 20120724110300) do
     t.boolean  "use_periodic_bundle_uploading",                :default => false
     t.string   "jnlp_cdn_hostname"
     t.boolean  "active"
+  end
+
+  create_table "admin_site_notice_roles", :force => true do |t|
+    t.integer  "notice_id"
+    t.integer  "role_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "admin_site_notice_users", :force => true do |t|
+    t.integer  "notice_id"
+    t.integer  "user_id"
+    t.boolean  "notice_dismissed"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
+  end
+
+  create_table "admin_site_notices", :force => true do |t|
+    t.text     "notice_html"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+    t.integer  "created_by"
+    t.integer  "updated_by"
   end
 
   create_table "admin_tags", :force => true do |t|
@@ -772,12 +801,6 @@ ActiveRecord::Schema.define(:version => 20120724110300) do
   create_table "native_libraries_versioned_jnlps", :id => false, :force => true do |t|
     t.integer "native_library_id"
     t.integer "versioned_jnlp_id"
-  end
-
-  create_table "notice_user_display_statuses", :force => true do |t|
-    t.integer  "user_id"
-    t.datetime "last_collapsed_at_time"
-    t.boolean  "collapsed_status"
   end
 
   create_table "otml_categories_otrunk_imports", :id => false, :force => true do |t|
@@ -2167,29 +2190,6 @@ ActiveRecord::Schema.define(:version => 20120724110300) do
   add_index "settings", ["scope_id", "scope_type", "name"], :name => "index_settings_on_scope_id_and_scope_type_and_name"
   add_index "settings", ["scope_type", "scope_id", "name"], :name => "index_settings_on_scope_type_and_scope_id_and_name"
   add_index "settings", ["value"], :name => "index_settings_on_value"
-
-  create_table "site_notice_roles", :force => true do |t|
-    t.integer  "notice_id"
-    t.integer  "role_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
-  create_table "site_notice_users", :force => true do |t|
-    t.integer  "notice_id"
-    t.integer  "user_id"
-    t.boolean  "notice_dismissed"
-    t.datetime "created_at",       :null => false
-    t.datetime "updated_at",       :null => false
-  end
-
-  create_table "site_notices", :force => true do |t|
-    t.text     "notice_html"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
-    t.integer  "created_by"
-    t.integer  "updated_by"
-  end
 
   create_table "student_views", :force => true do |t|
     t.integer "user_id",       :null => false
