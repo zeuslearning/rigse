@@ -132,7 +132,7 @@ Feature: Teacher can see recent activity
     And I follow "Show detail" within the first recent activity on the recent activity page
     Then I should see "gaurav, ankur" in In-progress on the recent activity page
     And I should see "Completed Smith, Chuck"
-    And I should see "Not Yet Started done, shon"
+    And I should see "Not yet started done, shon"
     
     
   @javascript
@@ -153,18 +153,18 @@ Feature: Teacher can see recent activity
       | dave      | My Class      | Radioactivity       | a               | a      |
     And I follow "Recent Activity" within left panel for class navigation
     And I follow "Show detail" within the first recent activity on the recent activity page
-    Then I should see "Completed No student has completed this investigation yet."
+    Then I should see "Completed No student has completed this offering yet."
     
     
   @javascript
   Scenario: Teacher views message if no student has started
     When the following student answers:
       | student | class     | investigation | question_prompt | answer |
-      | chuck   | Mechanics | Aerodynamics  | image_q          | Y      |
+      | chuck   | Mechanics | Aerodynamics  | image_          | Y      |
       | chuck   | Mechanics | Aerodynamics  | c               | Y      |
     And I follow "Recent Activity" within left panel for class navigation
     And I follow "Show detail" within the first recent activity on the recent activity page
-    Then I should see "Not Yet Started All students have started this investigation."
+    Then I should see "Not yet started All students have started this offering."
     
     
   @javascript
@@ -175,7 +175,7 @@ Feature: Teacher can see recent activity
       | chuck     | Mechanics      | Aerodynamics        | c               | Y      |
     And I follow "Recent Activity" within left panel for class navigation
     And I follow "Show detail" within the first recent activity on the recent activity page
-    Then I should see "In Progress No students with incomplete progress."
+    Then I should see "In-progress No students with incomplete progress."
     
     
   @javascript
