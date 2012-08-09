@@ -185,6 +185,10 @@ constraints :id => /\d+/ do
         post :register
         post :confirm
       end
+      member do
+        get :ask_consent
+        put :update_consent
+      end
     end
 
     resources :student_clazzes

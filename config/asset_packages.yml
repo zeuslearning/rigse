@@ -214,6 +214,8 @@ stylesheets:
   - app
   - accordion
   - please_wait
+  - window/window
+  - window/rites
   - live_validation
   - accordion
   - notes
@@ -223,4 +225,6 @@ stylesheets:
   - reports
   - workgroup
   - chosen
+  - classes_left_pane
+  - instructional_materials
 
