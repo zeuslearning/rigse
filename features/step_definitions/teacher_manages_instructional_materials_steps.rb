@@ -7,9 +7,10 @@ Then /^A report window opens of offering "(.+)"$/ do |offering|
 end
 
 And /^I click the tab of Instructional Materials with text "(.+)"$/ do |text|
-  script_text = "
+  result = page.execute_script("
     var arrTabs = $$('#oTabcontainer div.tab');
-    arrTabs = arrTabs.concat( $$('#oTabcontainer div.selected_tab') );
+    arrTabs.concat( $$('#oTabcontainer div.selected_tab') );
+    var bSuccess = false;
     var strTabText = null;
     for (var i = 0; i < arrTabs.length; i++)
     {
@@ -17,12 +18,11 @@ And /^I click the tab of Instructional Materials with text "(.+)"$/ do |text|
       if (strTabText == '#{text}')
       {
         arrTabs[i].simulate('click');
-        return true;
+        bSuccess = true;
       }
     }
-    return false;
-  "
-  result = page.execute_script(script_text)
+    return bSuccess;
+  ")
   
    raise 'Tab switch failed' if result == false
   
