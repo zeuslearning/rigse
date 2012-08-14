@@ -24,7 +24,10 @@ module HtmlSelectorsHelpers
       [:xpath, "//div[@id='suggestions']"]
     when "the activity table"
       [:xpath, "//div[@class = 'progress_div webkit_scrollbars']/table"]
-      
+    when "suggestion box"
+      "div#suggestions"
+    when "result box"
+      "div.results_container"
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
     #
