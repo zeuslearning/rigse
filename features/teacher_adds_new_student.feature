@@ -40,7 +40,7 @@ Feature: Teacher adds a new student
     And the student "student" belongs to class "My Class 2"
     And I am on "Student Roster" page for "My Class"
     And I follow "Register and add new student"
-    And I should see "Add and Register New Student"
+    And I should see "Register and Add New Student"
     And I fill in the following:
       | user_first_name            | John   |
       | user_last_name             | Albert |
@@ -58,7 +58,7 @@ Feature: Teacher adds a new student
     And the student "student" belongs to class "My Class 2"
     And I am on "Student Roster" page for "My Class"
     And I follow "Register and add new student"
-    And I should see "Add and Register New Student"
+    And I should see "Register and Add New Student"
     And I fill in the following:
       | user_first_name            | John   |
       | user_last_name             | Albert |
