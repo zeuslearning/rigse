@@ -201,3 +201,24 @@ function LoadingEnd (post) {
 function fulltrim(inputText){
     return inputText.replace(/(?:(?:^|\n)\s+|\s+(?:$|\n))/g,'').replace(/\s+/g,' ');
 }
+function materialCheckOnClick(ObjId)
+{
+    if(!$('investigation').checked &&  !$('activity').checked ){
+        $(ObjId).checked="checked";
+    }
+
+}
+
+function selectAllGreades(grades)
+{
+    if($('allgrades').checked){
+        grades.each(function(obj){
+            $(obj).checked= "checked";
+        })
+    }
+    else{
+        grades.each(function(obj){
+            $(obj).checked= false;
+        })
+    }
+}

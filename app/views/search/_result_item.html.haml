@@ -1,5 +1,3 @@
-
-D:\GIT\RIGSE>@git.exe %*
 %div
   - unless current_user.anonymous?
     - teacher_clazz_ids = current_user.portal_teacher.teacher_clazzes.map{|item| item.clazz_id}
@@ -15,7 +13,10 @@ D:\GIT\RIGSE>@git.exe %*
             %span
               from investigation
               ="\"#{material.parent.name}\""
-          
+          -unless material.user.name.nil?
+            %div
+              %span{:style=>"font-weight:bold"}
+                ="By #{material.user.name}"
         %td{:width=>"75px"}
           %div{:style=>'float:right'}
             = link_to "Preview",run_url_for(material,{}),:class=>"button"
@@ -42,8 +43,5 @@ D:\GIT\RIGSE>@git.exe %*
       Not used in any class.
     -else
       Used in #{material.offerings.count} classes.
-D:\GIT\RIGSE>@set ErrorLevel=%ErrorLevel%
-
-D:\GIT\RIGSE>@rem Restore the original console codepage.
-
-D:\GIT\RIGSE>@chcp %cp_oem% > nul < nul
+  %div
+    = "Required equipment:#{probe_types(material).map { |p| p.name }.join(", ")} "
