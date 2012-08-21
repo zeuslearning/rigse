@@ -216,3 +216,21 @@ input.disabledGo
 #offering_list .bookmark{
   color:#3F3F3F;
 }
+
+.disabledfilters{
+  color:gray;
+}
+
+  z-index:10;
+
+
+.disabledfilters input[type='checkbox']{
+  -moz-opacity: 0.5;
+  opacity: 0.5;
+  filter: alpha(opacity=50);
+}
+
+
+.tablecell input[type='checkbox'],.tablecell label{
+  vertical-align:middle;
+}
