@@ -1,3 +1,5 @@
+
+D:\GIT\RIGSE>@git.exe %*
 %div
   - unless current_user.anonymous?
     - teacher_clazz_ids = current_user.portal_teacher.teacher_clazzes.map{|item| item.clazz_id}
@@ -43,4 +45,16 @@
       Not used in any class.
     -else
       Used in #{material.offerings.count} classes.
+  - required_equipments = probe_types(material).map { |p| p.name }.join(", ") 
+  - unless required_equipments == ""
+    #required_equipment_container
+      %span#required_equipment
+        Required equipment:
+      %span{:style=>"font-weight:bold;"}
+        = "#{required_equipments} "
 
+D:\GIT\RIGSE>@set ErrorLevel=%ErrorLevel%
+
+D:\GIT\RIGSE>@rem Restore the original console codepage.
+
+D:\GIT\RIGSE>@chcp %cp_oem% > nul < nul
