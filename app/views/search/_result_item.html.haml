@@ -25,8 +25,7 @@
             - if current_user.portal_teacher
               = link_to 'Assign to a Class','#',:class=>"button", :onclick=>"get_Assign_To_Class_Popup(#{material.id},'#{material.class.to_s}')"
             - else
-              - flash[:notice]= "Please login or register as a teacher"
-              = link_to 'Assign to a Class',home_url,:class=>"button"
+              = link_to 'Assign to a Class', url_for({ :controller => 'search', :action => 'unauthorized_user' }), :class=>"button"
       %tr
         %td{:colspan=>3}
           - unless current_user.anonymous?
@@ -44,7 +43,7 @@
     -else
       Used in #{material.offerings.count} classes.
   - required_equipments = probe_types(material).map { |p| p.name }.join(", ") 
-  - if required_equipments != ""
+  - unless required_equipments == ""
     #required_equipment_container
       %span#required_equipment
         Required equipment:
