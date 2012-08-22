@@ -1,6 +1,7 @@
 RailsPortal::Application.routes.draw do
   get "search/index"
   match '/search/list/filter' => 'search#show', :as => :list_filter_search, :method => :get
+  get 'search/unauthorized_user' => 'search#unauthorized_user'
 
 
 constraints :id => /\d+/ do
