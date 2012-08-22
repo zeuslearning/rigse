@@ -42,6 +42,8 @@ D:\GIT\RIGSE>@git.exe %*
   %i
     -if(material.offerings.count == 0)
       Not used in any class.
+    -elsif(material.offerings.count == 1)
+      Used in 1 class.
     -else
       Used in #{material.offerings.count} classes.
   - required_equipments = probe_types(material).map { |p| p.name }.join(", ") 
