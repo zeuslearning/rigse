@@ -44,19 +44,16 @@ Feature: Teacher can see full status
     And I am on the full status page for "My Class"
     
     
-  @javascript
   Scenario: Teacher can see all the offerings of the class
     Then I should see "Radioactivity"
     And I should see "Plant reproduction"
     
     
-  @javascript
   Scenario: Teacher can see all the students assigned to the class
     Then I should see "Doe, Dave"
     And I should see "Smith, Chuck"
     
     
-  @javascript
   Scenario: Teacher can see all the activities when an offering is expanded except teacher only activity
     When I expand the column "Radioactivity" on the Full Status page
     Then the column for "Radioactivity" on the Full Status page should be expanded
@@ -88,7 +85,6 @@ Feature: Teacher can see full status
     Then the column for "Radioactivity" on the Full Status page should be expanded
     
     
-  @javascript
   Scenario: Anonymous user cannot see the full status page
     When I am an anonymous user
     And I go to the full status page for "My Class"

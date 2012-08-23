@@ -66,7 +66,6 @@ Feature: Teacher can see recent activity
     And I login with username: teacher password: teacher
     
     
-  @javascript
   Scenario: Teacher should see a message if no investigation is assigned to the class
     When I login with username: albert password: albert
     And I follow "Recent Activity" within left panel for class navigation
@@ -74,7 +73,6 @@ Feature: Teacher can see recent activity
     And I should see "As your students get started, their progress will be displayed here."
     
     
-  @javascript
   Scenario: Teacher should see a message if no activity is assigned to any investigation
     When the following empty investigations exist:
      | name      | user   | offerings_count | publication_status |
@@ -87,7 +85,6 @@ Feature: Teacher can see recent activity
     Then I should see "As your students get started, their progress will be displayed here."
     
     
-  @javascript
   Scenario: Teacher should see a message if no student is assigned to the class
     When the following empty investigations exist:
      | name      | user   | offerings_count | publication_status |
@@ -121,7 +118,6 @@ Feature: Teacher can see recent activity
     Then I should see the progress of the student within the first recent activity on the recent activity page
     
     
-  @javascript
   Scenario: Teacher views the class at the top where most recent activity occurred
     When the following student answers:
       | student   | class         | investigation       | question_prompt | answer |
@@ -147,7 +143,6 @@ Feature: Teacher can see recent activity
     And I should see "Not Yet Started done, shon"
     
     
-  @javascript
   Scenario: Teacher views class size
     When the following student answers:
       | student   | class         | investigation       | question_prompt | answer |
@@ -203,7 +198,6 @@ Feature: Teacher can see recent activity
     And I should see "Aerodynamics"
     
     
-  @javascript
   Scenario: Anonymous user cannot see recent activity page
     When I log out
     And I am an anonymous user
