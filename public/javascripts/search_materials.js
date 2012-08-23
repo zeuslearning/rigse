@@ -3,6 +3,7 @@ var ajaxRequest;
 var ajaxRequestSend = 0;
 var goButttondisabled=false;
 var animating=false;
+var ajaxRequestCounter = 0;
 function select_suggestion(search_box) {
     var strSuggestiontext;
     try{
@@ -23,13 +24,15 @@ function highlightlabel(e) {
 }
 
 function searchsuggestions(e, oElement) {
-    if(e.keyCode == 13 || e.keyCode == 40 || e.keyCode == 38) {
+    if(e.keyCode == 13 || e.keyCode == 40 || e.keyCode == 38 || e.keyCode == 27) {
         // if(e.keyCode == 13)
         return false;
     }
+    ajaxRequestCounter ++;
     ajaxRequest = new Ajax.Request('/search/get_search_suggestions', {
         parameters : {
-            search_term : oElement.value
+            search_term : oElement.value,
+            ajaxRequestCounter:ajaxRequestCounter
         },
         method : 'get'
     });
@@ -38,6 +41,20 @@ function searchsuggestions(e, oElement) {
 
 function showsuggestion(event, oelem) {
     // $('show_suggestion').writeAttribute('name','show_suggestion');
+    if(event.keyCode == 27){
+        //
+        $('search_suggestions').hide();
+        if(event.stop){
+            event.stop();
+        }
+        else{
+            event.returnValue = false;
+        }
+        
+        
+
+        return;
+    }
     var osuggestions = $$('.suggestion');
     var ohoverelements = $$('.suggestionhover');
     $('search_suggestions').show();
@@ -179,6 +196,21 @@ function abortAjaxRequest() {
         }
     }
 }
+
+var startUpdate = function(progress_sel,update_sel) {
+  if (typeof progress_sel == 'undefined')  { progress_sel = 'search_spinner';      }
+  if (typeof update_sel == 'undefined')    { update_sel = 'offering_list';  }
+  $(update_sel).hide();
+  $(progress_sel).show();
+};
+
+var endUpdate = function (progress_sel, update_sel) {
+  if (typeof progress_sel == 'undefined')  { progress_sel = 'search_spinner';      }
+  if (typeof update_sel == 'undefined')    { update_sel = 'offering_list';  }
+  $(update_sel).show();
+  $(progress_sel).hide();
+};
+
 
 function LoadingStart (pre,post) {
   disableForm();
