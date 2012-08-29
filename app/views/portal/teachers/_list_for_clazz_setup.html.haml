@@ -1,4 +1,4 @@
-- current_teachers = portal_clazz.teachers.sort { |a,b| (a.user.last_name <=> b.user.last_name) }
+- current_teachers = portal_clazz.teachers.sort { |a,b| (a.user.first_name + " " + a.user.last_name <=> b.user.first_name + " " + b.user.last_name) }
 - if current_teachers.length > 0
   %table
     - current_teachers.each do |portal_teacher|

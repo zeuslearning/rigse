@@ -1,5 +1,8 @@
 class Portal::Clazz < ActiveRecord::Base
   self.table_name = :portal_clazzes
+  
+  before_save :strip_white_space
+  before_validation :strip_white_space
 
   acts_as_replicatable
 
@@ -321,6 +324,12 @@ class Portal::Clazz < ActiveRecord::Base
       offering.save
       position += 1
     end
+  end
+  
+  def strip_white_space
+    self.name = self.name.strip
+    self.description = self.description.strip
+    self.class_word = self.class_word.strip
   end
   
 
