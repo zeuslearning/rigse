@@ -327,9 +327,9 @@ class Portal::Clazz < ActiveRecord::Base
   end
   
   def strip_white_space
-    self.name = self.name.strip
-    self.description = self.description.strip
-    self.class_word = self.class_word.strip
+    self.name = self.name.strip if self.name
+    self.description = self.description.strip if self.description
+    self.class_word = self.class_word.strip if self.class_word
   end
   
 
