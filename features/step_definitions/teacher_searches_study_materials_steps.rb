@@ -1,4 +1,39 @@
+Given /^the search data exists$/ do
+
+step 'the following simple investigations exist:', table(%{
+      | name                   | user   | publication_status | description                                     |
+      | Radioactivity          | author | published          | Nuclear Energy is a great subject               |
+      | Set Theory             | author | published          | Set Theory decay is a great subject             |
+      | Mechanics              | author | published          | Mechanics is a great subject                    |
+      | Geometry               | author | published          | Triangle is a great subject                     |
+      | integration calculus   | author | published          | integration calculus is a great subject         |
+      | differential calculus  | author | published          | differential calculus decay is a great subject  |
+      | differential equations | author | published          | differential equations is a great subject       |
+      | organic chemistry      | author | published          | organic chemistry decay is a great subject      |
+      | inorganic chemistry    | author | published          | inorganic chemistry decay is a great subject    |
+      | graph theory           | author | published          | graph theory is a great subject                 |
+      | radar theory           | author | published          | radar theory is a great subject                 |})
+
+step 'the following activities for the above investigations exist:', table(%{
+      | name                        | investigation | user    | publication_status | description                            |
+      | Radioactive decay           | Radioactivity | author  | published          | Nuclear Energy is a great material     |
+      | Gama Rays                   | Radioactivity | author  | published          | Gama Rays is a great material          |
+      | Venn Diagram                | Set Theory    | author  | published          | Venn Diagram is a great material       |
+      | operations on sets          | Set Theory    | author  | published          | operations on sets is a great material |
+      | Fluid Mechanics             | Mechanics     | author  | published          | Fluid Mechanics is a great material    |
+      | Circular Motion             | Mechanics     | author  | published          | Circular Motion is a great material    |
+      | Geometry                    | Geometry      | author  | published          | Triangle is a great material           |
+      | intersecting lines          | Geometry      | author  | published          | intersecting lines is a great material |
+      | parallel lines              | Geometry      | author  | published          | parallel lines is a great material     |
+      | graphs and lines            | Geometry      | author  | published          | parallel lines is a great material     |
+      | circles                     | Geometry      | author  | published          | circles is a great material            |
+      | boolean algebra             | Geometry      | author  | published          | boolean algebra is a great material    |})
+  step 'the investigation "Digestive System" with activity "Bile Juice" belongs to domain "Biological Science" and has grade "10-11"'
+  step 'the investigation "A Weather Underground" with activity "A heat spontaneously" belongs to probe "Temperature"'
+end
+
 When /^the following activities for the above investigations exist:$/ do |activity_table|
+  #the search data exists
   activity_table.hashes.each do |hash|
     investigation_name = hash.delete('investigation')
     investigation = Investigation.find_by_name(investigation_name)
@@ -9,27 +44,32 @@ When /^the following activities for the above investigations exist:$/ do |activi
 end
 
 When /^(?:|I )enter search text "(.+)" on the search instructional materials page$/ do |search_text|
+  #the search data exists
   step_text = "I fill in \"search_term\" with \"#{search_text}\""
   step step_text
 end
 
 When /^(?:|I )should see search suggestions for "(.+)" on the search instructional materials page$/ do |search_text|
+  #the search data exists
   step_text = "I should see \"#{search_text}\" within suggestion box"
   step step_text
 end
 
 When /^(?:|I )search study material "(.+)" on the search instructional materials page$/ do |search_text|
+  #the search data exists
   step_text = "I fill in \"search_term\" with \"#{search_text}\""
   step step_text
   step 'I press "GO"'
 end
 
 When /^(?:|I )should see search results for "(.+)" on the search instructional materials page$/ do|search_text|
+  #the search data exists
   step_text = "I should see \"#{search_text}\" within result box"
   step step_text
 end
 
 When /^(?:|I )should be able to sort search and filter results on the search instructional materials page$/ do
+  #the search data exists
   
   # Check sorting & filtering for activities
   
@@ -127,6 +167,7 @@ When /^(?:|I )should be able to sort search and filter results on the search ins
 end
 
 When /^(?:|I )should be able to see grouped search results on the search instructional materials page$/ do
+  #the search data exists
   #grouping
   #Activity
   step 'I fill in "search_term" with "Geometry"'
@@ -198,6 +239,8 @@ Then /^the search results should be paginated on the search instructional materi
 end
 
 Then /^(?:|I )can assign investigations and activities to a class on the search instructional materials page$/ do
+  #the search data exists
+  
   #assigning investigations
   #before search
   investigation_name = 'Geometry'
@@ -208,6 +251,13 @@ Then /^(?:|I )can assign investigations and activities to a class on the search 
   step 'I follow "Save"'
   step 'I go to the class page for "Mathematics"'
   step 'I should see "Geometry"'
+  #Teacher should see class in which investigation is assigned
+  step 'I am on the search instructional materials page'
+  within(:xpath,"//div[@class='material_list_item' and contains(., '#{investigation_name}')]") do
+    step 'I follow "Assign to a Class"'
+  end
+  step 'I should see "Already assigned to the following class(es)"'
+  step 'I should see "Mathematics"'
   #After search
   step 'I am on the search instructional materials page'
   step 'I fill in "search_term" with "graph theory"'
@@ -235,6 +285,9 @@ Then /^(?:|I )can assign investigations and activities to a class on the search 
   within(:xpath,"//div[@class='material_list_item' and contains(., '#{activity_name}')]") do
     step 'I follow "Assign to a Class"'
   end
+  #Investigation should come before activity
+  step '"Mechanics" should appear before "Fluid Mechanics"'
+  
   step 'I check "Physics"'
   step 'I follow "Save"'
   step 'I go to the class page for "Physics"'
@@ -256,6 +309,8 @@ Then /^(?:|I )can assign investigations and activities to a class on the search 
 end
 
 Then /^(?:|I )can preview investigations on the search instructional materials page$/ do
+    #the search data exists
+    
     #Preview investigations
     investigation_id = Investigation.find_by_name('Geometry').id
     within(:xpath,"//div[@id = 'search_investigation_#{investigation_id}']") do
@@ -275,6 +330,7 @@ end
 
 
 And /^(?:|I )should not be able to assign materials on the search instructional materials page$/ do
+  #the search data exists
   #investigation
   investigation_id = Investigation.find_by_name('Geometry').id
   within(:xpath,"//div[@id = 'search_investigation_#{investigation_id}']") do
@@ -315,7 +371,7 @@ And /^(?:|I )preview materials on the search instructional materials page$/ do
 end
 
 When /^(?:|I )should be able to filter the search results on the basis of domains and grades on the search instructional materials page$/ do
-  
+  #the search data exists
   step 'the project settings enables use of Grade Span Expectation'
   
   #domain
@@ -342,7 +398,7 @@ When /^(?:|I )should be able to filter the search results on the basis of domain
 end
 
 When /^(?:|I )should be able to filter the search results on the basis of probes on the search instructional materials page$/ do
-  
+  #the search data exists
   step 'the project settings enables use of Grade Span Expectation'
   
   step 'I check "random domain"'
@@ -361,11 +417,11 @@ When /^(?:|I )should be able to filter the search results on the basis of probes
   step 'I should see "A Weather Underground"'
   step 'I should see "A heat spontaneously"'
   step 'I should see "Required equipment"'
-  step 'I follow "All"'
+  step 'I follow "all"'
   step 'I should wait 2 seconds'
   step 'I should see "A Weather Underground"'
   step 'I should see "A heat spontaneously"'
-  step 'I follow "None"'
+  step 'I follow "none"'
   step 'I should wait 2 seconds'
   step 'I should see "A Weather Underground"'
   step 'I should see "A heat spontaneously"'
@@ -376,6 +432,7 @@ When /^(?:|I )should be able to filter the search results on the basis of probes
   step 'the project setting for Grade Span Expectation is restored'
 end
 When /^(?:|I )should be able to see number classes to which instructional materials are assigned on the search instructional materials page$/ do
+  #the search data exists
   #investigation
   step 'the Investigation "differential calculus" is assigned to the class "Physics"'
   step 'the Investigation "differential calculus" is assigned to the class "Geography"'
@@ -393,3 +450,4 @@ When /^(?:|I )should be able to see number classes to which instructional materi
     step 'I should see "Used in 3 classes."'
   end
 end
+ 
