@@ -13,6 +13,7 @@ And /^I click the tab of Instructional Materials with text "(.+)"$/ do |text|
 end
 
 And /^I should see progress bars for the students$/ do
+  step 'I wait 2 seconds'
   result = page.execute_script("
     var arrProgressBars = $$('div.progress');
     var bProgressBarWidthIncreased = false;
@@ -29,6 +30,5 @@ And /^I should see progress bars for the students$/ do
   ")
   
    raise 'Progress bar fail' if result == false
-  
-  
+
 end
