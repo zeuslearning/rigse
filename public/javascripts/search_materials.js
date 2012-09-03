@@ -24,8 +24,12 @@ function highlightlabel(e) {
 }
 
 function searchsuggestions(e, oElement) {
-    if(e.keyCode == 13 || e.keyCode == 40 || e.keyCode == 38 || e.keyCode == 27) {
-        // if(e.keyCode == 13)
+    var enter_key_code = 13;
+    var downArrow_key_code = 40;
+    var upArrow_key_code = 38;
+    var escape_key_code = 27;
+    
+    if(e.keyCode == enter_key_code || e.keyCode == downArrow_key_code || e.keyCode == upArrow_key_code || e.keyCode == escape_key_code) {
         return false;
     }
     ajaxRequestCounter ++;
@@ -40,8 +44,12 @@ function searchsuggestions(e, oElement) {
 }
 
 function showsuggestion(event, oelem) {
-    // $('show_suggestion').writeAttribute('name','show_suggestion');
-    if(event.keyCode == 27){
+    var enter_key_code = 13;
+    var downArrow_key_code = 40;
+    var upArrow_key_code = 38;
+    var escape_key_code = 27;
+
+    if(event.keyCode == escape_key_code){
         //
         $('search_suggestions').hide();
         if(event.stop){
@@ -57,7 +65,7 @@ function showsuggestion(event, oelem) {
     var ohoverelements = $$('.suggestionhover');
     $('search_suggestions').show();
     if(osuggestions.length === 0) {
-        if(event.keyCode == 13) {
+        if(event.keyCode == enter_key_code) {
             submitsuggestion();
         }
         return;
@@ -66,7 +74,7 @@ function showsuggestion(event, oelem) {
         ohoverelements[0].removeClassName('suggestionhover');
     }
     switch (event.keyCode) {
-        case 40:
+        case downArrow_key_code:
             suggestioncount++;
             if(suggestioncount >= osuggestions.length) {
                 suggestioncount = 0;
@@ -74,7 +82,7 @@ function showsuggestion(event, oelem) {
             osuggestions[suggestioncount].addClassName('suggestionhover');
             break;
 
-        case 38:
+        case upArrow_key_code:
             suggestioncount--;
             if(suggestioncount <= -1) {
                 suggestioncount = osuggestions.length - 1;
@@ -82,7 +90,7 @@ function showsuggestion(event, oelem) {
             osuggestions[suggestioncount].addClassName('suggestionhover');
             break;
 
-        case 13:
+        case enter_key_code:
             if(suggestioncount != -1) {
                 select_suggestion(osuggestions[suggestioncount]);
                 suggestioncount = -1;
@@ -265,7 +273,7 @@ function get_Assign_To_Class_Popup(material_id,material_type)
     {
         close_popup();
     }
-    list_modal = new UI.Window({ theme:"lightbox", width:500, height:600});
+    list_modal = new UI.Window({ theme:"lightbox", width:500});
     list_modal.setContent("<div style='padding:10px'>Loading...Please Wait.</div>").show(true).focus().center();
     list_modal.setHeader("Assign Materials to a Class");
     
@@ -275,7 +283,10 @@ function get_Assign_To_Class_Popup(material_id,material_type)
         onSuccess: function(transport) {
             var text = transport.responseText;
             text = "<div id='oErrMsgDiv' style='color:Red;font-weight:bold'></div>"+ text;
-            list_modal.setContent("<div style='padding:10px'>" + text + "</div>");
+            list_modal.setContent("<div id='windowcontent' style='padding:10px'>" + text + "</div>");
+            var contentheight=$('windowcontent').getHeight();
+            var contentoffset=40;
+            list_modal.setSize(500,contentheight+contentoffset);
         }
     };
     var target_url = "/search/get_current_material_unassigned_clazzes";
