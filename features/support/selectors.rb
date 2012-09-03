@@ -20,8 +20,6 @@ module HtmlSelectorsHelpers
       "table.materials"
     when "the first recent activity on the recent activity page"
       [:xpath, "//div[@class=\"recent_activity_container\"]/div[1]"]
-    when "the search suggestion"
-      [:xpath, "//div[@id='suggestions']"]
     when "the activity table"
       [:xpath, "//div[@class = 'progress_div webkit_scrollbars']/table"]
     when "suggestion box"
