@@ -117,7 +117,7 @@ function setTableHeaders(iDefaultWidth)
         var oChild = oTitle.childElements()[0];
         if(oChild)
         {
-            iContainerWidth = (oTitle.offsetWidth > 0)? oTitle.offsetWidth-10 : 1;
+            iContainerWidth = (oTitle.offsetWidth > 10)? oTitle.offsetWidth-10 : 1;
             if(iDefaultWidth)
                 iWidth = iDefaultWidth;
             else

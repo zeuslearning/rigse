@@ -29,13 +29,12 @@ Feature: Student should see latest class information
       | Non Linear Devices        |
     And the student "student" belongs to class "My Class"
     And I am logged in with the username teacher
-    And I am on "the class edit page for "My Class""
+    And I am on the class edit page for "My Class"
     And I fill in Class Name with "Basic Electronics"
     And I select Term "Fall" from the drop down
     And I fill Description with "This is a biology class"
     And I fill Class Word with "betrx"
     And I uncheck investigation with label "Lumped circuit abstraction"
-    And I move investigation named "Non Linear Devices" to the top of the list
     And I press "Save"
     
     

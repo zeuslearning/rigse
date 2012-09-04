@@ -27,7 +27,7 @@ Feature: Teacher removes a student
     
   @javascript
   Scenario: Teacher removes a student
-    Given I am logged in with the username teacher
+    Given I login with username: teacher password: teacher
     And I am on "Student Roster" page for "My Class"
     And I accept the upcoming javascript confirm box
     When I follow "Remove Student"

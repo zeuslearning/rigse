@@ -35,6 +35,7 @@ Feature: Teacher navigates using left pane
     And I follow "Class Setup"
     Then I should be on the class edit page for "My Class"
     
+    
   @javascript
   Scenario: Teacher visits Materials page
     When I follow "My Class"

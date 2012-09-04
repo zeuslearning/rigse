@@ -1440,5 +1440,27 @@ a.hlink:hover{color:#DA5936;text-decoration:none;cursor:pointer}
   font-style: italic;
   text-align: center;
 }
+#teacher_id_selector
+{
+  width:250px;
+}
+
+/* CSS classes to display scrollbars on Mac OS X Lion */
+.webkit_scrollbars::-webkit-scrollbar {
+    -webkit-appearance: none;
+    width: 11px;
+    height: 11px;
+}
+.webkit_scrollbars::-webkit-scrollbar-thumb {
+    border-radius: 8px;
+    border: 2px solid white; /* should match background, can't be transparent */
+    background-color: rgba(0, 0, 0, .5);
+}
+
+.no_recent_activity
+{
+  font-style: italic;
+  text-align: center;
+}
 
 #div_teacher_list td {width:auto !important;white-space:nowrap;}

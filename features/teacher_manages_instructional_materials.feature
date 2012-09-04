@@ -89,17 +89,17 @@ Feature: Teacher manages instructional materials of a class
   Scenario: Teacher can click button to Add new materials
     When I follow "Add new Materials to this class"
     Then I should be on the search instructional materials page
-    
+    And I should see "Class Assignments:"
+        
   Scenario: Teacher should see investigation tabs with the first tab selected
     Then I should see "Radioactivity" within the tab block for Instructional Materials
     And I should see "Plant reproduction" within the tab block for Instructional Materials
     And I should see "Aerodynamics" within the tab block for Instructional Materials
     And I should see "Investigation: Radioactivity"
-    
+        
   @javascript
   Scenario: Teacher should see activity name in tab
     Then I should see "Algebra" within the tab block for Instructional Materials
-    
   @javascript
   Scenario: Teacher should be able to switch tabs
     When I click the tab of Instructional Materials with text "Plant reproduction"
@@ -150,20 +150,24 @@ Feature: Teacher manages instructional materials of a class
     When I follow "Run as Student"
     Then I receive a file for download with a filename like "_investigation_"
     
+  Scenario: Teacher should be able to run investigation as student
+    When I follow "Run as Student"
+    Then I receive a file for download with a filename like "_investigation_"
+    
   Scenario: Teacher should be able to run the activity
     When I follow "Run Activity"
     Then I receive a file for download with a filename like "_activity_"
-  
+
   @javascript
   Scenario: Teacher should not see teacher only activity in the activity table
     When I go to Instructional Materials page for "My Class"
     And I click the tab of Instructional Materials with text "Aerodynamics"
     Then I should not see "Aeroplane" within the activity table
-  
+
   @javascript
   Scenario: Teacher should see teacher only activity
     When I go to Instructional Materials page for "My Class"
     And I click the tab of Instructional Materials with text "Aerodynamics"
     Then I should see "Aeroplane (teacher only)"
-    
+
     

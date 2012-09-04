@@ -16,10 +16,6 @@
   padding-left:5px;
 }
 
-.notice_text p{
-  margin-bottom: 0px;
-}
-
 .table_row {
   text-align: center;
 }
@@ -93,10 +89,8 @@ a.create_notice, a.create_notice:visited, a.create_notice:active {
   margin-left: 50px;
 }
 
-.submit_button_container{
+.submit{
   float:right;
-  padding-right: 10px;
-  padding-top: 1px;
 }
 
 .notice_container{
