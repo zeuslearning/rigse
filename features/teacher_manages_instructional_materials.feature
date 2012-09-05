@@ -65,7 +65,7 @@ Feature: Teacher manages instructional materials of a class
     And the student "gaurav" belongs to class "My Class"
     And the following student answers:
       | student   | class         | investigation       | question_prompt | answer |
-      | dave      | My Class      | Radioactivity       | a               | a      |
+      | dave      | My Class      | Radioactivity       | b               | a      |
       | dave      | My Class      | Radioactivity       | image_q         | Y      |
     And the following student answers:
       | student   | class         | activity            | question_prompt | answer |
@@ -112,6 +112,7 @@ Feature: Teacher manages instructional materials of a class
     
   @javascript
   Scenario: Teacher should be able to run the report
+    When I should see "kjhkhjkjh"
     When I follow "Run Report"
     Then A report window opens of offering "Radioactivity"
     And I should see "Radioactivity"
