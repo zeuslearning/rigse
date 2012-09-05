@@ -55,7 +55,7 @@ Feature: Teacher can search and filter instructional materials
     
     
   @javascript
-  Scenario: Teacher views all investigations and activities with probes
+  Scenario: Teacher views all investigations and activities with sensors
     When I follow "all"
     And I should wait 2 seconds
     Then I should see "A Weather Underground"
@@ -63,8 +63,8 @@ Feature: Teacher can search and filter instructional materials
     
     
   @javascript
-  Scenario: Teacher views  investigations and activities without probes
-    When I check "No Probes Required"
+  Scenario: Teacher views  investigations and activities without sensors
+    When I check "No Sensors Required"
     Then I should not see "A Weather Underground"
     And I should not see "A heat spontaneously"
     And  I follow "none"
