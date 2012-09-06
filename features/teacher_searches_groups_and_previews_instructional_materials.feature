@@ -1,4 +1,5 @@
-  Feature: Teacher searches sorts groups and previews search the offerings
+Feature: Teacher searches sorts groups and previews search the offerings
+
   So my class can perform a task
   As a teacher
   I want to search sort group and preview offerings
@@ -65,7 +66,7 @@
     Then I should preview investigation "Geometry" on the search instructional materials page
     
     
- Scenario: Teacher can preview activity
+  Scenario: Teacher can preview activity
     Then I should preview activity "differential calculus" on the search instructional materials page
     
     
@@ -155,12 +156,12 @@
     And I should see "Geometry"
     And I should see "Triangle is a great subject"
     And I should see "Triangle is a great material"
-    And I should not see "Radioactivity"
+    Then I should not see "Radioactivity"
     And I fill in "search_term" with "Radioactivity"
     And I check "Investigation"
     And I uncheck "Activity"
     And I press "GO"
-    And I should see "Radioactivity"
+    Then I should see "Radioactivity"
     And I should see "Nuclear Energy is a great subject"
     And I should not see "Nuclear Energy is a great material"
     And I should not see "Geometry"

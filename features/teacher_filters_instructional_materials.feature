@@ -63,7 +63,7 @@ Feature: Teacher can search and filter instructional materials
     
     
   @javascript
-  Scenario: Teacher views  investigations and activities without sensors
+  Scenario: Teacher views investigations and activities without sensors
     When I check "No Sensors Required"
     Then I should not see "A Weather Underground"
     And I should not see "A heat spontaneously"
