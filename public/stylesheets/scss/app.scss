@@ -1260,6 +1260,7 @@ ul.quiet_list {
     height:auto;
     }
     #sortable { list-style-type: none; margin: 0; padding: 0;width:auto; }
+    #sortable {vertical-align:middle;}
 }
 
 .right_float
@@ -1461,6 +1462,10 @@ a.hlink:hover{color:#DA5936;text-decoration:none;cursor:pointer}
 {
   font-style: italic;
   text-align: center;
+}
+.message_text
+{
+  font-style: italic;
 }
 
 #div_teacher_list td {width:auto !important;white-space:nowrap;}
