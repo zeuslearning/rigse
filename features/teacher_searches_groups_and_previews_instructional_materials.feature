@@ -47,7 +47,7 @@ Feature: Teacher searches sorts groups and previews search the offerings
       | Biology     | teacher    | bio        |
       | Geography   | teacher    | geo        |
     And I login with username: teacher password: teacher
-    And I am on the search instructional materials page"
+    And I am on the search instructional materials page
     
     
   Scenario: Anonymous user can preview investigation
@@ -170,6 +170,8 @@ Feature: Teacher searches sorts groups and previews search the offerings
   @javascript
   Scenario: Search results should be paginated
     When I enter search text "is a great material" on the search instructional materials page
+    And I press "GO"
+    And I should wait 2 seconds
     Then the search results should be paginated on the search instructional materials page
     
     
