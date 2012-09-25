@@ -30,6 +30,10 @@ module HtmlSelectorsHelpers
       "div#students_listing"
     when "the assign materials popup on the search page"
       "div.ui-window.lightbox.draggable.resizable.lightbox_focused"
+    when "header sign in box"
+      "form#header-project-signin"
+    when "content box in change password page"
+      "div#content"
     when "the no report popup on the instructional materials page"
       "div.ui-window.lightbox.draggable.resizable.lightbox_focused"
     # Add more mappings here.
