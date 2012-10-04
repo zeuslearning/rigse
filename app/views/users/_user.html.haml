@@ -12,10 +12,11 @@
               %li.menu=link_to 'Student Page', portal_student_path(portal_student)
             %li.menu=link_to 'edit', edit_user_path(user)
             %li.menu=link_to 'Reset Password', reset_password_user_path(user)
-            %li.menu
-              = form_for user, :url => switch_user_path(user), :html => { :method => :put, :style=>"display: inline" }  do |form|
-                = hidden_field_tag 'user[id]', user.id
-                = submit_tag 'Switch'
+            - if(user != current_user)
+              %li.menu
+                = form_for user, :url => switch_user_path(user), :html => { :method => :put, :style=>"display: inline" }  do |form|
+                  = hidden_field_tag 'user[id]', user.id
+                  = submit_tag 'Switch'
     %div{:id => dom_id_for(user, :details), :class => 'tiny'}
       %ul.menu_h
         %li
