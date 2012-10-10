@@ -83,3 +83,11 @@ Then /^I switch to "([^"]*)"$/ do |username|
   click_button('Switch')
 end
 
+When /^(?:|I )fill in (HTML|Help) textarea with "(.+)" on the admin projects page$/ do|page, text|
+  case text
+    when "HTML"
+    fill_in("admin_project[home_page_content]", :with => text)
+    when "HTML"
+    fill_in("admin_project[help_page_content]", :with => text)
+  end
+end
