@@ -8,8 +8,11 @@
 - else
   =render :partial => 'sessions/new'
   .padded_content
-    - unless current_project.home_page_content.blank?
-      = current_project.home_page_content.html_safe
+    - if defined? home_page_preview_content
+      = home_page_preview_content.html_safe
     - else
-      - render_project_info
-      = content_for :project_info
+      - unless current_project.home_page_content.blank?
+        = current_project.home_page_content.html_safe
+      - else
+        - render_project_info
+        = content_for :project_info
