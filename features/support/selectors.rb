@@ -30,6 +30,8 @@ module HtmlSelectorsHelpers
       "div#students_listing"
     when "the assign materials popup on the search page"
       "div.ui-window.lightbox.draggable.resizable.lightbox_focused"
+    when "the message popup on the admin projects page"
+      "div.ui-window.lightbox.draggable.resizable.lightbox_focused"
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
     #
