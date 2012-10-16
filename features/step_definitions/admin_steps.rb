@@ -86,7 +86,3 @@ Then /^I switch to "([^"]*)" in the user list by searching "([^"]*)"$/ do |fulln
     click_link('Switch')
   end
 end
-
-When /^(?:|I )fill in HTML textarea with "(.+)" on the admin projects page$/ do|text|
-  fill_in("admin_project[home_page_content]", :with => text)
-end

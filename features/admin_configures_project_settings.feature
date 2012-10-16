@@ -107,7 +107,7 @@ Feature: Admin configures project settings
     And I login as an admin
     And am on the admin projects page
     When I follow "edit project"
-    And I fill in HTML textarea with "Creating Home Page" on the admin projects page
+    And I fill in "admin_project[home_page_content]" with "Creating Home Page"
     And I press "Save"
     And I log out
     And am on the my home page
@@ -119,11 +119,10 @@ Feature: Admin configures project settings
     And I login as an admin
     And am on the admin projects page
     When I follow "edit project"
-    And I fill in HTML textarea with "Creating Home Page" on the admin projects page
+    And I fill in "admin_project[home_page_content]" with "Creating Home Page"
     And I press "Save"
     And I follow "Preview Home Page"
     Then the newly opened window should have content "Creating Home Page"
     And the newly opened window should have content "Username"
     And the newly opened window should have content "Password"
-    
     
