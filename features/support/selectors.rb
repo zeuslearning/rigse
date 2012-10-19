@@ -32,6 +32,8 @@ module HtmlSelectorsHelpers
       "div.ui-window.lightbox.draggable.resizable.lightbox_focused"
     when "the message popup on the admin projects page"
       "div.ui-window.lightbox.draggable.resizable.lightbox_focused"
+      when "the top navigation bar"
+      "div#nav_top"
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
     #
