@@ -17,6 +17,9 @@ function open_preview_help_page(isExternalUrl, urlOrHtmlContainerId, idDomId, pr
         }
         else{
             customHtml = document.getElementById(urlOrHtmlContainerId).value;
+            customHtml = customHtml + "<script>var logoutLinkParent = document.getElementsByClassName('logout-link');"
+            customHtml = customHtml + "var logoutLink = logoutLinkParent[0].getElementsByTagName('a')[0];"
+            customHtml = customHtml + "logoutLink.href = 'javascript: void(0)';</script>"
             previewWindow = window.open('','help_page', 'height = 700 width = 800');
             formString = '<form id="preview_help_page" name="preview_help_page" action="/help/preview_help_page" method="post" style="display: none"><textarea id="preview_help_page_content" name="preview_help_page_content" style="opacity:0;">'+customHtml+'</textarea></form>';
             previewWindow.document.write(formString);
