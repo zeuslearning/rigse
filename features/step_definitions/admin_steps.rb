@@ -83,3 +83,7 @@ Then /^I switch to "([^"]*)"$/ do |username|
   click_button('Switch')
 end
 
+Then /^(?:|I )should see "([^"]*)" in the input box of external URL for help page on projects page$/ do |url|
+  step_text = "I should see the xpath \"//input[@name='admin_project[external_url]' and @value = '#{url}']\""
+  step step_text
+end
