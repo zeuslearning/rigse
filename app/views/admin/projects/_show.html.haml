@@ -111,7 +111,7 @@
               %p= admin_project.description.html_safe
             - home_page_content = admin_project.home_page_content
             - unless home_page_content.nil?
-              %input{:type=>"button", :value=>"Preview Home Page", :onclick=>"preview_home_page('', '#{home_page_content}', false);", :class=>"button", :style=>"margin-top: 10px; font-size: 13px"}
+              %input{:type=>"button", :value=>"Preview Home Page", :onclick=>"preview_home_page(null, '#{home_page_content}');", :class=>"button", :style=>"margin-top: 10px; font-size: 13px"}
             %br
             %br
             = render :partial => 'custom_css', :locals => { :admin_project => admin_project }
