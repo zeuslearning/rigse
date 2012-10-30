@@ -16,7 +16,7 @@
   - link_url = browse_investigation_url(material)
 - elsif material.class == ::Activity
   - inst_material = material.parent
-  - btn_text = "Assign individual activities"
+  - btn_text = "Assign Individual Activities"
   - icon_image = image_tag("search/investigation.gif",:size=>"100x100")
   - if inst_material.nil?
     - inst_material = material
@@ -64,8 +64,7 @@
         - else
           = link_to btn_text, url_for({ :controller => '/search', :action => 'unauthorized_user' }),:id=>"btn_Assign", :class=>"button"
       %td{:class=>"share"}
-        %a{:class=>"addthis_button button",:style=>"text-decoration:none;",:'addthis:url'=>link_url,:'addthis:title'=>material_title}
-          Share
+        %a{:class=>"addthis_button button",:style=>"text-decoration:none;",:'addthis:url'=>link_url,:'addthis:title'=>material_title} Share
   %br
   .description
     = material_description
