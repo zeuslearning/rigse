@@ -6,6 +6,7 @@
     #content
       padding-top: 0px
       padding-right: 0px
+- material_id = material.id
 - if material.class == ::Investigation
   - inst_material = material
   - material_title = inst_material.name
@@ -28,13 +29,14 @@
     - activitites = inst_material.activities
     - link_url = browse_activity_url(inst_material)
     - btn_text = (activitites.length == 1)? "Assign Investigation" : btn_text
+    - material_id = (activitites.length == 1)? inst_material.id : material_id
 
   - material_title = inst_material.name
   - material_description = inst_material.description
   
   
 = hidden_field_tag "investigation_id", inst_material.id
-= hidden_field_tag "material_id", material.id
+= hidden_field_tag "material_id", material_id
 = hidden_field_tag "assign_material_type", material.class.to_s
 %div
   - unless @back_url.nil?
