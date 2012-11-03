@@ -1,4 +1,3 @@
-= javascript_include_tag "http://s7.addthis.com/js/300/addthis_widget.js#username=USERNAME"
 = javascript_include_tag "search_materials"
 = javascript_include_tag "share_material"
 
@@ -16,10 +15,12 @@
   - activitites = inst_material.activities
   - link_url = browse_investigation_url(material)
   - material_url = link_url
+  - material_type = "Inv"
 - elsif material.class == ::Activity
   - inst_material = material.parent
   - btn_text = "Assign Individual Activities"
   - icon_image = image_tag("search/investigation.gif",:size=>"100x100")
+  - material_type = "Act"
   - if inst_material.nil?
     - inst_material = material
     - btn_text = "Assign Activity"
@@ -68,8 +69,8 @@
         - else
           = link_to btn_text, url_for({ :controller => '/search', :action => 'unauthorized_user' }),:id=>"btn_Assign", :class=>"button"
       %td{:class=>"share"}
-        %a{:class=>"button share_Button",:id=>"shareExpandCollapse_#{inst_material.id}",:href=>"javascript:void(0)",:onclick=>"showShareoptions(#{inst_material.id})"}Share &#9660;
-        .sharing{:id=>"share_#{inst_material.id}",:style=>"display:none"}
+        %a{:class=>"button share_Button",:id=>"shareExpandCollapse_#{inst_material.id}",:href=>"javascript:void(0)",:onclick=>"showShareoptions(#{inst_material.id},'#{material_type}')"}Share &#9660;
+        .sharing{:id=>"share_Inv#{inst_material.id}",:style=>"display:none"}
           = render :partial => '/browse/share', :locals => {:material_url => material_url,:material_title=>material_title}
   %br
   .description

@@ -1,5 +1,5 @@
 var expandedShareButtonid;
-function showShareoptions(id){
+function showShareoptions(id,type){
     if (animating)
     {
         return false;
@@ -9,7 +9,7 @@ function showShareoptions(id){
         $$(".sharing").each(function(shareContainer){shareContainer.hide();shareContainer.removeClassName('visible');});
         $$(".share_Button").each(function(sharebtn){sharebtn.update("Share &#9660");});
     }
-    var shareContainer=$("share_"+id);
+    var shareContainer=$("share_"+type+id);
     var afterFinishCallback = function(){
         animating = false;
         $('shareExpandCollapse_'+id).update(expandCollapseText);
