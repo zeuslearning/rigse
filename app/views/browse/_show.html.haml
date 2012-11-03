@@ -1,5 +1,6 @@
 = javascript_include_tag "http://s7.addthis.com/js/300/addthis_widget.js#username=USERNAME"
 = javascript_include_tag "search_materials"
+= javascript_include_tag "share_material"
 
 %style{:type => "text/css"}
   :sass
@@ -14,6 +15,7 @@
   - icon_image = image_tag("search/investigation.gif",:size=>"100x100")
   - activitites = inst_material.activities
   - link_url = browse_investigation_url(material)
+  - material_url = link_url
 - elsif material.class == ::Activity
   - inst_material = material.parent
   - btn_text = "Assign Individual Activities"
@@ -24,11 +26,13 @@
     - icon_image = image_tag("search/activity.gif",:size=>"100x100")
     - activitites = nil
     - link_url = browse_activity_url(material)
+    - material_url =  link_url 
   - else
     - activitites = inst_material.activities
     - link_url = browse_activity_url(inst_material)
     - btn_text = (activitites.length == 1)? "Assign Investigation" : btn_text
-
+    - material_url = browse_investigation_url(inst_material)
+    
   - material_title = inst_material.name
   - material_description = inst_material.description
   
@@ -64,7 +68,9 @@
         - else
           = link_to btn_text, url_for({ :controller => '/search', :action => 'unauthorized_user' }),:id=>"btn_Assign", :class=>"button"
       %td{:class=>"share"}
-        %a{:class=>"addthis_button button",:href=>"javascript:void(0)",:style=>"text-decoration:none;",:'addthis:url'=>link_url,:'addthis:title'=>material_title} Share
+        %a{:class=>"button share_Button",:id=>"shareExpandCollapse_#{inst_material.id}",:href=>"javascript:void(0)",:onclick=>"showShareoptions(#{inst_material.id})"}Share &#9660;
+        .sharing{:id=>"share_#{inst_material.id}",:style=>"display:none"}
+          = render :partial => '/browse/share', :locals => {:material_url => material_url,:material_title=>material_title}
   %br
   .description
     = material_description
@@ -80,5 +86,6 @@
   
   - unless activitites.nil?
     %div
+      %script{:src=>"//platform.linkedin.com/in.js",:type=>"text/javascript"}
       = render :partial => '/browse/investigation_activity_list', :locals => {:material => material,:investigation=>inst_material}
 .clearboth
