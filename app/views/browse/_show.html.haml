@@ -63,15 +63,15 @@
         = link_to "Preview",run_url_for(inst_material,{}),:class=>"button"
       %td
         - if current_user.portal_teacher
-          = link_to btn_text,'javascript:void(0)',:class=>"button", :onclick=>"getDataForAssignToClassPopup()",:id=>"btn_Assign"
+          = link_to btn_text,'javascript:void(0)',:class=>"button", :onclick=>"hideSharelinks();getDataForAssignToClassPopup()",:id=>"btn_Assign"
         - else
           = link_to btn_text, url_for({ :controller => '/search', :action => 'unauthorized_user' }),:id=>"btn_Assign", :class=>"button"
       %td{:class=>"share"}
         - material_type ="Inv"
         - if activitites == nil
           - material_type ="Act"
-        %a{:class=>"button share_Button",:id=>"shareExpandCollapse_#{inst_material.id}",:href=>"javascript:void(0)",:onclick=>"showShareoptions(#{inst_material.id},'#{material_type}')"}Share &#9660;
-        .sharing{:id=>"share_Inv#{inst_material.id}",:style=>"display:none"}
+        %a{:class=>"button share_Button",:id=>"shareExpandCollapse_#{material_type}#{inst_material.id}",:href=>"javascript:void(0)",:onclick=>"showShareoptions(#{inst_material.id},'#{material_type}')"}Share &#9660;
+        .sharing{:id=>"share_#{material_type}#{inst_material.id}",:style=>"display:none"}
           = render :partial => '/browse/share', :locals => {:material_url => material_url,:material_title=>material_title}
   %br
   .description
