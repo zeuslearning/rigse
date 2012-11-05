@@ -4,7 +4,7 @@ function showShareoptions(id,type){
     {
         return false;
     }
-    if(id!=expandedShareButtonid)
+    if((type+id)!=expandedShareButtonid)
     {
         $$(".sharing").each(function(shareContainer){shareContainer.hide();shareContainer.removeClassName('visible');});
         $$(".share_Button").each(function(sharebtn){sharebtn.update("Share &#9660");});
@@ -12,7 +12,7 @@ function showShareoptions(id,type){
     var shareContainer=$("share_"+type+id);
     var afterFinishCallback = function(){
         animating = false;
-        $('shareExpandCollapse_'+id).update(expandCollapseText);
+        $('shareExpandCollapse_'+type+id).update(expandCollapseText);
     };
     
     if (shareContainer.hasClassName('visible'))
@@ -27,9 +27,20 @@ function showShareoptions(id,type){
         Effect.BlindDown(shareContainer, { duration: 0.2, afterFinish: afterFinishCallback });
         shareContainer.addClassName('visible');
         expandCollapseText = "Share &#9650;";
-        expandedShareButtonid=id;
+        expandedShareButtonid=type+id;
         animating = true;
     }
     return true;
 }
 
+function hideSharelinks(){
+    $$(".sharing").each(function(shareContainer){shareContainer.hide();shareContainer.removeClassName('visible');});
+    $$(".share_Button").each(function(sharebtn){sharebtn.update("Share &#9660");});
+}
+
+document.observe("click",function(obj){
+    if(obj.srcElement.hasClassName("share_Button")==false)
+    {
+        hideSharelinks();
+    }
+});
