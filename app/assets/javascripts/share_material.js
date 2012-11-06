@@ -39,7 +39,7 @@ function hideSharelinks(){
 }
 
 document.observe("click",function(obj){
-    if(obj.srcElement.hasClassName("share_Button")==false)
+    if(obj.srcElement.hasClassName("share_Button")===false)
     {
         hideSharelinks();
     }
