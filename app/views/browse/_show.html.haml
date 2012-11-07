@@ -75,7 +75,7 @@
         - if current_user.portal_teacher
           = link_to btn_text,'javascript:void(0)',:class=>"button", :onclick=>"getDataForAssignToClassPopup()",:id=>"btn_Assign"
         - else
-          = link_to btn_text, url_for({ :controller => '/search', :action => 'unauthorized_user' }),:id=>"btn_Assign", :class=>"button"
+          = link_to btn_text, 'javascript:void(0)',:onclick=>"msgPopupDescriptionText()",:id=>"btn_Assign", :class=>"button"
       %td{:class=>"share"}
         %a{:class=>"button share_Button Expand_Collapse_Link",:id=>"ExpandCollapse_#{material_type}#{inst_material.id}Share",:href=>"javascript:void(0)",:onclick=>"expandcollapseoptions(#{inst_material.id},'#{material_type}','Share')"}Share &#9660;
         .Expand_Collapse{:id=>"#{material_type}#{inst_material.id}Share",:style=>"display:none",:class=>"Expand_Collapse_share"}
