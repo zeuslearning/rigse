@@ -351,7 +351,7 @@ filter: alpha(opacity=40);
 .activity_list td{padding:3px 3px 3px 3px;text-align:left;vertical-align:top;}
 .activity_list td.check_box{width:30px;text-align:center;}
 .activity_list td.check_box input{border:0;}
-.activity_list td.preview{width:80px;}
+.activity_list td.preview{width:90px;}
 .activity_description{padding-bottom:6px;}
 .activity_name{font-weight:bold;}
 .activity_name label{display:inline;}
@@ -363,9 +363,8 @@ span.clazz_count{padding-left:5px;font-style:italic;}
 .return_link{font-size:16px;}
 
 .share_activity{width: 80px;}
-.sharing{
+.Expand_Collapse{
   position:absolute;
-  width:74px;
   background-color: white;
   border: 1px solid #416962;
   margin-top:2px;
@@ -373,6 +372,9 @@ span.clazz_count{padding-left:5px;font-style:italic;}
   text-align: center;
   z-index: 10;
   }
+.Expand_Collapse_share{width:74px;}
+.Expand_Collapse_preview{width:98px;font-size:10px;padding:4px;margin-left: -10px;}
+.preview_link{padding:3px;}
 .ss-fb{padding-top:8px;}
 .ss-tw{padding-top:7px;}
 .ss-li{padding-top:2px;}

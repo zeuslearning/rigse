@@ -1,45 +1,66 @@
 var expandedShareButtonid;
-function showShareoptions(id,type){
+function expandcollapseoptions(id,material_type,btn_type){
     if (animating)
     {
         return false;
     }
-    if((type+id)!=expandedShareButtonid)
+    if((material_type+id+btn_type)!=expandedShareButtonid)
     {
-        $$(".sharing").each(function(shareContainer){shareContainer.hide();shareContainer.removeClassName('visible');});
-        $$(".share_Button").each(function(sharebtn){sharebtn.update("Share &#9660");});
+        $$(".Expand_Collapse").each(function(shareContainer){shareContainer.hide();shareContainer.removeClassName('visible');});
+        $$(".Expand_Collapse_Link").each(function(sharebtn){
+            if (sharebtn.hasClassName('preview_Button'))
+                {
+                    sharebtn.update("Preview &#9660");
+                }
+            else
+                sharebtn.update("Share &#9660");
+                });
     }
-    var shareContainer=$("share_"+type+id);
+    var shareContainer=$(material_type+id+btn_type);
     var afterFinishCallback = function(){
         animating = false;
-        $('shareExpandCollapse_'+type+id).update(expandCollapseText);
+        $('ExpandCollapse_'+material_type+id+btn_type).update(expandCollapseText);
     };
     
     if (shareContainer.hasClassName('visible'))
     {
         Effect.BlindUp(shareContainer, { duration: 0.2, afterFinish: afterFinishCallback });
         shareContainer.removeClassName('visible');
-        expandCollapseText = "Share &#9660;";
+        expandCollapseText = btn_type + " &#9660;";
         animating = true;
     }
     else
     {
         Effect.BlindDown(shareContainer, { duration: 0.2, afterFinish: afterFinishCallback });
         shareContainer.addClassName('visible');
-        expandCollapseText = "Share &#9650;";
-        expandedShareButtonid=type+id;
+        expandCollapseText = btn_type + " &#9650;";
+        expandedShareButtonid=material_type+id+btn_type;
         animating = true;
     }
     return true;
 }
 
 function hideSharelinks(){
-    $$(".sharing").each(function(shareContainer){shareContainer.hide();shareContainer.removeClassName('visible');});
-    $$(".share_Button").each(function(sharebtn){sharebtn.update("Share &#9660");});
+    if (animating)
+    {   
+        return false;
+    }
+    $$(".Expand_Collapse").each(function(shareContainer){
+        Effect.BlindUp(shareContainer, { duration: 0.2});
+        shareContainer.removeClassName('visible');
+        });
+    $$(".Expand_Collapse_Link").each(function(sharebtn){
+            if (sharebtn.hasClassName('preview_Button'))
+                {
+                    sharebtn.update("Preview &#9660");
+                }
+            else
+                sharebtn.update("Share &#9660");
+            });
 }
 
 document.observe("click",function(obj){
-    if(obj.srcElement.hasClassName("share_Button")===false)
+    if(obj.srcElement.hasClassName("Expand_Collapse_Link")===false)
     {
         hideSharelinks();
     }
