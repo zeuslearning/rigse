@@ -39,7 +39,19 @@ function openPreviewHelpPage(isExternalUrl, urlOrHtmlContainerId, isDomId, proje
             if(!previewWindow){
                 return;
             }
-            formString = '<form id="preview_help_page" name="preview_help_page" action="/help/preview_help_page" method="post" style="display: none"><textarea id="preview_help_page_content" name="preview_help_page_from_edit" style="opacity:0;">'+customHtml+'</textarea></form>';
+            formString = '<html>' +
+                           '<head>' +
+                             '<meta http-equiv="Content-type" value="text/html; charset=UTF-8" />' +
+                           '</head>' +
+                           '<body>' +
+                             '<form id="preview_help_page" name="preview_help_page" action="/help/preview_help_page" method="post" style="display: none" accept-charset="UTF-8">' +
+                               '<textarea id="preview_help_page_content" name="preview_help_page_from_edit" style="opacity:0;">' +
+                                 customHtml +
+                               '</textarea>' +
+                             '</form>' +
+                           '</body>' +
+                         '</html>'
+                         '';
             previewWindowDocument = previewWindow.document;
             previewWindowDocument.open();
             previewWindowDocument.write(formString);
