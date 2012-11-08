@@ -20,11 +20,19 @@ function preview_home_page(homePageContentId, homePageContent){
         return;
     }
     
-    var formString = '<form id="preview_project_form" action="/home/preview_home_page" method="post" style="display: none;" enctype="application/x-www-form-urlencoded">' +
-                     '<textarea class="mceNoEditor" cols="40" id="preview_content_container" name="home_page_preview_content" rows="20" style="opacity:0;">' +
-                     previewContent +
-                     '</textarea>' +
-                     '</form>';
+    var formString = '<html>' +
+                       '<head>' +
+                         '<meta http-equiv="Content-type" value="text/html; charset=UTF-8" />' +
+                       '</head>' +
+                       '<body>' +
+                         '<form id="preview_project_form" action="/home/preview_home_page" method="post" style="display: none;" enctype="application/x-www-form-urlencoded">' +
+                           '<textarea class="mceNoEditor" cols="40" id="preview_content_container" name="home_page_preview_content" rows="20" style="opacity:0;">' +
+                             previewContent +
+                           '</textarea>' +
+                         '</form>' +
+                       '</body>' +
+                     '</html>' +
+                     '';
     
     var previewWindowDocument = previewWindow.document;
     
