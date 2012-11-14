@@ -15,6 +15,8 @@
   - btn_text = "Assign Investigation"
   - icon_image = image_tag("search/investigation.gif",:size=>"100x100")
   - activitites = inst_material.activities
+  - if current_user.anonymous?
+    - activitites = activitites.select{|activity| !(activity.teacher_only)}
   - link_url = browse_investigation_url(material)
   - material_url = link_url
 - elsif material.is_a? ::Activity
@@ -30,6 +32,8 @@
     - material_url =  link_url 
   - else
     - activitites = inst_material.activities
+    - if current_user.anonymous?
+      - activitites = activitites.select{|activity| !(activity.teacher_only)}
     - link_url = browse_activity_url(inst_material)
     - btn_text = (activitites.length == 1)? "Assign Investigation" : btn_text
     - material_url = browse_investigation_url(inst_material)
