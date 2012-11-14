@@ -42,7 +42,7 @@
       - activities = activities.select{|activity| !(activity.teacher_only)}
     - link_url = browse_activity_url(inst_material)
     - if (activities.length == 1)
-      - btn_text = ? "Assign Investigation" : btn_text
+      - btn_text = "Assign Investigation"
       - material_id = inst_material.id
       - material_type = material.class.to_s
     
