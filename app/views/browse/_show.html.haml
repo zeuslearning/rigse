@@ -96,13 +96,14 @@
   %br
   .description
     = material_description
-    %span.clazz_count{:id=>"material_clazz_count"}
-      - if(material_count == 0)
-        Not used in any class.
-      - elsif(material_count == 1)
-        Used in 1 class.
-      - else
-        Used in #{material_count} classes.
+    %div.clazz_count{:id=>"material_clazz_count"}
+      %i
+        - if(material_count == 0)
+          Not used in any class.
+        - elsif(material_count == 1)
+          Used in 1 class.
+        - else
+          Used in #{material_count} classes.
   %br
   %br
   
