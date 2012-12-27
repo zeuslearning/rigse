@@ -5,18 +5,12 @@ Feature: An author edits a data collector
 
   Background:
     Given The default project and jnlp resources exist using factories
-    Given the following users exist:
-      | login        | password            | roles                |
-      | author       | author              | member, author       |
+    And the data for test exists
     And I am logged in with the username author
     
-
+    
   @javascript
   Scenario: The author edits a graph and sees the Y-axis label and units change as the probe type changes
-    Given the following simple investigations exist:
-      | name                 | description           | user                 |
-      | testing fast cars    | how fast can cars go? | author               |
-
     When I go to the first page of the "testing fast cars" investigation
     Then I should see "Page: testing fast cars"
     When I add a "Graph" to the page

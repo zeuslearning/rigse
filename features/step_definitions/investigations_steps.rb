@@ -65,7 +65,7 @@ Given /^the following investigations with multiple choices exist:$/ do |investig
     investigation.save
     # ITSISU requires descriptions on activities
     activity = Activity.find_or_create_by_name(hash['activity'], :description => hash['activity'])
-    
+    activity.user = investigation.user
     if hash['activity_teacher_only']
       # Create a teacher only activity if specified
       activity.teacher_only = (hash['activity_teacher_only'] == 'true')

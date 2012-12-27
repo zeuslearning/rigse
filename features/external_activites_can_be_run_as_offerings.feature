@@ -5,19 +5,8 @@ Feature: External Activities can be run as offerings
 
   Background:
     Given The default project and jnlp resources exist using factories
-    And the following teachers exist:
-      | login   | password |
-      | teacher | teacher  |
-    And the following classes exist:
-      | name     | teacher |
-      | My Class | teacher |
-    And the following external activity exists:
-      | name        | user    | url               |
-      | My Activity | teacher | /mock_html/test-exernal-activity.html |
-    And the following students exist:
-      | login   | password |
-      | student | student  |
-
+    And the data for test exists
+    
   @javascript
   Scenario: External Activity offerings are runnable
     Given the student "student" belongs to class "My Class"

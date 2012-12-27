@@ -5,25 +5,15 @@ Feature: Investigation index pages can be printed
 
   Background:
     Given The default project and jnlp resources exist using factories
-    Given the following teachers exist:
-      | login         | password        |
-      | teacher       | teacher         |
-    And the following classes exist:
-      | name      | teacher     |
-      | My Class  | teacher     |
-    And I am logged in with the username teacher
-    And the following empty investigations exist:
-      | name    | user      | offerings_count | created_at                      | publication_status  |
-      | NewestInv  | teacher   | 5               | Wed Jan 26 12:00:00 -0500 2011  | published           |
-      | MediumInv  | teacher   | 10              | Wed Jan 23 12:00:00 -0500 2011  | published           |
-      | OldestInv  | teacher   | 20              | Wed Jan 20 12:00:00 -0500 2011  | published           |
-
+    And the data for test exists
+    
+    
   @pending
   Scenario: Teacher prints the listing of all investigations with usage counts
     When I am on the investigations page
-    Then I should see "NewestInv"
-    And I should see "MediumInv"
-    And I should see "OldestInv"
+    Then I should see "b Investigation"
+    And I should see "a Investigation"
+    And I should see "c Investigation"
     And I should see "printable view"
     And "printable-view" should have href like "printable_index"
     And the link to "printable-view" should have a target "_blank"
@@ -31,34 +21,34 @@ Feature: Investigation index pages can be printed
     And I am on the investigations printable index page
     Then I should see "Investigation"
     And I should see "Usage Count"
-    And I should see "NewestInv"
-    And I should see "MediumInv"
-    And I should see "OldestInv"
+    And I should see "b Investigation"
+    And I should see "a Investigation"
+    And I should see "c Investigation"
 
   Scenario: Teacher prints the listing of all investigations
     When I am on the investigations page
-    Then I should see "NewestInv"
-    And I should see "MediumInv"
-    And I should see "OldestInv"
+    Then I should see "b Investigation"
+    And I should see "a Investigation"
+    And I should see "c Investigation"
     And I should see "printable view"
     And "printable-view" should have href like "printable_index"
     And the link to "printable-view" should have a target "_blank"
     When I am on the investigations printable index page
     Then I should see "Investigation"
-    And I should see "NewestInv"
-    And I should see "MediumInv"
-    And I should see "OldestInv"
+    And I should see "b Investigation"
+    And I should see "a Investigation"
+    And I should see "c Investigation"
 
   Scenario: Teacher prints the listing of a subset of investigations
     When I am on the investigations like "New" page
-    Then I should see "NewestInv"
-    And I should not see "MediumInv"
-    And I should not see "OldestInv"
+    Then I should see "b Investigation"
+    And I should not see "a Investigation"
+    And I should not see "c Investigation"
     And I should see "printable view"
     And "printable-view" should have href like "printable_index" with params "name=New"
     And the link to "printable-view" should have a target "_blank"
     When I am on the investigations printable index page
     Then I should see "Investigations"
-    And I should see "NewestInv"
-    And I should not see "MediumInv"
-    And I should not see "OldestInv"
+    And I should see "b Investigation"
+    And I should not see "a Investigation"
+    And I should not see "c Investigation"

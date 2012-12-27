@@ -5,19 +5,13 @@ Feature: An copies and pastes embeddables
 
   Background:
     Given The default project and jnlp resources exist using factories
+    And the data for test exists
 
   @dialog
   @javascript
   Scenario: The author copies and pastes an embeddable by clicking on the embeddable content
-    Given the following users exist:
-      | login  | password | roles          |
-      | author | author   | member, author |
-    Given the following simple investigations exist:
-      | name              | description           | user   |
-      | testing fast cars | how fast can cars go? | author |
-
     And I am logged in with the username author
-    When I go to the first page of the "testing fast cars" investigation
+    When I go to the first page of the "Set Theory" investigation
     And I add a "Text" to the page
     Then I should see "content goes here ..."
     When I copy the embeddable "Text: content goes here ..." by clicking on the content
@@ -29,15 +23,8 @@ Feature: An copies and pastes embeddables
   @dialog
   @javascript
   Scenario: The author copies and pastes an embeddable by clicking on the embeddable title
-    Given the following users exist:
-      | login  | password | roles          |
-      | author | author   | member, author |
-    Given the following simple investigations exist:
-      | name              | description           | user   |
-      | testing fast cars | how fast can cars go? | author |
-
     And I am logged in with the username author
-    When I go to the first page of the "testing fast cars" investigation
+    When I go to the first page of the "Set Theory" investigation
     And I add a "Text" to the page
     Then I should see "content goes here ..."
     When I copy the embeddable "Text: content goes here ..." by clicking on the title
