@@ -6,19 +6,7 @@ Feature: Users can view notices created by project staff
 
   Background:
     Given The default project and jnlp resources exist using factories
-    
-    And the following users exist:
-      | login      | password   | roles          |
-      | mymanager  | mymanager  | manager        |
-      | author     | author     | member, author |
-      | researcher | researcher | researcher     |
-      | admin      | admin      | admin          |
-    And the following teachers exist:
-      | login   | password | first_name | last_name |
-      | teacher | teacher  | John       | Nash      |
-    And the following students exist:
-      | login   | password | first_name | last_name |
-      | student | student  | Albert     | Chuck     |
+    And the data for test exists
     And I login as an admin
     And I create the following notices:
       | notice_html          | roles                                   |

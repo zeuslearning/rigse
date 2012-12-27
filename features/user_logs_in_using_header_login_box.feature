@@ -6,17 +6,7 @@ Feature: User logs in using header login box to use the portal
   
   Background:
     Given The default project and jnlp resources exist using factories
-    And the following teachers exist:
-      | login   | password | first_name | last_name |
-      | teacher | teacher  | John       | Nash      |
-    And the following students exist:
-      | login   | password | first_name | last_name |
-      | student | student  | Albert     | Chuck     |
-    And the following users exist:
-      | login   | password | roles          |
-      | author  | author   | member, author |
-      | myadmin | myadmin  | admin          |
-      | manager | manager  | manager        |
+    And the data for test exists
       
       
   @javascript

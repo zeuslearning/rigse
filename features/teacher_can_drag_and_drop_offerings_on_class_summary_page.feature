@@ -6,27 +6,12 @@ Feature: Teachers can drag-drop offerings to reposition them on the class summar
   
   Background:
     Given The default project and jnlp resources exist using factories
-    And the following teachers exist:
-      | login    | password   | first_name | last_name |
-      | teacher  | teacher    | John       | Nash      |
-    And the following classes exist:
-      | name     | teacher |
-      | My Class | teacher |
-    And the following students exist:
-      | login     | password |
-      | student   | student  |
-    And the following offerings exist
-      | name                       |
-      | Lumped circuit abstraction |
-      | static discipline          |
-      | Non Linear Devices         |
-    And the student "student" belongs to class "My Class"
+    And the data for test exists
     And I login with username: teacher
     And I am on the class page for "My Class"
     And I should see "Non Linear Devices"
     And I move the offering named "Non Linear Devices" to the top of the list on the class summary page
-    And I should wait 5 seconds
-    And "Non Linear Devices" should appear before "static discipline"
+    
     
   @javascript
   Scenario: Teacher should be able to see the changes on the class summary page

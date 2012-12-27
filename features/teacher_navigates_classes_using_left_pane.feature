@@ -6,17 +6,10 @@ Feature: Teacher navigates using left pane
   
   Background:
     Given The default project and jnlp resources exist using factories
-    And the following teachers exist:
-      | login    | password | first_name   | last_name |
-      | teacher  | teacher  | John         | Nash      |
-      
-    And the following classes exist:
-      | name       | teacher | class_word   |
-      | My Class   | teacher | PhysicsClass |
-      
-   And I login with username: teacher
-   
-   
+    And the data for test exists
+    And I login with username: teacher
+    
+    
   Scenario: Teachers can see their class name
     Then I should see "My Class"
     

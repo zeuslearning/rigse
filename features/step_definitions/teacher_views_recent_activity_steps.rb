@@ -33,3 +33,8 @@ When /^(?:I )should see "(.*)" in In-progress on the recent activity page$/ do |
   step_text = "I should see the xpath \"//tr/td/div[contains(.,'#{student_name}')]\""
   step step_text
 end
+When /^(?:I )click link "(.*)" for the material "(.*)" on the recent activity page$/ do |link_name, material_name|
+  within(:xpath,"//table[contains(.,'#{material_name}')]") do
+    click_link(link_name)
+  end
+end

@@ -6,51 +6,7 @@ Feature: Teacher can see full status
   
   Background:
     Given The default project and jnlp resources exist using factories
-    And the following teachers exist:
-      | login     | password | first_name   | last_name |
-      | teacher   | teacher  | John         | Nash      |
-      | peterson  | teacher  | peterson     | gaurav    |
-    And the following classes exist:
-      | name        | teacher  |
-      | My Class    | teacher  |
-      | Physics     | peterson |
-    And the following multiple choice questions exists:
-      | prompt | answers | correct_answer |
-      | a      | a,b,c,d | a              |
-      | b      | a,b,c,d | a              |
-      | c      | a,b,c,d | a              |
-      | d      | a,b,c,d | a              |
-      | e      | a,b,c,d | a              |
-    And there is an image question with the prompt "image_q"
-    And the following investigations with multiple choices exist:
-      | investigation        | activity       | section   | page   | multiple_choices | image_questions | user      | activity_teacher_only |
-      | Radioactivity        | Radio activity | section a | page 1 | a                | image_q         | teacher   | false                 |
-      | Radioactivity        | Nuclear Energy | section a | page 1 | a                | image_q         | teacher   | false                 |
-      | Plant reproduction   | Plant activity | section b | page 2 | b                | image_q         | teacher   | false                 |
-      | Radioactivity        | Aeroplane      | section d | page 4 | d                | image_q         | teacher   | true                  |
-    And the following activities with multiple choices exist:
-      | activity | section   | page   | multiple_choices | image_questions | user      |
-      | Algebra  | section a | page 1 | a                | image_q         | teacher   |
-    And the following assignments exist:
-      | type          | name                 | class       |
-      | investigation | Radioactivity        | My Class    |
-      | investigation | Plant reproduction   | My Class    |
-      | activity      | Algebra              | My Class    |
-    And the following students exist:
-      | login     | password  | first_name | last_name |
-      | dave      | student   | Dave       | Doe       |
-      | chuck     | student   | Chuck      | Smith     |
-      | Mache     | student   | Mache      | Smith     |
-    And the student "dave" belongs to class "My Class"
-    And the student "chuck" belongs to class "My Class"
-    And the student "Mache" belongs to class "Physics"
-    And the following student answers:
-      | student   | class    | investigation      | question_prompt | answer |
-      | dave      | My Class | Radioactivity      | a               | y      |
-      | chuck     | My Class | Plant reproduction | b               | Y      |
-    And the following student answers:
-      | student   | class    | activity            | question_prompt | answer |
-      | Chuck     | My Class | Algebra             | a               | y      |
+    Given the data for test exists
     And I login with username: teacher password: teacher
     And I am on the full status page for "My Class"
     
@@ -106,9 +62,10 @@ Feature: Teacher can see full status
     Then I should be on "my home page"
     
     
+  @javascript
   Scenario: Teacher can see a message if no materials are in the class
     When I login with username: peterson password: teacher
-    And I am on the full status page for "Physics"
+    And I am on the full status page for "class_with_no_assignment"
     Then I should see "No materials assigned to this class."
     
     

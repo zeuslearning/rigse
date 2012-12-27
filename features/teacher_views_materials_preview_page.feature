@@ -6,35 +6,7 @@ Feature: Teacher can search and assign instructional materials to a class
   
   Background:
     Given The default project and jnlp resources exist using factories
-    And the following teachers exist:
-      | login    | password | first_name   | last_name |
-      | teacher  | teacher  | John         | Nash      |
-      | albert   | albert   | Albert       | Michael   |
-    And the following users exist:
-      | login  | password | roles          |
-      | author | author   | member, author |
-    And the following multiple choice questions exists:
-      | prompt | answers | correct_answer |
-      | a      | a,b,c,d | a              |
-    And there is an image question with the prompt "image_q"
-    And the following investigations with multiple choices exist:
-      | investigation        | activity       | section   | page   | multiple_choices | image_questions | user      | activity_teacher_only |
-      | Radioactivity        | Radio activity | section a | page 1 | a                | image_q         | teacher   | true                 |
-    And the following simple investigations exist:
-      | name                   | user   | publication_status | description                                     |
-      | Mechanics              | author | published          | Mechanics is a great subject                    |
-      | Geometry               | author | published          | Triangle is a great subject                     |
-      | differential calculus  | author | published          | differential calculus is a great subject        |
-    And the following activities for the above investigations exist:
-      | name                    | investigation | user    | publication_status | description                            |
-      | Fluid Mechanics         | Mechanics     | author  | published          | Fluid Mechanics is a great material    |
-      | Quantum Mechanics       | Mechanics     | author  | published          | Quantum Mechanics is a great material  |
-      | Geometry                | Geometry      | author  | published          | Triangle is a great material           |
-    And the following classes exist:
-      | name        | teacher    | class_word |
-      | Physics     | teacher    | phy        |
-      | Mathematics | teacher    | math       |
-      | Geography   | teacher    | geo        |
+    And the data for test exists
     And I login with username: teacher password: teacher
     
     
@@ -52,7 +24,7 @@ Feature: Teacher can search and assign instructional materials to a class
   @javascript
   Scenario: Anonymous user should see message for teacher only activity
     When I log out
-    And I am on the the preview activity page for the activity "Radio activity"
+    And I am on the the preview activity page for the activity "Aeroplane"
     Then I should see "Please log in as a teacher to see this content."
     
     
@@ -146,6 +118,7 @@ Feature: Teacher can search and assign instructional materials to a class
     When I am on the the preview investigation page for the investigation "Mechanics"
     And I uncheck "Mechanics" from the investigation preview page
     And I uncheck "Quantum Mechanics" from the investigation preview page
+    And I uncheck "Circular Motion" from the investigation preview page
     And I follow "Assign Individual Activities"
     And "Mechanics" should appear before "Fluid Mechanics"
     When I check "Physics"
@@ -161,6 +134,7 @@ Feature: Teacher can search and assign instructional materials to a class
     And I uncheck "Mechanics" from the investigation preview page
     And I uncheck "Fluid Mechanics" from the investigation preview page
     And I uncheck "Quantum Mechanics" from the investigation preview page
+    And I uncheck "Circular Motion" from the investigation preview page
     And I follow "Assign Individual Activities"
     Then I should see "Please select atleast one activity to assign to a class" within the lightbox in focus
     
@@ -176,7 +150,7 @@ Feature: Teacher can search and assign instructional materials to a class
     And I follow "Save"
     Then I should see "Assigned successfully" within the lightbox in focus
     And I should see "Physics" within the lightbox in focus
-    And I should see "Fluid Mechanics, Quantum Mechanics" within the lightbox in focus
+    And I should see "Fluid Mechanics, Circular Motion, Quantum Mechanics" within the lightbox in focus
     And I am on the the preview investigation page for the investigation "Mechanics"
     And I uncheck "Mechanics" from the investigation preview page
     And I follow "Assign Individual Activities"
@@ -229,7 +203,7 @@ Feature: Teacher can search and assign instructional materials to a class
     
   @javascript
   Scenario: Teacher can see a message in the popup if the investigation is assigned to all the classes
-    When I login with username: albert password: albert
+    When I login with username: teacher_with_no_class password: teacher_with_no_class
     And I am on the the preview investigation page for the investigation "differential calculus"
     And I follow "Assign Investigation"
     And I check "clazz_id[]"
@@ -242,7 +216,7 @@ Feature: Teacher can search and assign instructional materials to a class
     
   @javascript
   Scenario: Teacher can see a message in the popup if the activity is assigned to all the classes
-    When I login with username: albert password: albert
+    When I login with username: teacher_with_no_class password: teacher_with_no_class
     And I am on the the preview activity page for the activity "Fluid Mechanics"
     And I follow "Assign Individual Activities"
     And I check "clazz_id[]"
@@ -255,7 +229,7 @@ Feature: Teacher can search and assign instructional materials to a class
     
   @javascript
   Scenario: Teacher can see a message if assign to a class popup is opened without creating any class
-    When I login with username: albert password: albert
+    When I login with username: teacher_with_no_class password: teacher_with_no_class
     And I go to the Manage Class Page
     And I uncheck "teacher_clazz[]"
     And I should wait 2 seconds
