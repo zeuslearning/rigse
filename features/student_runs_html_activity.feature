@@ -5,15 +5,7 @@ Feature: Student runs html activity
 
   Background:
     Given the most basic default project
-    And the following students exist:
-      | login     | password  |
-      | student   | student   |
-    And the following teachers exist:
-      | login         | password        |
-      | teacher       | teacher         |
-    And the following classes exist:
-      | name      | teacher     |
-      | My Class  | teacher     |
+    And the data for test exists
     And a simple activity with a multiple choice exists
     And the student "student" belongs to class "My Class"
     And the activity "simple activity" is assigned to the class "My Class"

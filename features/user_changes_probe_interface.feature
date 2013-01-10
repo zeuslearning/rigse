@@ -6,14 +6,12 @@ Feature: A user changes which probeware interface they are using
 
   Background:
     Given The default project and jnlp resources exist using factories
-
+    And the data for test exists
+    
   @javascript
   Scenario: Student changes probeware interface on preferences page
-    Given the following students exist:
-      | login     | password  |
-      | student   | student   |
-    And I am logged in with the username student
-    When I go to my preferences
+    When I am logged in with the username student
+    And I go to my preferences
     And I select "Fourier Ecolog" from "user_vendor_interface_id"
     And I press "Save"
     Then I should not see "Please log in as an administrator"

@@ -5,15 +5,7 @@ Feature: Pages can be assigned as offerings
 
   Background:
     Given The default project and jnlp resources exist using factories
-    And the following teachers exist:
-      | login         | password        |
-      | teacher       | teacher         |
-    And the following classes exist:
-      | name      | teacher     |
-      | My Class  | teacher     |
-    And the following page exists:
-      | name    | user    | publication_status |
-      | My Page | teacher | published          |
+    And the data for test exists
     And I am logged in with the username teacher
 
   @javascript

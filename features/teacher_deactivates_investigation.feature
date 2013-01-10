@@ -5,15 +5,7 @@ Feature: Teacher can deactivate investigations from a class
 
   Background:
     Given The default project and jnlp resources exist using factories
-    And the following teachers exist:
-      | login         | password        |
-      | teacher       | teacher         |
-    And the following classes exist:
-      | name      | teacher     |
-      | My Class  | teacher     |
-    And the following students exist:
-      | login     | password  |
-      | student   | student   |
+    And the data for test exists
     And the following simple investigations exist:
       | name                | user      | publication_status |
       | Test Investigation  | teacher   | published          |
@@ -28,13 +20,11 @@ Feature: Teacher can deactivate investigations from a class
 
     When I follow "deactivate" on the investigation "Test Investigation" from the class "My Class"
     And I am on the class page for "My Class"
-    Then I should not see "0 student responses"
-    And I should see "1 student response"
+    Then I should see "1 student response"
 
     When I follow "activate" on the investigation "Test Investigation" from the class "My Class"
     And I am on the class page for "My Class"
-    Then I should not see "0 student responses"
-    And I should see "1 student response"
+    Then I should see "1 student response"
 
   @dialog
   @javascript

@@ -6,12 +6,7 @@ Feature: Teacher can deactivate resource pages from a class
   
   Background:
     Given The default project and jnlp resources exist using factories
-    And the following teachers exist:
-      | login         | password        |
-      | teacher       | teacher         |
-    And the following classes exist:
-      | name      | teacher     |
-      | My Class  | teacher     |
+    And the data for test exists
     And the following resource pages exist:
       | name           | user      | publication_status |
       | Test Resource  | teacher   | published          |

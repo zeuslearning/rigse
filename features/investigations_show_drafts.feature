@@ -6,12 +6,7 @@ Feature: Investigations show drafts
 
   Background:
     Given The default project and jnlp resources exist using factories
-    Given the following teachers exist:
-      | login         | password        |
-      | teacher       | teacher         |
-    And the following classes exist:
-      | name      | teacher     |
-      | My Class  | teacher     |
+    Given the data for test exists
     Given I am logged in with the username teacher
 
   @javascript
@@ -57,6 +52,7 @@ Feature: Investigations show drafts
     Then I should see "Investigation21"
     And I should see "Investigation22"
     And I should see "Investigation23"
+    And I follow "Next"
     And I should see "Investigation24"
     And the "drafts too:" checkbox should be checked
     When I uncheck "drafts too:"

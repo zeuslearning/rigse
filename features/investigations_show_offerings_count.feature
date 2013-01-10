@@ -5,12 +5,7 @@ Feature: Investigations show the offerings count
 
   Background:
     Given The default project and jnlp resources exist using factories
-    Given the following teachers exist:
-      | login   | password |
-      | teacher | teacher  |
-    And the following classes exist:
-      | name     | teacher |
-      | My Class | teacher |
+    Given the data for test exists
     Given I am logged in with the username teacher
 
   @javascript
