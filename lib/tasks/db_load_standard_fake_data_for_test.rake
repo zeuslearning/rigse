@@ -2,6 +2,8 @@ namespace :db do
   desc "Load a standard set of fake data and have that be available at the start of every test."
   task :load_standard_fake_data => :environment do
     
+    REST_AUTH_SITE_KEY = 'sitekeyforrunningtests'
+    
     #load factories
     require 'factory_girl'
     Dir[File.dirname(__FILE__) + '/../../factories/*.rb'].each {|file| require file }
@@ -352,9 +354,9 @@ namespace :db do
      
      #following empty investigations exist:
      data = {
-       :empty_investigation1 => { "name" => "NewestInv","user" => "teacher","offerings_count" => "5","created_at" => "Wed Jan 26 12:00:00 -0500 2011","publication_status" => "published"},
-       :empty_investigation2 => { "name" => "MediumInv","user" => "teacher","offerings_count" => "10","created_at" => "Wed Jan 23 12:00:00 -0500 2011","publication_status" => "published"},
-       :empty_investigation3 => { "name" => "OldestInv","user" => "teacher","offerings_count" => "20","created_at" => "Wed Jan 20 12:00:00 -0500 2011","publication_status" => "published"}
+       :empty_investigation1 => { "name" => "NewestInv","user" => "teacher","offerings_count" => "5","created_at" => "Wed Jan 26 12:00:00 -0500 2111","publication_status" => "published"},
+       :empty_investigation2 => { "name" => "MediumInv","user" => "teacher","offerings_count" => "10","created_at" => "Wed Jan 23 12:00:00 -0500 2111","publication_status" => "published"},
+       :empty_investigation3 => { "name" => "OldestInv","user" => "teacher","offerings_count" => "20","created_at" => "Wed Jan 20 12:00:00 -0500 2111","publication_status" => "published"}
      }
      data.each do |investigation, investigation_info|
        user = User.find_by_login investigation_info['user']
@@ -388,19 +390,22 @@ namespace :db do
     
     #following simple investigations exist:
     data = {
-      :simple_investigation1 => { "name" => "Radioactivity","user" => "author","publication_status" => "published","description" => "Nuclear Energy is a great subject"},
-      :simple_investigation2 => { "name" => "Set Theory","user" => "author","publication_status" => "published","description" => "Set Theory is a great subject"},
-      :simple_investigation3 => { "name" => "Mechanics","user" => "author","publication_status" => "published","description" => "Mechanics is a great subject"},
-      :simple_investigation4 => { "name" => "Geometry","user" => "author","publication_status" => "published","description" => "Triangle is a great subject"},
-      :simple_investigation5 => { "name" => "integral calculus","user" => "author","publication_status" => "published","description" => "integral calculus is a great subject"},
-      :simple_investigation6 => { "name" => "differential calculus","user" => "author","publication_status" => "published","description" => "differential calculus is a great subject"},
-      :simple_investigation7 => { "name" => "differential equations","user" => "author","publication_status" => "published","description" => "differential equations is a great subject"},
-      :simple_investigation8 => { "name" => "organic chemistry","user" => "author","publication_status" => "published","description" => "organic chemistry is a great subject"},
-      :simple_investigation9 => { "name" => "inorganic chemistry","user" => "author","publication_status" => "published","description" => "inorganic chemistry is a great subject"},
-      :simple_investigation10 => { "name" => "graph theory","user" => "author","publication_status" => "published","description" => "graph theory is a great subject"},
-      :simple_investigation11 => { "name" => "investigaion_not_assigned","user" => "author","publication_status" => "published","description" => "investigaion_not_assigned is a great subject"},
-      :simple_investigation12 => { "name" => "testing fast cars","user" => "author","publication_status" => "published","description" => "how fast can cars go?"}
-    }
+       :simple_investigation1 => { "name" => "Radioactivity","user" => "author","publication_status" => "published","description" => "Nuclear Energy is a great subject"},
+       :simple_investigation2 => { "name" => "Set Theory","user" => "author","publication_status" => "published","description" => "Set Theory is a great subject"},
+       :simple_investigation3 => { "name" => "Mechanics","user" => "author","publication_status" => "published","description" => "Mechanics is a great subject"},
+       :simple_investigation4 => { "name" => "Geometry","user" => "author","publication_status" => "published","description" => "Triangle is a great subject"},
+       :simple_investigation5 => { "name" => "integral calculus","user" => "author","publication_status" => "published","description" => "integral calculus is a great subject"},
+       :simple_investigation6 => { "name" => "differential calculus","user" => "author","publication_status" => "published","description" => "differential calculus is a great subject"},
+       :simple_investigation7 => { "name" => "differential equations","user" => "author","publication_status" => "published","description" => "differential equations is a great subject"},
+       :simple_investigation8 => { "name" => "organic chemistry","user" => "author","publication_status" => "published","description" => "organic chemistry is a great subject"},
+       :simple_investigation9 => { "name" => "inorganic chemistry","user" => "author","publication_status" => "published","description" => "inorganic chemistry is a great subject"},
+       :simple_investigation10 => { "name" => "graph theory","user" => "author","publication_status" => "published","description" => "graph theory is a great subject"},
+       :simple_investigation11 => { "name" => "investigaion_not_assigned","user" => "author","publication_status" => "published","description" => "investigaion_not_assigned is a great subject"},
+       :simple_investigation12 => { "name" => "testing fast cars","user" => "author","publication_status" => "published","description" => "how fast can cars go?"},
+       :simple_investigation13 => { "name" => "Lumped circuit abstraction","user" => "author","publication_status" => "published","description" => "LCA is a great subject"},
+       :simple_investigation14 => { "name" => "Static discipline","user" => "author","publication_status" => "published","description" => "SD is a great subject"},
+       :simple_investigation15 => { "name" => "Non Linear Devices","user" => "author","publication_status" => "published","description" => "NLD is a great subject"}
+     }
     data.each do |simple_investigation, inv_info|
       user = User.first(:conditions => { :login => inv_info.delete('user') })
       inv_info[:user_id] = user.id
@@ -420,7 +425,7 @@ namespace :db do
     data = {
       :investigation_with_multiple_choice1 => { "investigation" => "Plant reproduction","activity" => "Plant activity","section" => "section b","page" => "page 2","multiple_choices" => "b","image_questions" => "image_q","user" => "teacher","activity_teacher_only" => "false"},
       :investigation_with_multiple_choice2 => { "investigation" => "Aerodynamics","activity" => "Air activity","section" => "section c","page" => "page 3","multiple_choices" => "c","image_questions" => "image_q","user" => "teacher","activity_teacher_only" => "false"},
-      :investigation_with_multiple_choice3 => { "investigation" => "Aerodynamics","activity" => "Aeroplane","section" => "section d","page" => "page 4","multiple_choices" => "d","image_questions" => "image_q","user" => "teacher","activity_teacher_only" => "false"},
+      :investigation_with_multiple_choice3 => { "investigation" => "Aerodynamics","activity" => "Aeroplane","section" => "section d","page" => "page 4","multiple_choices" => "d","image_questions" => "image_q","user" => "teacher","activity_teacher_only" => "true"},
       :investigation_with_multiple_choice4 => { "investigation" => "Arithmatics","activity" => "Algebra","section" => "section a","page" => "page 1","multiple_choices" => "a","image_questions" => "image_q","user" => "teacher","activity_teacher_only" => "false"},
       :investigation_with_multiple_choice5 => { "investigation" => "Radioactivity","activity" => "Radio activity","section" => "section a","page" => "page 1","multiple_choices" => "a","image_questions" => "image_q","user" => "teacher","activity_teacher_only" => "false"},
       :investigation_with_multiple_choice6 => { "investigation" => "Radioactivity","activity" => "Nuclear Energy","section" => "section b","page" => "page 2","multiple_choices" => "b","image_questions" => "image_q","user" => "teacher","activity_teacher_only" => "false"},
@@ -432,7 +437,7 @@ namespace :db do
       investigation.save
       # ITSISU requires descriptions on activities
       activity = Activity.find_or_create_by_name(inv_info['activity'], :description => inv_info['activity'])
-      
+      activity.user = investigation.user
       if inv_info['activity_teacher_only']
         # Create a teacher only activity if specified
         activity.teacher_only = (inv_info['activity_teacher_only'] == 'true')
@@ -478,7 +483,7 @@ namespace :db do
       investigation_name = act_info.delete('investigation')
       investigation = Investigation.find_by_name(investigation_name)
       act_info[:investigation_id] = investigation.id
-      act_info[:user] = User.find_by_login(act_info[:user])
+      act_info[:user] = User.find_by_login(act_info['user'])
       activity = Activity.create(act_info)
     end
     
@@ -539,7 +544,7 @@ namespace :db do
       "student" => "My Class, class_with_no_assignment, class_with_no_attempts",
       "dave" => "My Class",
       "chuck" => "My Class, Physics, Mechanics",
-      "taylor" => "My Class",
+      "taylor" => "My Class, Mathematics",
       "Mache" => "Physics",
       "shon" => "Physics",
       "ross" => "Physics"
@@ -566,7 +571,7 @@ namespace :db do
       :assignment7 => {"type" => "investigation", "name" => "Radioactivity", "class" => "Physics"},
       :assignment8 => {"type" => "investigation", "name" => "Aerodynamics", "class" => "Mechanics"},
       :assignment9 => {"type" => "investigation", "name" => "Aerodynamics", "class" => "class_with_no_attempts"},
-      :assignment10 => {"type" => "investigation", "name" => "Plant reproduction", "class" => "class_with_no_attempts"},
+      :assignment10 => {"type" => "investigation", "name" => "Plant reproduction", "class" => "class_with_no_students"},
       :assignment11 => {"type" => "activity", "name" => "Algebra", "class" => "Physics"},
       :assignment12 => {"type" => "activity", "name" => "Algebra", "class" => "My Class"}
     }
