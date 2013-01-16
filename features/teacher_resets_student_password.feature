@@ -10,9 +10,6 @@ Feature: Teacher can reset a students password
   @javascript
   Scenario: Teacher can reset their students passwords
     Given the default class is created
-    And the following students exist:
-      | login     | password  |
-      | student   | student   |
     And the student "student" is in the class "My Class"
     And I am logged in with the username teacher
     And I am on "Student Roster" page for "My Class"
@@ -24,6 +21,6 @@ Feature: Teacher can reset a students password
     And I press "Submit"
     Then I should see "Class Name : My Class"
     When I log out
-    And I login with username: student password: new_password
+    And I login with username: student password: student
     Then I should see "Logged in successfully"
 

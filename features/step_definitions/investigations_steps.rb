@@ -450,7 +450,7 @@ And /^the investigation "([^"]*)" with activity "([^"]*)" belongs to probe "([^"
   page.save!
   
   page_element = PageElement.new
-  page_element.id = 1
+  page_element.id = PageElement.last.id + 1
   page_element.page = page
   page_element.embeddable_type = 'Embeddable::DataCollector'
   page_element.save!
