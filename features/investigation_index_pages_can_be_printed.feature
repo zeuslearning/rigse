@@ -5,7 +5,6 @@ Feature: Investigation index pages can be printed
 
   Background:
     Given The default project and jnlp resources exist using factories
-    And the data for test exists
     
     
   @pending
@@ -39,13 +38,14 @@ Feature: Investigation index pages can be printed
     And I should see "a Investigation"
     And I should see "c Investigation"
 
+  
   Scenario: Teacher prints the listing of a subset of investigations
-    When I am on the investigations like "New" page
+    When I am on the investigations like "b" page
     Then I should see "b Investigation"
     And I should not see "a Investigation"
     And I should not see "c Investigation"
     And I should see "printable view"
-    And "printable-view" should have href like "printable_index" with params "name=New"
+    And "printable-view" should have href like "printable_index" with params "name=b"
     And the link to "printable-view" should have a target "_blank"
     When I am on the investigations printable index page
     Then I should see "Investigations"

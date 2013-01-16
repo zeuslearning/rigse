@@ -6,15 +6,18 @@ Feature: Teacher can see recent activity
   
   Background:
     Given The default project and jnlp resources exist using factories
-    And the data for test exists
     And I login with username: teacher password: teacher
     
   @javascript
   Scenario: Teacher should see a message if no student is assigned to the class
-    When I login with username: albert password: albert
+    When the following teacher and class mapping exists:
+      | class_name                   | teacher  |
+      | class_with_no_students       | robert   |
+    And I login with username: robert password: robert
     Then I should see "You have not yet assigned students to your classes."
     And I should see "As your students get started, their progress will be displayed here."
     
+  @javascript
   Scenario: Teacher should see a message if no investigation is assigned to the class
     When I login with username: albert password: albert
     And I follow "Recent Activity" within left panel for class navigation
@@ -32,11 +35,6 @@ Feature: Teacher can see recent activity
     And I login with username: albert password: albert
     Then I should see "As your students get started, their progress will be displayed here."
     
-  @javascript
-  Scenario: Teacher should see a message if no student is assigned to the class
-    When I login with username: robert password: robert
-    Then I should see "You have not yet assigned students to your classes."
-    And I should see "As your students get started, their progress will be displayed here."
     
   @javascript
   Scenario: Teacher should see standalone activity 

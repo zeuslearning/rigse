@@ -5,14 +5,11 @@ Feature: Investigations can be viewed by guests
 
   Background:
     Given The default project and jnlp resources exist using factories
-    And the data for test exists
-
-
 
   @javascript
   Scenario: Guest can Change the sort order
     When I sort investigations by "name DESC"
-    Then There should be 18 investigations displayed
+    Then There should be 20 investigations displayed
     And  "e Investigation" should appear before "f Investigation"   
     And  "draft" should not be displayed in the investigations list
 

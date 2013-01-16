@@ -11,15 +11,15 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120830195146) do
+ActiveRecord::Schema.define(:version => 20121017055613) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
-    t.string   "name"
     t.string   "uuid",               :limit => 36
+    t.string   "name"
+    t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.text     "description"
     t.boolean  "is_template"
     t.integer  "position"
     t.integer  "investigation_id"
@@ -56,14 +56,17 @@ ActiveRecord::Schema.define(:version => 20120830195146) do
     t.boolean  "enable_grade_levels",                          :default => false
     t.text     "custom_css"
     t.boolean  "use_bitmap_snapshots",                         :default => false
-    t.boolean  "opportunistic_installer",                      :default => false
     t.boolean  "teachers_can_author",                          :default => true
+    t.boolean  "opportunistic_installer",                      :default => false
     t.boolean  "enable_member_registration",                   :default => false
     t.boolean  "allow_adhoc_schools",                          :default => false
     t.boolean  "require_user_consent",                         :default => false
     t.boolean  "use_periodic_bundle_uploading",                :default => false
     t.string   "jnlp_cdn_hostname"
     t.boolean  "active"
+    t.string   "external_url"
+    t.text     "custom_help_page_html"
+    t.string   "help_type"
   end
 
   create_table "admin_site_notice_roles", :force => true do |t|
@@ -148,6 +151,15 @@ ActiveRecord::Schema.define(:version => 20120830195146) do
   end
 
   add_index "dataservice_bucket_contents", ["bucket_logger_id"], :name => "index_dataservice_bucket_contents_on_bucket_logger_id"
+
+  create_table "dataservice_bucket_log_items", :force => true do |t|
+    t.text     "content"
+    t.integer  "bucket_logger_id"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
+  end
+
+  add_index "dataservice_bucket_log_items", ["bucket_logger_id"], :name => "index_dataservice_bucket_log_items_on_bucket_logger_id"
 
   create_table "dataservice_bucket_loggers", :force => true do |t|
     t.integer  "learner_id"
@@ -416,25 +428,25 @@ ActiveRecord::Schema.define(:version => 20120830195146) do
   create_table "embeddable_data_collectors", :force => true do |t|
     t.string   "name"
     t.text     "description"
+    t.integer  "probe_type_id"
     t.integer  "user_id"
     t.string   "uuid",                       :limit => 36
-    t.integer  "y_axis_min",                               :default => 0
-    t.integer  "y_axis_max",                               :default => 5
-    t.integer  "x_axis_min",                               :default => 0
-    t.integer  "x_axis_max",                               :default => 60
     t.string   "title"
-    t.string   "x_axis_label"
-    t.string   "x_axis_units"
+    t.float    "y_axis_min",                               :default => 0.0
+    t.float    "y_axis_max",                               :default => 5.0
+    t.float    "x_axis_min"
+    t.float    "x_axis_max"
+    t.string   "x_axis_label",                             :default => "Time"
+    t.string   "x_axis_units",                             :default => "s"
     t.string   "y_axis_label"
     t.string   "y_axis_units"
-    t.boolean  "multiple_graphable_enabled"
-    t.boolean  "draw_marks"
-    t.boolean  "connect_points"
-    t.boolean  "autoscale_enabled"
-    t.boolean  "ruler_enabled"
-    t.boolean  "show_tare"
-    t.boolean  "single_value"
-    t.integer  "probe_type_id"
+    t.boolean  "multiple_graphable_enabled",               :default => false
+    t.boolean  "draw_marks",                               :default => false
+    t.boolean  "connect_points",                           :default => true
+    t.boolean  "autoscale_enabled",                        :default => false
+    t.boolean  "ruler_enabled",                            :default => false
+    t.boolean  "show_tare",                                :default => false
+    t.boolean  "single_value",                             :default => false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "graph_type_id"
@@ -569,14 +581,14 @@ ActiveRecord::Schema.define(:version => 20120830195146) do
   end
 
   create_table "embeddable_open_responses", :force => true do |t|
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "name"
-    t.text     "description"
     t.integer  "user_id"
     t.string   "uuid",             :limit => 36
+    t.string   "name"
+    t.text     "description"
     t.text     "prompt"
     t.string   "default_response"
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.integer  "rows",                           :default => 5
     t.integer  "columns",                        :default => 32
     t.integer  "font_size",                      :default => 12
@@ -643,26 +655,14 @@ ActiveRecord::Schema.define(:version => 20120830195146) do
   end
 
   create_table "embeddable_xhtmls", :force => true do |t|
-    t.string   "name"
-    t.text     "description"
     t.integer  "user_id"
     t.string   "uuid",        :limit => 36
+    t.string   "name"
+    t.text     "description"
     t.text     "content"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
-  create_table "equipments", :force => true do |t|
-    t.string   "name"
-    t.text     "description"
-    t.integer  "created_by"
-    t.integer  "updated_by"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
-  end
-
-  add_index "equipments", ["created_by"], :name => "created_by_index"
-  add_index "equipments", ["updated_by"], :name => "updated_by_index"
 
   create_table "external_activities", :force => true do |t|
     t.integer  "user_id"
@@ -683,6 +683,8 @@ ActiveRecord::Schema.define(:version => 20120830195146) do
     t.string   "template_type"
   end
 
+  add_index "external_activities", ["id"], :name => "id"
+  add_index "external_activities", ["id"], :name => "id_2"
   add_index "external_activities", ["report_url"], :name => "index_external_activities_on_report_url"
   add_index "external_activities", ["save_path"], :name => "index_external_activities_on_save_path"
 
@@ -735,19 +737,6 @@ ActiveRecord::Schema.define(:version => 20120830195146) do
     t.integer "jar_id"
     t.integer "versioned_jnlp_id"
   end
-
-  create_table "material_equipments", :force => true do |t|
-    t.integer  "material_id"
-    t.string   "material_type"
-    t.integer  "equipment_id"
-    t.integer  "created_by"
-    t.integer  "updated_by"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
-  end
-
-  add_index "material_equipments", ["created_by"], :name => "created_by_index"
-  add_index "material_equipments", ["updated_by"], :name => "updated_by_index"
 
   create_table "maven_jnlp_icons", :force => true do |t|
     t.string   "uuid"
@@ -926,12 +915,12 @@ ActiveRecord::Schema.define(:version => 20120830195146) do
   add_index "otrunk_example_otrunk_view_entries", ["fq_classname"], :name => "index_otrunk_example_otrunk_view_entries_on_fq_classname", :unique => true
 
   create_table "page_elements", :force => true do |t|
-    t.datetime "created_at"
-    t.datetime "updated_at"
     t.integer  "page_id"
-    t.integer  "position"
     t.integer  "embeddable_id"
     t.string   "embeddable_type"
+    t.integer  "position"
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.integer  "user_id"
   end
 
@@ -940,17 +929,17 @@ ActiveRecord::Schema.define(:version => 20120830195146) do
   add_index "page_elements", ["position"], :name => "index_page_elements_on_position"
 
   create_table "pages", :force => true do |t|
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "name"
-    t.text     "description"
     t.integer  "user_id"
-    t.integer  "position"
     t.integer  "section_id"
     t.string   "uuid",               :limit => 36
+    t.string   "name"
+    t.text     "description"
+    t.integer  "position"
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.boolean  "teacher_only",                     :default => false
-    t.integer  "offerings_count",                  :default => 0
     t.string   "publication_status"
+    t.integer  "offerings_count",                  :default => 0
   end
 
   add_index "pages", ["position"], :name => "index_pages_on_position"
@@ -981,7 +970,7 @@ ActiveRecord::Schema.define(:version => 20120830195146) do
     t.boolean  "default_class",               :default => false
   end
 
-  add_index "portal_clazzes", ["class_word"], :name => "index_portal_clazzes_on_class_word"
+  add_index "portal_clazzes", ["class_word"], :name => "index_portal_clazzes_on_class_word", :unique => true
 
   create_table "portal_courses", :force => true do |t|
     t.string   "uuid",          :limit => 36
@@ -2200,14 +2189,14 @@ ActiveRecord::Schema.define(:version => 20120830195146) do
   end
 
   create_table "sections", :force => true do |t|
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "name"
-    t.text     "description"
     t.integer  "user_id"
-    t.integer  "position"
     t.integer  "activity_id"
     t.string   "uuid",               :limit => 36
+    t.string   "name"
+    t.text     "description"
+    t.integer  "position"
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.boolean  "teacher_only",                     :default => false
     t.string   "publication_status"
   end

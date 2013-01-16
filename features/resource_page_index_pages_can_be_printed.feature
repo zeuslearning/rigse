@@ -5,7 +5,6 @@ Feature: Resource Page index pages can be printed
   
   Background:
     Given The default project and jnlp resources exist using factories
-    And the data for test exists
     And I am logged in with the username teacher
 
   Scenario: Teacher prints the listing of all resource pages

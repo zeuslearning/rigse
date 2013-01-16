@@ -5,7 +5,6 @@ Feature: Pages can be assigned as offerings
 
   Background:
     Given The default project and jnlp resources exist using factories
-    And the data for test exists
     And I am logged in with the username teacher
 
   @javascript

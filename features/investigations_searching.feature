@@ -5,7 +5,6 @@ Feature: Investigations can be searched
 
   Background:
     Given The default project and jnlp resources exist using factories
-    And the data for test exists
     Given I am logged in with the username teacher
     
     
@@ -34,7 +33,7 @@ Feature: Investigations can be searched
   Scenario:  browsing unpublished investigations
     When I browse draft investigations
     And I click on the next page of results
-    Then There should be 10 investigations displayed
+    Then There should be 7 investigations displayed
     And "testing fast cars" should be displayed in the investigations list
     
   @javascript

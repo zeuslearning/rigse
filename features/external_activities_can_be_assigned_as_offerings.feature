@@ -5,7 +5,6 @@ Feature: External Activities can be assigned as offerings
 
   Background:
     Given The default project and jnlp resources exist using factories
-    And the data for test exists
 
   # DO NOT TOUCH THE BROWSER WINDOW THAT SELENIUM IS DRIVING
   # IT WILL CAUSE THE TEST TO FAIL

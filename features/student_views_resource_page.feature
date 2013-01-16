@@ -7,7 +7,6 @@ Feature: Student views resource page
 
   Background:
     Given The default project and jnlp resources exist using factories
-    And the data for test exists
     And the following resource pages exist:
       | name          | user    | publication_status |
       | Test Resource | teacher | published          |

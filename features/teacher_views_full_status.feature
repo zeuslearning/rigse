@@ -6,7 +6,6 @@ Feature: Teacher can see full status
   
   Background:
     Given The default project and jnlp resources exist using factories
-    Given the data for test exists
     And I login with username: teacher password: teacher
     And I am on the full status page for "My Class"
     

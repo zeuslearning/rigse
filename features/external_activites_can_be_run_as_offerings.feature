@@ -5,7 +5,6 @@ Feature: External Activities can be run as offerings
 
   Background:
     Given The default project and jnlp resources exist using factories
-    And the data for test exists
     
   @javascript
   Scenario: External Activity offerings are runnable

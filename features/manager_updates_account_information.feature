@@ -9,8 +9,7 @@ Feature: A manager updates account information for another user
 
   # @javascript
   Scenario Outline: Managers can change a users email address
-    Given the data for test exists
-    And I am logged in with the username mymanager
+    Given I am logged in with the username mymanager
     And I am on the user preferences page for the user "<username>"
     Then I should see "User Preferences"
     When I fill in "user_email" with "<changed_email>"
@@ -24,6 +23,7 @@ Feature: A manager updates account information for another user
       | student  | test1@mailintator.com  |
       | teacher  | test2@mailintator.com  |
 
+  @javascript
   Scenario Outline: Managers can change a users password
     Given the following teachers exist:
       | login   | password     | email               |
@@ -56,8 +56,7 @@ Feature: A manager updates account information for another user
       | joe user | teacher   | buzbixbez    |
 
   Scenario: Managers can activate users
-    Given the data for test exists
-    And there is an unactivated user named "justsignedup"
+    Given there is an unactivated user named "justsignedup"
 
     When I am logged in with the username mymanager
     And I am on the user list page

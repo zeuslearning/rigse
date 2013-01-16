@@ -1,15 +1,17 @@
 Feature: Teacher edits and saves class information
 
   As a teacher
-  I want to edit my classes
-  In order to keep my classes updated
+  I want to edit classes
+  In order to keep classes updated
   
   Background:
     Given The default project and jnlp resources exist using factories
-    And the data for test exists
-    And the classes "My Class" are in a school named "VJTI"
+    And the classes "Mathematics" are in a school named "VJTI"
+    And the following teacher and class mapping exists:
+      | class_name  | teacher    |
+      | Mathematics | peterson   |
     And I am logged in with the username teacher
-    And I am on "the class edit page for "My Class""
+    And I am on "the class edit page for "Mathematics""
     
     
   @javascript

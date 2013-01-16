@@ -1,11 +1,17 @@
 Given /^the data for test exists$/ do
+  step "the following semesters exist:", table(%{
+      | name     | start_time          | end_time            |
+      | Fall     | 2012-12-01 00:00:00 | 2012-03-01 23:59:59 |
+      | Spring   | 2012-10-10 23:59:59 | 2013-03-31 23:59:59 |
+      })
   step "the following teachers exist:", table(%{
-      | login   | password | first_name | last_name |
-      | teacher | teacher  | John       | Nash      |
-      | albert  | albert   | Albert     | Fernandez |
-      | robert  | robert   | Robert     | Fernandez |
-      | peterson | teacher| peterson    | gaurav    |
-      | teacher_with_no_class | teacher_with_no_class | teacher_with_no_class  | teacher_with_no_class  |
+      | login   | password | first_name | last_name |email               |
+      | teacher | teacher  | John       | Nash      |bademail@noplace.com|
+      | albert  | albert   | Albert     | Fernandez |bademail@noplace2.com|
+      | robert  | robert   | Robert     | Fernandez |bademail@noplace3.com|
+      | jonson   | teacher  | Jonson    | Jackson  |bademail@noplace3.com|
+      | peterson | teacher| peterson    | taylor    |bademail@noplace4.com|
+      | teacher_with_no_class | teacher_with_no_class | teacher_with_no_class  | teacher_with_no_class  |bademail@noplace5.com|
       })
   step "And the following users exist:",table(%{
      | login      | password   | roles    |
@@ -17,32 +23,37 @@ Given /^the data for test exists$/ do
      | admin      | admin      | admin          |
      })
   step "the following classes exist:", table(%{
-    | name     | teacher |
-    | My Class | teacher |
-    | Physics    | teacher |
-    | Mathematics | teacher |
-    | Chemistry   | teacher |
-    | Biology     | teacher |
-    | Geography   | teacher | 
-    | Mechanics   | teacher |
-    | Biology     | albert  |
-    | class_with_no_assignment | peterson|
-    | class_with_no_assignment | teacher |
-    | class_with_no_students   | teacher |
-    | class_with_no_students   | albert |
-    | class_with_no_attempts   | teacher |
+    | name     | teacher | class_word |
+    | My Class | teacher | My Class|
+    | Physics    | teacher | phy|
+    | Mathematics | teacher |math |
+    | Chemistry   | teacher |chem|
+    | Biology     | teacher |bio|
+    | Geography   | teacher |geo|
+    | Mechanics   | teacher |Mec|
+    | class_with_no_assignment | teacher |class_with_no_assignment|
+    | class_with_no_students   | teacher |class_with_no_students|
+    | class_with_no_attempts   | teacher |class_with_no_attempts|
     })
+    step "the following teacher and class mapping exists:", table(%{
+      | class_name  | teacher  |
+      | Biology     | albert   |
+      | class_with_no_assignment     | peterson |
+      | class_with_no_students       | albert |
+      | My Class       | peterson |
+      
+      })
   step "the following students exist:", table(%{
-      | login     | password  |first_name  | last_name |
-      | student   | student   |  Alfred    | Robert|
-      | dave      | student   | Dave       | Doe       |
-      | chuck     | student   | Chuck      | Smith     |
-      | gaurav    | student   | Gaurav     | Donald    |
-      | Mache     | student   | Mache      | Smith     |
-      | shon      | student   | shon       | done      |
-      | ankur     | student   | ankur      | gaurav    |
-      | monty     | student   | Monty      | Donald    |
-      | Switchuser| Switchuser| Joe        | Switchuser   |
+      | login     | password  |first_name  | last_name    |email                   |
+      | student   | student   |  Alfred    | Robert       |student@mailinator.com  |
+      | dave      | student   | Dave       | Doe          |student@mailinator1.com |
+      | chuck     | student   | Chuck      | Smith        |student@mailinator2.com |
+      | taylor    | student   | taylor     | Donald       |student@mailinator3.com |
+      | Mache     | student   | Mache      | Smith        |student@mailinator4.com |
+      | shon      | student   | shon       | done         |student@mailinator5.com |
+      | ross      | student   | ross       | taylor       |student@mailinator6.com |
+      | monty     | student   | Monty      | Donald       |student@mailinator7.com |
+      | Switchuser| Switchuser| Joe        | Switchuser   |student@mailinator8.com |
       })
   step "the following multiple choice questions exists:",table(%{
       | prompt | answers | correct_answer |
@@ -69,6 +80,16 @@ Given /^the data for test exists$/ do
         | d Investigation         | teacher | 5               | published          |
         | e Investigation         | teacher | 5               | published          |
         | f Investigation         | teacher | 5               | published          |
+      })
+  step "the following resource pages exist:",table(%{
+      | name            | user      | offerings_count | created_at                      | publication_status  |
+      | NewestResource  | teacher   | 6               | Wed Jan 26 12:00:00 -0500 2011  | published           |
+      | MediumResource  | teacher   | 11              | Wed Jan 23 12:00:00 -0500 2011  | published           |
+      | OldestResource  | teacher   | 21              | Wed Jan 20 12:00:00 -0500 2011  | published           |
+      })
+  step "the following page exists:", table(%{
+      | name    | user    | publication_status |
+      | My Page | teacher | published          |
       })
   step "the following empty investigations exist:", table(%{
       | name    | user      | offerings_count | created_at                      | publication_status  |
@@ -130,18 +151,19 @@ Given /^the data for test exists$/ do
     | name        | user    | url               |
     | My Activity | teacher | /mock_html/test-exernal-activity.html |
     })
+  step 'the teachers "teacher , albert" are in a school named "VJTI"'
   step 'the student "student" belongs to class "My Class"'
   step 'the student "student" belongs to class "class_with_no_assignment"'
   step 'the student "student" belongs to class "class_with_no_attempts"'
   step 'the student "dave" belongs to class "My Class"'
   step 'the student "chuck" belongs to class "My Class"'
-  step 'the student "gaurav" belongs to class "My Class"'
+  step 'the student "taylor" belongs to class "My Class"'
   step 'the student "Mache" belongs to class "Physics"'
   step 'the student "chuck" belongs to class "Physics"'
   step 'the student "chuck" belongs to class "Mechanics"'
   step 'the student "shon" belongs to class "Physics"'
-  step 'the student "ankur" belongs to class "Physics"'
-  step 'the student "gaurav" belongs to class "Mathematics"'
+  step 'the student "ross" belongs to class "Physics"'
+  step 'the student "taylor" belongs to class "Mathematics"'
   
   step "the following assignments exist:", table(%{
       | type          | name                 | class       |
@@ -169,7 +191,7 @@ Given /^the data for test exists$/ do
       })
   step "the following student answers:", table(%{
       | student   | class         | activity             | question_prompt | answer |
-      | gaurav    | My Class      | Algebra              | f               | a      |
+      | taylor    | My Class      | Algebra              | f               | a      |
       | chuck     | My Class      | Algebra              | f               | a      |
       })
 end

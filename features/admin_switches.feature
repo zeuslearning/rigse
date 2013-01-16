@@ -6,7 +6,6 @@ Feature: Admin switches to a different user
   
   Background:
     Given The default project and jnlp resources exist using factories
-    And the data for test exists
     
   @javascript
   Scenario: Admin switches to student

@@ -5,7 +5,6 @@ Feature: Investigations can be sorted
   
   Background:
     Given The default project and jnlp resources exist using factories
-    And the data for test exists
     And I am logged in with the username teacher
   
   Scenario: The investigation list page has a sort mechanism
@@ -21,8 +20,8 @@ Feature: Investigations can be sorted
   @javascript
   Scenario: The investigations list can be sorted by date created
     When I sort investigations by "created_at DESC"
-    Then "Radioactivity" should appear before "Set Theory "
-    And "Set Theory" should appear before "Geometry"
+    Then "NewestInv" should appear before "MediumInv"
+    And "MediumInv" should appear before "OldestInv"
     
   @javascript
   Scenario: The investigations list can be sorted by offerings count

@@ -6,7 +6,6 @@ Feature: Teacher can search instructional materials grouped by material type, so
   
   Background:
     Given The default project and jnlp resources exist using factories
-    And the data for test exists
     And I login with username: teacher password: teacher
     And I am on the search instructional materials page
     
@@ -161,6 +160,8 @@ Feature: Teacher can search instructional materials grouped by material type, so
     And the Investigation "integral calculus" is assigned to the class "Mathematics"
     And the Investigation "integral calculus" is assigned to the class "Geography"
     And I follow "Popularity" in Sort By on the search instructional materials page
+    And I should wait 2 seconds
+    And I enter search text "calculus" on the search instructional materials page
     And I should wait 2 seconds
     Then "differential calculus" should appear before "integral calculus"
     

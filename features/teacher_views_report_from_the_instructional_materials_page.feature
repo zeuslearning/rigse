@@ -6,7 +6,6 @@ Feature: Teacher views report from the instructional materials page of a class
 
   Background:
     Given The default project and jnlp resources exist using factories
-    And the data for test exists
     And I am logged in with the username teacher
     
     

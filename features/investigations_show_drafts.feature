@@ -6,7 +6,6 @@ Feature: Investigations show drafts
 
   Background:
     Given The default project and jnlp resources exist using factories
-    Given the data for test exists
     Given I am logged in with the username teacher
 
   @javascript

@@ -6,7 +6,6 @@ Feature: Teacher navigates using left pane
   
   Background:
     Given The default project and jnlp resources exist using factories
-    And the data for test exists
     And I login with username: teacher
     
     

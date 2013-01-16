@@ -6,7 +6,6 @@ Feature: Teacher manages instructional materials of a class
   
   Background:
     Given The default project and jnlp resources exist using factories
-    And the data for test exists
     And I am logged in with the username teacher
     And I go to Instructional Materials page for "My Class"
     
@@ -74,6 +73,9 @@ Feature: Teacher manages instructional materials of a class
     
   @javascript
   Scenario: Teacher should not get an error if no activities are present
+    When the following offerings exist
+      | name                       | class       |
+      | Lumped circuit abstraction | My Class    |
     When I go to Instructional Materials page for "My Class"
     Then I should see "Investigation: Lumped circuit abstraction"
     

@@ -6,8 +6,6 @@ Feature: User logs in using header login box to use the portal
   
   Background:
     Given The default project and jnlp resources exist using factories
-    And the data for test exists
-      
       
   @javascript
   Scenario: Teacher should be logged in

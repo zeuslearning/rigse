@@ -5,7 +5,6 @@ Feature: Teacher reorders materials assigned to the class
 
   Background:
     Given The default project and jnlp resources exist using factories
-    And the data for test exists
     And  the teachers "teacher , albert" are in a school named "VJTI"
     And the classes "class_with_no_students" are in a school named "VJTI"
     And the student "student" belongs to class "class_with_no_students"

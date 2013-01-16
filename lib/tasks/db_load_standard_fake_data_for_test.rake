@@ -214,7 +214,13 @@ namespace :db do
       teacher = user.portal_teacher
       clazz_info.merge!('teacher' => teacher)
       clazz_info.merge!('course' => course)
+      
+      clazz = Portal::Clazz.find_by_name(clazz_info['name'])
+      if clazz
+        clazz.add_teacher(teacher)
+      else
       Factory.create(:portal_clazz, clazz_info)
+      end
     end
     
     
@@ -222,7 +228,7 @@ namespace :db do
     data = {
       :teacher_clazz_1 => {"clazz_name" => "Biology", "teacher" => "albert"},
       :teacher_clazz_2 => {"clazz_name" => "class_with_no_assignment", "teacher" => "peterson"},
-      :teacher_clazz_3 => {"clazz_name" => "class_with_no_students", "teacher" => "albert"},
+      :teacher_clazz_3 => {"clazz_name" => "class_with_no_assignment", "teacher" => "albert"},
       :teacher_clazz_4 => {"clazz_name" => "My Class", "teacher" => "peterson"}
     }
     
@@ -390,22 +396,22 @@ namespace :db do
     
     #following simple investigations exist:
     data = {
-       :simple_investigation1 => { "name" => "Radioactivity","user" => "author","publication_status" => "published","description" => "Nuclear Energy is a great subject"},
-       :simple_investigation2 => { "name" => "Set Theory","user" => "author","publication_status" => "published","description" => "Set Theory is a great subject"},
-       :simple_investigation3 => { "name" => "Mechanics","user" => "author","publication_status" => "published","description" => "Mechanics is a great subject"},
-       :simple_investigation4 => { "name" => "Geometry","user" => "author","publication_status" => "published","description" => "Triangle is a great subject"},
-       :simple_investigation5 => { "name" => "integral calculus","user" => "author","publication_status" => "published","description" => "integral calculus is a great subject"},
-       :simple_investigation6 => { "name" => "differential calculus","user" => "author","publication_status" => "published","description" => "differential calculus is a great subject"},
-       :simple_investigation7 => { "name" => "differential equations","user" => "author","publication_status" => "published","description" => "differential equations is a great subject"},
-       :simple_investigation8 => { "name" => "organic chemistry","user" => "author","publication_status" => "published","description" => "organic chemistry is a great subject"},
-       :simple_investigation9 => { "name" => "inorganic chemistry","user" => "author","publication_status" => "published","description" => "inorganic chemistry is a great subject"},
-       :simple_investigation10 => { "name" => "graph theory","user" => "author","publication_status" => "published","description" => "graph theory is a great subject"},
-       :simple_investigation11 => { "name" => "investigaion_not_assigned","user" => "author","publication_status" => "published","description" => "investigaion_not_assigned is a great subject"},
-       :simple_investigation12 => { "name" => "testing fast cars","user" => "author","publication_status" => "published","description" => "how fast can cars go?"},
-       :simple_investigation13 => { "name" => "Lumped circuit abstraction","user" => "author","publication_status" => "published","description" => "LCA is a great subject"},
-       :simple_investigation14 => { "name" => "Static discipline","user" => "author","publication_status" => "published","description" => "SD is a great subject"},
-       :simple_investigation15 => { "name" => "Non Linear Devices","user" => "author","publication_status" => "published","description" => "NLD is a great subject"}
-     }
+      :simple_investigation1 => { "name" => "Radioactivity","user" => "author","publication_status" => "published","description" => "Nuclear Energy is a great subject"},
+      :simple_investigation2 => { "name" => "Set Theory","user" => "author","publication_status" => "published","description" => "Set Theory is a great subject"},
+      :simple_investigation3 => { "name" => "Mechanics","user" => "author","publication_status" => "published","description" => "Mechanics is a great subject"},
+      :simple_investigation4 => { "name" => "Geometry","user" => "author","publication_status" => "published","description" => "Triangle is a great subject"},
+      :simple_investigation5 => { "name" => "integral calculus","user" => "author","publication_status" => "published","description" => "integral calculus is a great subject"},
+      :simple_investigation6 => { "name" => "differential calculus","user" => "author","publication_status" => "published","description" => "differential calculus is a great subject"},
+      :simple_investigation7 => { "name" => "differential equations","user" => "author","publication_status" => "published","description" => "differential equations is a great subject"},
+      :simple_investigation8 => { "name" => "organic chemistry","user" => "author","publication_status" => "published","description" => "organic chemistry is a great subject"},
+      :simple_investigation9 => { "name" => "inorganic chemistry","user" => "author","publication_status" => "published","description" => "inorganic chemistry is a great subject"},
+      :simple_investigation10 => { "name" => "graph theory","user" => "author","publication_status" => "published","description" => "graph theory is a great subject"},
+      :simple_investigation11 => { "name" => "investigaion_not_assigned","user" => "author","publication_status" => "published","description" => "investigaion_not_assigned is a great subject"},
+      :simple_investigation12 => { "name" => "testing fast cars","user" => "author","publication_status" => "published","description" => "how fast can cars go?"},
+      :simple_investigation13 => { "name" => "Lumped circuit abstraction","user" => "author","publication_status" => "published","description" => "LCA is a great subject"},
+      :simple_investigation14 => { "name" => "Static discipline","user" => "author","publication_status" => "published","description" => "SD is a great subject"},
+      :simple_investigation15 => { "name" => "Non Linear Devices","user" => "author","publication_status" => "published","description" => "NLD is a great subject"}
+    }
     data.each do |simple_investigation, inv_info|
       user = User.first(:conditions => { :login => inv_info.delete('user') })
       inv_info[:user_id] = user.id
@@ -572,8 +578,11 @@ namespace :db do
       :assignment8 => {"type" => "investigation", "name" => "Aerodynamics", "class" => "Mechanics"},
       :assignment9 => {"type" => "investigation", "name" => "Aerodynamics", "class" => "class_with_no_attempts"},
       :assignment10 => {"type" => "investigation", "name" => "Plant reproduction", "class" => "class_with_no_students"},
-      :assignment11 => {"type" => "activity", "name" => "Algebra", "class" => "Physics"},
-      :assignment12 => {"type" => "activity", "name" => "Algebra", "class" => "My Class"}
+      :assignment11 => {"type" => "investigation", "name" => "Lumped circuit abstraction", "class" => "Mathematics"},
+      :assignment12 => {"type" => "investigation", "name" => "Static discipline", "class" => "Mathematics"},
+      :assignment13 => {"type" => "investigation", "name" => "Non Linear Devices", "class" => "Mathematics"},
+      :assignment14 => {"type" => "activity", "name" => "Algebra", "class" => "Physics"},
+      :assignment15 => {"type" => "activity", "name" => "Algebra", "class" => "My Class"}
     }
     
     data.each do |assignment, assignment_info|

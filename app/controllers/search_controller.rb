@@ -14,6 +14,7 @@ class SearchController < ApplicationController
   
   public
   def search_material
+
     search_options=get_searchoptions()
     @investigations_count=0
     @activities_count=0

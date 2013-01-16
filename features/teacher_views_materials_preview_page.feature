@@ -6,7 +6,6 @@ Feature: Teacher can search and assign instructional materials to a class
   
   Background:
     Given The default project and jnlp resources exist using factories
-    And the data for test exists
     And I login with username: teacher password: teacher
     
     
@@ -90,6 +89,7 @@ Feature: Teacher can search and assign instructional materials to a class
   @javascript
   Scenario: Teacher should be able return on search page
     When I am on the search instructional materials page
+    And I search study material "Mechanics" on the search instructional materials page
     And I follow investigation link "Mechanics" on the search instructional materials page
     And the check box for the activity "Mechanics" should be checked
     And the check box for the activity "Fluid Mechanics" should be checked

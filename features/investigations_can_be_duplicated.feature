@@ -6,7 +6,6 @@ Feature: Investigations can be duplicated
   
   Background:
     Given The default project and jnlp resources exist using factories
-    And the data for test exists
     
   @javascript
   Scenario: Duplicating investigations have an offering count of 0
