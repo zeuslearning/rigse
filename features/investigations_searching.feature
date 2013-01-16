@@ -25,7 +25,7 @@ Feature: Investigations can be searched
   Scenario: Searching public investigations
     When I sort investigations by "name ASC"
     And I click on the next page of results
-    Then There should be 2 investigations displayed
+    Then There should be 5 investigations displayed
     And  "a Investigation" should not be displayed in the investigations list
     And  "testing fast cars" should appear before "WithLinksInv"
     
@@ -33,7 +33,7 @@ Feature: Investigations can be searched
   Scenario:  browsing unpublished investigations
     When I browse draft investigations
     And I click on the next page of results
-    Then There should be 7 investigations displayed
+    Then There should be 10 investigations displayed
     And "testing fast cars" should be displayed in the investigations list
     
   @javascript

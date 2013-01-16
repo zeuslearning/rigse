@@ -17,6 +17,7 @@ Feature: Investigations show the offerings count
     When I show offerings count on the investigations page
     Then I should see "assigned 5 times"
     And I should see "assigned 10 times"
+    And I follow "Next →"
     And I should see "assigned 20 times"
 
   @javascript
