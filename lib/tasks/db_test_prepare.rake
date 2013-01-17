@@ -7,7 +7,7 @@ namespace :db do
       Rake::Task['db:backup:load_probe_configurations'].invoke
       Rake::Task['db:backup:load_ri_grade_span_expectations'].invoke
       Rake::Task['app:jnlp:generate_maven_jnlp_resources'].invoke('false')
-      Rake::Task['db:load_standard_fake_data'].invoke
+      Rake::Task['db:load_standard_fake_data'].invoke(true ,"test")
     end
 
   end

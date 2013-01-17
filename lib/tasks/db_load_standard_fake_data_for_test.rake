@@ -1,8 +1,26 @@
 namespace :db do
   desc "Load a standard set of fake data and have that be available at the start of every test."
-  task :load_standard_fake_data => :environment do
+  task :load_standard_fake_data,[:database_connected ,:context]  => :environment do |t, args|
+    def establish_db_connection(db, database_connected)
+      unless database_connected
+        ActiveRecord::Base.establish_connection(ActiveRecord::Base.configurations[db])
+      end
+    end
+    context = args.context or Rails.env
+    database_connected = args.database_connected
+    case context
+    when "test"
+      establish_db_connection("test", database_connected)
+      require File.expand_path('../../../spec/spec_helper.rb', __FILE__)
+    when "development"
+      establish_db_connection("development", database_connected)
+      #TODO: Find out what REST_AUTH_SITE_KEY to use  in development environment 
+    when "production"
+      establish_db_connection("production", database_connected)
+      #TODO: Find out what REST_AUTH_SITE_KEY to use  in development environment 
+    end
     
-    REST_AUTH_SITE_KEY = 'sitekeyforrunningtests'
+    
     
     #load factories
     require 'factory_girl'
@@ -561,10 +579,10 @@ namespace :db do
     if (school.nil?) then
       school = Factory(:portal_school, {:name=>school_name, :semesters => [semester]})
     end
-    teachers = teachers.split(",").map { |t| t.strip }
-    teachers.map! {|t| User.find_by_login(t)}
+    teachers = teachers.split(",").map { |k| k.strip }
+    teachers.map! {|k| User.find_by_login(k)}
     teachers.map! {|u| u.portal_teacher }
-    teachers.each {|t| t.schools = [ school ]; t.save!; t.reload}
+    teachers.each {|k| k.schools = [ school ]; k.save!; k.reload}
     
     
     #And following student clazz mapping exist
