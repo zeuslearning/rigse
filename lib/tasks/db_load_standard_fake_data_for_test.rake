@@ -225,23 +225,22 @@ namespace :db do
     
     
     #following teacher and class mapping exists:
-    data = {
-      :teacher_clazz_1 => {"clazz_name" => "Biology", "teacher" => "albert"},
-      :teacher_clazz_2 => {"clazz_name" => "class_with_no_assignment", "teacher" => "peterson"},
-      :teacher_clazz_3 => {"clazz_name" => "class_with_no_assignment", "teacher" => "albert"},
-      :teacher_clazz_4 => {"clazz_name" => "My Class", "teacher" => "peterson"}
+  data = {
+        "albert" => ["Biology", "class_with_no_assignment"],
+        "peterson" =>["class_with_no_assignment", "My Class"]
     }
-    
-    data.each do |teacher_clazz, teacher_clazz_info|
-      portal_clazz = Portal::Clazz.find_by_name(teacher_clazz_info['clazz_name'])
-      user = User.find_by_login(teacher_clazz_info['teacher'])
+    data.each do |teacher, clazzes_name|
+      user = User.find_by_login(teacher)
       portal_teacher = Portal::Teacher.find_by_user_id(user.id)
-      teacher_clazz = Portal::TeacherClazz.new()
-      teacher_clazz.clazz_id = portal_clazz.id
-      teacher_clazz.teacher_id = portal_teacher.id
-      save_result = teacher_clazz.save
-      if (save_result == false)
-        return save_result
+      clazzes_name.each do |clazz_name|
+        portal_clazz = Portal::Clazz.find_by_name(clazz_name)
+        teacher_clazz = Portal::TeacherClazz.new()
+        teacher_clazz.clazz_id = portal_clazz.id
+        teacher_clazz.teacher_id = portal_teacher.id
+        save_result = teacher_clazz.save
+        if (save_result == false)
+          return save_result
+        end
       end
     end
     
@@ -429,68 +428,91 @@ namespace :db do
     
     #following investigations with multiple choices exist:
     data = {
-      :investigation_with_multiple_choice1 => { "investigation" => "Plant reproduction","activity" => "Plant activity","section" => "section b","page" => "page 2","multiple_choices" => "b","image_questions" => "image_q","user" => "teacher","activity_teacher_only" => "false"},
-      :investigation_with_multiple_choice2 => { "investigation" => "Aerodynamics","activity" => "Air activity","section" => "section c","page" => "page 3","multiple_choices" => "c","image_questions" => "image_q","user" => "teacher","activity_teacher_only" => "false"},
-      :investigation_with_multiple_choice3 => { "investigation" => "Aerodynamics","activity" => "Aeroplane","section" => "section d","page" => "page 4","multiple_choices" => "d","image_questions" => "image_q","user" => "teacher","activity_teacher_only" => "true"},
-      :investigation_with_multiple_choice4 => { "investigation" => "Arithmatics","activity" => "Algebra","section" => "section a","page" => "page 1","multiple_choices" => "a","image_questions" => "image_q","user" => "teacher","activity_teacher_only" => "false"},
-      :investigation_with_multiple_choice5 => { "investigation" => "Radioactivity","activity" => "Radio activity","section" => "section a","page" => "page 1","multiple_choices" => "a","image_questions" => "image_q","user" => "teacher","activity_teacher_only" => "false"},
-      :investigation_with_multiple_choice6 => { "investigation" => "Radioactivity","activity" => "Nuclear Energy","section" => "section b","page" => "page 2","multiple_choices" => "b","image_questions" => "image_q","user" => "teacher","activity_teacher_only" => "false"},
-      :investigation_with_multiple_choice7 => { "investigation" => "Electricity","activity" => "current","section" => "section b","page" => "page 2","multiple_choices" => "b","image_questions" => "image_q","user" => "teacher","activity_teacher_only" => "false"}
+      "Plant reproduction"  =>  [
+                                  {"activity" => "Plant activity","section" => "section b","page" => "page 2","multiple_choices" => "b","image_questions" => "image_q","user" => "teacher","activity_teacher_only" => "false"}
+                                ],
+      "Aerodynamics"  =>  [
+                            {"activity" => "Air activity","section" => "section c","page" => "page 3","multiple_choices" => "c","image_questions" => "image_q","user" => "teacher","activity_teacher_only" => "false"},
+                            {"activity" => "Aeroplane","section" => "section d","page" => "page 4","multiple_choices" => "d","image_questions" => "image_q","user" => "teacher","activity_teacher_only" => "true"}
+                          ],
+      "Arithmatics" =>  [
+                          {"activity" => "Algebra","section" => "section a","page" => "page 1","multiple_choices" => "a","image_questions" => "image_q","user" => "teacher","activity_teacher_only" => "false"}
+                        ],
+      "Radioactivity" =>  [
+                            {"activity" => "Radio activity","section" => "section a","page" => "page 1","multiple_choices" => "a","image_questions" => "image_q","user" => "teacher","activity_teacher_only" => "false"},
+                            {"activity" => "Nuclear Energy","section" => "section b","page" => "page 2","multiple_choices" => "b","image_questions" => "image_q","user" => "teacher","activity_teacher_only" => "false"}
+                          ],
+      "Electricity" =>  [
+                          {"activity" => "current","section" => "section b","page" => "page 2","multiple_choices" => "b","image_questions" => "image_q","user" => "teacher","activity_teacher_only" => "false"}
+                        ]
     }
-    data.each do |simple_investigation, inv_info|
-      investigation = Investigation.find_or_create_by_name(inv_info['investigation'])
+    data.each do |investigation, questions|
+      investigation = Investigation.find_or_create_by_name(investigation)
       investigation.user = Factory(:user)
       investigation.save
       # ITSISU requires descriptions on activities
-      activity = Activity.find_or_create_by_name(inv_info['activity'], :description => inv_info['activity'])
-      activity.user = investigation.user
-      if inv_info['activity_teacher_only']
-        # Create a teacher only activity if specified
-        activity.teacher_only = (inv_info['activity_teacher_only'] == 'true')
-        activity.save
-      end
+      questions.each do |question|
+        activity = Activity.find_or_create_by_name(question['activity'], :description => question['activity'])
+        activity.user = investigation.user
+        if question['activity_teacher_only']
+          # Create a teacher only activity if specified
+          activity.teacher_only = (question['activity_teacher_only'] == 'true')
+          activity.save
+        end
       
-      section = Section.find_or_create_by_name(inv_info['section'])
-      page = Page.find_or_create_by_name(inv_info['page'])
-      mcs = inv_info['multiple_choices'].split(",").map{ |q| Embeddable::MultipleChoice.find_by_prompt(q.strip) }
-      mcs.each do |q|
-        q.pages << page
+        section = Section.find_or_create_by_name(question['section'])
+        page = Page.find_or_create_by_name(question['page'])
+        mcs = question['multiple_choices'].split(",").map{ |q| Embeddable::MultipleChoice.find_by_prompt(q.strip) }
+        mcs.each do |q|
+          q.pages << page
+        end
+        imgqs = question['image_questions'].split(",").map{ |q| Embeddable::ImageQuestion.find_by_prompt(q.strip) }
+        imgqs.each do |q|
+          q.pages << page
+        end
+        page.save
+        section.pages << page
+        activity.sections << section
+        investigation.activities << activity
       end
-      imgqs = inv_info['image_questions'].split(",").map{ |q| Embeddable::ImageQuestion.find_by_prompt(q.strip) }
-      imgqs.each do |q|
-        q.pages << page
-      end
-      page.save
-      section.pages << page
-      activity.sections << section
-      investigation.activities << activity
     end
   
     
     #following activities for the above investigations exist:
     data = {
-      :activities_for_investigation1 => { "name" => "Radioactive decay","investigation" => "Radioactivity","user" => "author","publication_status" => "published","description" => "Nuclear Energy is a great material"},
-      :activities_for_investigation2 => { "name" => "Gamma Rays","investigation" => "Radioactivity","user" => "author","publication_status" => "published","description" => "Gamma Rays is a great material"},
-      :activities_for_investigation3 => { "name" => "Venn Diagram","investigation" => "Set Theory","user" => "author","publication_status" => "published","description" => "Venn Diagram is a great material"},
-      :activities_for_investigation4 => { "name" => "operations on sets","investigation" => "Set Theory","user" => "author","publication_status" => "published","description" => "operations on sets is a great material"},
-      :activities_for_investigation5 => { "name" => "Fluid Mechanics","investigation" => "Mechanics","user" => "author","publication_status" => "published","description" => "Fluid Mechanics is a great material"},
-      :activities_for_investigation6 => { "name" => "Circular Motion","investigation" => "Mechanics","user" => "author","publication_status" => "published","description" => "Circular Motion is a great material"},
-      :activities_for_investigation7 => { "name" => "Geometry","investigation" => "Geometry","user" => "author","publication_status" => "published","description" => "Triangle is a great material"},
-      :activities_for_investigation8 => { "name" => "intersecting lines","investigation" => "Geometry","user" => "author","publication_status" => "published","description" => "intersecting lines is a great material"},
-      :activities_for_investigation9 => { "name" => "parallel lines","investigation" => "Geometry","user" => "author","publication_status" => "published","description" => "parallel lines is a great material"},
-      :activities_for_investigation10 => { "name" => "graphs and lines","investigation" => "Geometry","user" => "author","publication_status" => "published","description" => "parallel lines is a great material"},
-      :activities_for_investigation11 => { "name" => "circles","investigation" => "Geometry","user" => "author","publication_status" => "published","description" => "circles is a great material"},
-      :activities_for_investigation12 => { "name" => "boolean algebra","investigation" => "Geometry","user" => "author","publication_status" => "published","description" => "boolean algebra is a great material"},
-      :activities_for_investigation13 => { "name" => "Quantum Mechanics","investigation" => "Mechanics","user" => "author","publication_status" => "published","description" => "Quantum Mechanics is a great material"},
-      :activities_for_investigation14 => { "name" => "Atmosphere","investigation" => "Aerodynamics","user" => "author","publication_status" => "published","description" => "Atmosphere is a great material"}
+      "Radioactivity" => [
+                            { "name" => "Radioactive decay", "user" => "author", "publication_status" => "published", "description" => "Nuclear Energy is a great material"},
+                            { "name" => "Gamma Rays" ,"user" => "author","publication_status" => "published", "description" => "Gamma Rays is a great material"}
+                         ],
+      "Set Theory" => [
+                        { "name" => "Venn Diagram", "user" => "author", "publication_status" => "published","description" => "Venn Diagram is a great material"},
+                        { "name" => "operations on sets", "user" => "author","publication_status" => "published","description" => "operations on sets is a great material"}
+                      ],
+      "Mechanics" => [
+                        { "name" => "Fluid Mechanics", "user" => "author", "publication_status" => "published","description" => "Fluid Mechanics is a great material"},
+                        { "name" => "Circular Motion", "user" => "author", "publication_status" => "published","description" => "Circular Motion is a great material"},
+                        { "name" => "Quantum Mechanics", "user" => "author","publication_status" => "published","description" => "Quantum Mechanics is a great material"}
+                    ],
+      "Geometry"  => [
+                        { "name" => "Geometry", "user" => "author","publication_status" => "published","description" => "Triangle is a great material"},
+                        { "name" => "intersecting lines", "user" => "author","publication_status" => "published","description" => "intersecting lines is a great material"},
+                        { "name" => "parallel lines", "user" => "author","publication_status" => "published","description" => "parallel lines is a great material"},
+                        { "name" => "graphs and lines", "user" => "author","publication_status" => "published","description" => "parallel lines is a great material"},
+                        { "name" => "circles", "user" => "author","publication_status" => "published","description" => "circles is a great material"},
+                        { "name" => "boolean algebra", "user" => "author","publication_status" => "published","description" => "boolean algebra is a great material"},
+                     ],
+      "Aerodynamics" => [
+                          { "name" => "Atmosphere", "user" => "author","publication_status" => "published","description" => "Atmosphere is a great material"}
+                        ]
     }
-    
-    data.each do |activities, act_info|
-      investigation_name = act_info.delete('investigation')
-      investigation = Investigation.find_by_name(investigation_name)
-      act_info[:investigation_id] = investigation.id
-      act_info[:user] = User.find_by_login(act_info['user'])
-      activity = Activity.create(act_info)
+  
+    data.each do |investigation_name, activities|
+        investigation = Investigation.find_by_name(investigation_name)
+        activities.each do |act_info|
+          act_info[:investigation_id] = investigation.id
+          act_info[:user] = User.find_by_login(act_info['user'])
+          activity = Activity.create(act_info)
+        end
     end
     
     #following activities with multiple choices exist
@@ -568,28 +590,46 @@ namespace :db do
     
     #following assignments exist
     data = {
-      :assignment1 => {"type" => "investigation", "name" => "Aerodynamics", "class" => "My Class"},
-      :assignment2 => {"type" => "investigation", "name" => "Plant reproduction", "class" => "My Class"},
-      :assignment3 => {"type" => "investigation", "name" => "Radioactivity", "class" => "My Class"},
-      :assignment4 => {"type" => "investigation", "name" => "Electricity", "class" => "Physics"},
-      :assignment5 => {"type" => "investigation", "name" => "Plant reproduction", "class" => "Physics"},
-      :assignment6 => {"type" => "investigation", "name" => "Aerodynamics", "class" => "Physics"},
-      :assignment7 => {"type" => "investigation", "name" => "Radioactivity", "class" => "Physics"},
-      :assignment8 => {"type" => "investigation", "name" => "Aerodynamics", "class" => "Mechanics"},
-      :assignment9 => {"type" => "investigation", "name" => "Aerodynamics", "class" => "class_with_no_attempts"},
-      :assignment10 => {"type" => "investigation", "name" => "Plant reproduction", "class" => "class_with_no_students"},
-      :assignment11 => {"type" => "investigation", "name" => "Lumped circuit abstraction", "class" => "Mathematics"},
-      :assignment12 => {"type" => "investigation", "name" => "Static discipline", "class" => "Mathematics"},
-      :assignment13 => {"type" => "investigation", "name" => "Non Linear Devices", "class" => "Mathematics"},
-      :assignment14 => {"type" => "activity", "name" => "Algebra", "class" => "Physics"},
-      :assignment15 => {"type" => "activity", "name" => "Algebra", "class" => "My Class"}
+      "My Class" => [
+                      {"type" => "investigation", "name" => "Aerodynamics"},
+                      {"type" => "investigation", "name" => "Plant reproduction"},
+                      {"type" => "investigation", "name" => "Radioactivity"},
+                      {"type" => "activity", "name" => "Algebra"}
+                    ],
+      "Physics" => [
+                      {"type" => "investigation", "name" => "Electricity"},
+                      {"type" => "investigation", "name" => "Plant reproduction"},
+                      {"type" => "investigation", "name" => "Aerodynamics"},
+                      {"type" => "investigation", "name" => "Radioactivity"},
+                      {"type" => "activity", "name" => "Algebra"}
+                   ],
+      "Mechanics" => [
+                        {"type" => "investigation", "name" => "Aerodynamics"}
+                     ],
+      
+      "class_with_no_attempts" => [
+                                    {"type" => "investigation", "name" => "Aerodynamics"}
+                                  ],
+      
+      "class_with_no_students" => [
+                                    {"type" => "investigation", "name" => "Plant reproduction"}
+                                  ],
+      
+      "Mathematics" => [
+                          {"type" => "investigation", "name" => "Lumped circuit abstraction"},
+                          {"type" => "investigation", "name" => "Static discipline"},
+                          {"type" => "investigation", "name" => "Non Linear Devices"}
+                       ]
+  
+         
     }
-    
-    data.each do |assignment, assignment_info|
-      type = assignment_info['type']
-      name = assignment_info['name']
-      clazz_name = assignment_info['class']
-      polymorphic_assign(type, name, clazz_name)
+
+    data.each do |clazz_name, assignment_info|
+      assignment_info.each do |assignment|
+        type = assignment['type']
+        name = assignment['name']
+        polymorphic_assign(type, name, clazz_name)
+      end
     end
     
     
