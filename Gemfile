@@ -100,7 +100,7 @@ group :production do
 end
 
 group :development do
-  gem "rake",                 "~> 0.9.2"
+  gem "rake",                 "~> 10.0.3"
   gem "highline"
   gem "wirble"
   gem "what_methods"

@@ -37,7 +37,7 @@ describe SearchController do
 
   describe "GET index" do
     it "should redirect to root for students" do
-      controller.stub!(:current_user).and_return(@student_user)
+      controller.stub!(:current_visitor).and_return(@student_user)
       @post_params = {
         :search_term => @laws_of_motion_activity.name,
         :activity => 'true',
@@ -107,7 +107,7 @@ describe SearchController do
 
   describe "POST show" do
     it "should redirect to root for all the users other than teacher" do
-      controller.stub!(:current_user).and_return(@student_user)
+      controller.stub!(:current_visitor).and_return(@student_user)
       @post_params = {
         :search_term => @laws_of_motion_activity.name,
         :activity => 'true',
