@@ -454,7 +454,7 @@ namespace :db do
                             {"activity" => "Aeroplane","section" => "section d","page" => "page 4","multiple_choices" => "d","image_questions" => "image_q","user" => "teacher","activity_teacher_only" => "true"}
                           ],
       "Arithmatics" =>  [
-                          {"activity" => "Algebra","section" => "section a","page" => "page 1","multiple_choices" => "a","image_questions" => "image_q","user" => "teacher","activity_teacher_only" => "false"}
+                          {"activity" => "Linear algebra","section" => "section a","page" => "page 1","multiple_choices" => "a","image_questions" => "image_q","user" => "teacher","activity_teacher_only" => "false"}
                         ],
       "Radioactivity" =>  [
                             {"activity" => "Radio activity","section" => "section a","page" => "page 1","multiple_choices" => "a","image_questions" => "image_q","user" => "teacher","activity_teacher_only" => "false"},

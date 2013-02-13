@@ -49,7 +49,7 @@ Feature: Teacher can see recent activity
   Scenario: Teacher should not see teacher only activity
     When the following student answers:
       | student   | class         | investigation       | question_prompt | answer |
-      | ross     | Physics       | Aerodynamics        | d               | y      |
+      | ross      | Physics       | Aerodynamics        | d               | y      |
     And I follow "Recent Activity" within left panel for class navigation
     And I click link "Show detail" for the material "Aerodynamics" on the recent activity page
     Then I should see "Air activity"
@@ -83,7 +83,7 @@ Feature: Teacher can see recent activity
       | student   | class         | investigation       | question_prompt | answer |
       | chuck     | Mechanics     | Aerodynamics        | image_q         | Y      |
       | chuck     | Mechanics     | Aerodynamics        | c               | Y      |
-      | ross     | Physics       | Aerodynamics        | c               | y      |
+      | ross      | Physics       | Aerodynamics        | c               | y      |
       | chuck     | Physics       | Aerodynamics        | image_q         | Y      |
       | chuck     | Physics       | Aerodynamics        | c               | Y      |
     And I follow "Recent Activity" within left panel for class navigation
@@ -96,7 +96,7 @@ Feature: Teacher can see recent activity
   Scenario: Teacher views class size
     When the following student answers:
       | student   | class         | investigation       | question_prompt | answer |
-      | ross     | Physics       | Aerodynamics        | c               | y      |
+      | ross      | Physics       | Aerodynamics        | c               | y      |
       | chuck     | Physics       | Aerodynamics        | image_q         | Y      |
       | chuck     | Physics       | Aerodynamics        | c               | Y      |
     And I follow "Recent Activity" within left panel for class navigation
@@ -136,7 +136,7 @@ Feature: Teacher can see recent activity
   Scenario: Teacher should be able to run the report
     When the following student answers:
       | student   | class         | investigation       | question_prompt | answer |
-      | ross     | Physics       | Aerodynamics        | c               | y      |
+      | ross      | Physics       | Aerodynamics        | c               | y      |
       | chuck     | Physics       | Aerodynamics        | image_q         | Y      |
       | chuck     | Physics       | Aerodynamics        | c               | Y      |
     And I follow "Recent Activity" within left panel for class navigation

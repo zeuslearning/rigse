@@ -44,16 +44,16 @@ Feature: A manager updates account information for another user
     When I fill in "user_password" with "<new_password>"
     And I fill in "user_password_confirmation" with "<new_password>"
     And I press "Submit"
-    Then the location should be "http://www.example.com/users"
+    Then I should be on "user list"
     When I log out
     And I login with username: <userlogin> password: <new_password>
     Then I should see "Welcome"
     And I should see "My Preferences"
 
     Examples:
-      | username | userlogin | new_password |
-      | joe user | student   | foobarbaz    |
-      | joe user | teacher   | buzbixbez    |
+      | username      | userlogin | new_password |
+      | Alfred Robert | student   | foobarbaz    |
+      | John Nash     | teacher   | buzbixbez    |
 
   Scenario: Managers can activate users
     Given there is an unactivated user named "justsignedup"
