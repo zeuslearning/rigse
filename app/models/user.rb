@@ -44,11 +44,6 @@ class User < ActiveRecord::Base
 
   include Changeable
 
-  include Authentication
-  include Authentication::ByPassword
-  include Authentication::ByCookieToken
-  include Authorization::AasmRoles
-
   attr_accessor :skip_notifications
 
   before_validation :strip_spaces
@@ -93,7 +88,6 @@ class User < ActiveRecord::Base
 
   belongs_to :vendor_interface, :class_name => 'Probe::VendorInterface'
 
-  attr_accessor :updating_password
 
   acts_as_replicatable
 
