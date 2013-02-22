@@ -82,6 +82,10 @@ source "http://rubygems.org"
   gem "contentflow",          :git => 'git://github.com/concord-consortium/contentflow',
     :branch => "remove-addon-support"
 
+  # Devise single sign on
+  gem 'devise'
+
+
 # Ideally we pre-compile all asetts and then run production
 # with out the asset compiling requirements. But We have dynamic assets
 # generated a prototype helper 'calendar_date_picker'
