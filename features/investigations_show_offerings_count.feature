@@ -5,9 +5,6 @@ Feature: Investigations show the offerings count
 
   Background:
     Given The default project and jnlp resources exist using factories
-    And the following classes exist:
-      | name     | teacher |
-      | My Class | teacher |
     Given I am logged in with the username teacher
 
   @javascript

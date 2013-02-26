@@ -5,9 +5,6 @@ Feature: Pages can be assigned as offerings
 
   Background:
     Given The default project and jnlp resources exist using factories
-    And the following classes exist:
-      | name      | teacher     |
-      | My Class  | teacher     |
     And the following page exists:
       | name    | user    | publication_status |
       | My Page | teacher | published          |

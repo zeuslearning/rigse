@@ -8,16 +8,12 @@ Feature: Teacher adds a new student
   Background:
     Given The default project and jnlp resources exist using factories
     And the teachers "teacher" are in a school named "Harvard"
-    And the following classes exist:
-      | name       | teacher | semester |
-      | My Class   | teacher | Fall     |
-      | My Class 2 | teacher | Fall     |
-    And the classes "My Class,My Class 2" are in a school named "Harvard"
+    And the classes "My Class,Physics" are in a school named "Harvard"
     
     
   @javascript
   Scenario: Teacher can add a registered user
-    When the student "student" belongs to class "My Class 2"
+    When the student "student" belongs to class "Physics"
     When I login with username: teacher password: teacher
     And I am on "Student Roster" page for "My Class"
     And I follow "Search for registered student."
@@ -31,7 +27,7 @@ Feature: Teacher adds a new student
   @javascript
   Scenario: Teacher can add an unregistered user
     When the student "student" belongs to class "My Class"
-    And the student "student" belongs to class "My Class 2"
+    And the student "student" belongs to class "Physics"
     And I login with username: teacher password: teacher
     And I am on "Student Roster" page for "My Class"
     And I follow "Register and add new student"
@@ -50,7 +46,7 @@ Feature: Teacher adds a new student
   @javascript
   Scenario: Teacher adds another student from the pop up
     When the student "student" belongs to class "My Class"
-    And the student "student" belongs to class "My Class 2"
+    And the student "student" belongs to class "Physics"
     And I login with username: teacher password: teacher
     And I am on "Student Roster" page for "My Class"
     And I follow "Register and add new student"
@@ -68,7 +64,7 @@ Feature: Teacher adds a new student
   @javascript
   Scenario: With the default class enabled, teachers cannot directly add existing students
     Given the option to allow default classes is enabled
-    When the student "student" belongs to class "My Class 2"
+    When the student "student" belongs to class "Physics"
     When I login with username: teacher password: teacher
     And I am on "Student Roster" page for "My Class"
     Then I should see "If a student already has an account, ask the student to enter the Class Word above"

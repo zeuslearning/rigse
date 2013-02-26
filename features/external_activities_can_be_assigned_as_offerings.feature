@@ -5,9 +5,6 @@ Feature: External Activities can be assigned as offerings
 
   Background:
     Given The default project and jnlp resources exist using factories
-    And the following classes exist:
-      | name     | teacher |
-      | My Class | teacher |
     And the following simple investigations exist:
       | name               | user    |
       | Test Investigation | teacher |

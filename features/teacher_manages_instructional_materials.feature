@@ -6,15 +6,6 @@ Feature: Teacher manages instructional materials of a class
   
   Background:
     Given The default project and jnlp resources exist using factories
-    And the teachers "teacher" are in a school named "Harvard School"
-    And the following classes exist:
-      | name        | teacher | class_word | semester |
-      | My Class    | teacher | my_classes | Fall     |
-      | Physics     | teacher | physics    | Fall     |
-      | Mathematics | teacher | math       | Fall     |
-      | Chemistry   | teacher | chem       | Fall     |
-    And the classes "My Class, Physics, Mathematics" are in a school named "Harvard School"
-    
     And the following multiple choice questions exists:
       | prompt | answers | correct_answer |
       | a      | a,b,c,d | a              |
@@ -50,9 +41,6 @@ Feature: Teacher manages instructional materials of a class
       | name                       | class       |
       | Lumped circuit abstraction | Mathematics |
       | Static discipline          | Mathematics |
-    And the student "dave" belongs to class "My Class"
-    And the student "chuck" belongs to class "My Class"
-    And the student "taylor" belongs to class "My Class"
     And the following student answers:
       | student   | class         | investigation       | question_prompt | answer |
       | dave      | My Class      | Radioactivity       | a               | a      |

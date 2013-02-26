@@ -12,9 +12,6 @@ Feature: Student joins another class
 
   @javascript
   Scenario: Student joins another class
-    And the following classes exist:
-      | name     | teacher |
-      | My Class | teacher |
     And the class "My Class" has the class word "word"
     And the student "student" belongs to class "Default Class"
     And I am logged in with the username student
@@ -30,9 +27,6 @@ Feature: Student joins another class
   @javascript
   Scenario: Student joins another class with invalid information
     Given the option to allow default classes is enabled
-    And the following classes exist:
-      | name     | teacher |
-      | My Class | teacher |
     And the class "My Class" has the class word "word"
     And the student "student" belongs to class "Default Class"
     And I am logged in with the username student
@@ -51,9 +45,6 @@ Feature: Student joins another class
   @javascript
   Scenario: With the default class enabled, student joins another class
     Given the option to allow default classes is enabled
-    And the following classes exist:
-      | name     | teacher |
-      | My Class | teacher |
     And the class "My Class" has the class word "word"
     And the student "student" belongs to class "Default Class"
     And I am logged in with the username student
@@ -70,9 +61,6 @@ Feature: Student joins another class
   @javascript
   Scenario: With the default class enabled, student joins another class with invalid information
     Given the option to allow default classes is enabled
-    And the following classes exist:
-      | name     | teacher |
-      | My Class | teacher |
     And the class "My Class" has the class word "word"
     And the student "student" belongs to class "Default Class"
     And I am logged in with the username student

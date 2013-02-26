@@ -5,9 +5,6 @@ Feature: Resource Pages show the offerings count
 
   Background:
     Given The default project and jnlp resources exist using factories
-    And the following classes exist:
-      | name     | teacher |
-      | My Class | teacher |
     And I am logged in with the username teacher
 
   @javascript

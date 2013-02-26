@@ -5,11 +5,7 @@ Feature: Teacher navigates using left pane
   In order to make navigation more effective
   
   Background:
-    Given The default project and jnlp resources exist using factories
-    When the following classes exist:
-      | name       | teacher | class_word   |
-      | My Class   | teacher | PhysicsClass |
-      
+   Given The default project and jnlp resources exist using factories
    And I login with username: teacher
    
    

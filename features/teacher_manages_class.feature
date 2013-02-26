@@ -7,28 +7,11 @@ Feature: Teacher manages a class
   Background:
     Given The default project and jnlp resources exist using factories
     And the teachers "teacher, teacher_with_no_class" are in a school named "Harvard School"
-    And the following classes exist:
-      | name        | teacher | class_word |
-      | Physics     | teacher    | phy        |
-      | Chemistry   | teacher    | chem       |
-      | Mathematics | teacher    | math       |
-      | Biology     | teacher    | bio        |
-      | Geography   | teacher    | geo        |
-    And the classes "Physics" are in a school named "Harvard School"
-    And the classes "Chemistry" are in a school named "Harvard School"
-    And the classes "Mathematics" are in a school named "Harvard School"
-    And the classes "Biology" are in a school named "Harvard School"
-    And the classes "Geography" are in a school named "Harvard School"
     And the following offerings exist in the classes:
       | name                      | class     |
       | Lumped circuit abstraction| Physics   |
       | static discipline         | Physics   |
       | Non Linear Devices        | Physics   |
-    And the student "student" belongs to class "Physics"
-    And the student "student" belongs to class "Chemistry"
-    And the student "student" belongs to class "Mathematics"
-    And the student "student" belongs to class "Biology"
-    And the student "student" belongs to class "Geography"
     And I am logged in with the username teacher
     And I go to the Manage Class Page
     

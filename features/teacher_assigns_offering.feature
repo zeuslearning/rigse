@@ -5,9 +5,6 @@ Feature: Teacher can assign an offering to a class
 
   Background:
     Given The default project and jnlp resources exist using factories
-    And the following classes exist:
-      | name     | teacher |
-      | My Class | teacher |
 
   Scenario: Teacher can assign an investigation to a class
     Given the following simple investigations exist:

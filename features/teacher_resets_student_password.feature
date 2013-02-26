@@ -5,9 +5,6 @@ Feature: Teacher can reset a students password
 
   Background:
     Given The default project and jnlp resources exist using factories
-    And the following classes exist:
-      | name     | teacher |
-      | My Class | teacher |
 
   @javascript
   Scenario: Teacher can reset their students passwords
