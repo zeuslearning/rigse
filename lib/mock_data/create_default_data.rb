@@ -13,6 +13,11 @@ module MockData
   #Create fake users and roles
   def self.create_default_users
     
+    project = Admin::Project.first
+    unless project
+      project = Admin::Project.create!
+    end
+    
     #create roles in order
     %w| admin manager researcher author member guest|.each_with_index do |role_name,index|
       unless Role.find_by_title_and_position(role_name,index)
@@ -755,8 +760,8 @@ module MockData
           end
           
           act[:image_questions].each do |iq_key, iq|
-            img_que = Embeddable::ImageQuestion.find_or_create_by_uuid(mcq[:uuid])
-            img_que.prompt = mcq[:prompt]
+            img_que = Embeddable::ImageQuestion.find_or_create_by_uuid(iq[:uuid])
+            img_que.prompt = iq[:prompt]
             img_que.save!
             
             pages.each do |p|
