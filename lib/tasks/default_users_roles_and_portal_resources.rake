@@ -395,9 +395,8 @@ First creating admin user account for: #{APP_CONFIG[:admin_email]} from site par
       anonymous_user = User.create(:login => "anonymous", :email => "anonymous@concord.org", :password => "password", :password_confirmation => "password", :first_name => "Anonymous", :last_name => "User")
 
       [admin_user, researcher_user, member_user].each do |user|
-        user.save
-        user.register!
-        user.activate!
+        user.save!
+        user.confirm!
       end
       admin_user.roles << admin_role 
       researcher_user.roles << researcher_role
@@ -469,8 +468,8 @@ First creating admin user account for: #{APP_CONFIG[:admin_email]} from site par
               :password => pw, 
               :password_confirmation => pw)
             u = User.find_by_login(user_config[0])
-            u.register!
-            u.activate!
+            u.save!
+            u.confirm!
             role_title = user_config[1]['role']
             if role_title
               role = Role.find_by_title(role_title)

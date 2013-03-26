@@ -13,8 +13,8 @@ teacher_user = User.find_or_create_by_login(:login => 'sparks_teacher',
   :first_name => 'Ms', :last_name => 'Sparkles',
   :email => 'sparks_teacher@concord.org',
   :password => "password", :password_confirmation => "password"){|u| u.skip_notifications = true}
-teacher_user.register! if teacher_user.activated_at.nil?
-teacher_user.activate! if teacher_user.activated_at.nil?
+teacher_user.save! if teacher_user.confirmed_at.nil?
+teacher_user.confirm! if teacher_user.confirmed_at.nil?
 
 # Give the teacher a role of 'member'
 teacher_user.add_role('member')
@@ -37,8 +37,8 @@ site_school.portal_teachers << teacher
     :email                  => "#{color}#{num}@example.com",
     :password               => "#{color}#{num}",
     :password_confirmation  => "#{color}#{num}"){|u| u.skip_notifications = true}
-    u.register! if u.activated_at.nil?
-    u.activate! if u.activated_at.nil?
+    u.save! if u.confirmed_at.nil?
+    u.confirm! if u.confirmed_at.nil?
 
     # Make a student with the user's id
     student = Portal::Student.find_or_create_by_user_id(:user_id => u.id)

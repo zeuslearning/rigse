@@ -6,9 +6,8 @@ class ItsiImporter
       unless user = User.find_by_login('itsi_import_user')
         member_role = Role.find_by_title('member')
         user = User.create(:login => 'itsi_import_user', :first_name => 'ITSI', :last_name => 'Importer', :email => 'itsi_import_user@concord.org', :password => "it$iu$er", :password_confirmation => "it$iu$er")
-        user.save
-        user.register!
-        user.activate!
+        user.save!
+        user.confirm!
         user.roles << member_role
       end
       user

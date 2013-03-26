@@ -323,10 +323,10 @@ module SisImporter
         row[:rites_user_id] = user.id
         # user.unsuspend! if user.state == 'suspended'
         # if user.state == 'pending'
-        #   user.activate!
+        #   user.confirm!
         # elsif user.state != 'active'
-        #   user.register!
-        #   user.activate!
+        #   user.save!
+        #   user.confirm!
         # end
         if user.state != 'active'
           user.state = 'active'
