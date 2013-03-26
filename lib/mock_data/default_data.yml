@@ -364,56 +364,48 @@
   :empt_inv_1:
     :name: draft g
     :user: teacher
-    :offerings_count: 5
     :publication_status: draft
     :uuid: 00000000-0000-0000-0000-000000000049
     
   :empt_inv_2: 
     :name: b Investigation
     :user: teacher
-    :offerings_count: 5
     :publication_status: published
     :uuid: 00000000-0000-0000-0000-000000000050
      
   :empt_inv_3:
     :name: a Investigation
     :user: teacher
-    :offerings_count: 5
     :publication_status: published
     :uuid: 00000000-0000-0000-0000-000000000051
     
   :empt_inv_4:
     :name: c Investigation
     :user: teacher
-    :offerings_count: 5
     :publication_status: published
     :uuid: 00000000-0000-0000-0000-000000000052
     
   :empt_inv_5:
     :name: d Investigation
     :user: teacher
-    :offerings_count: 5
     :publication_status: published
     :uuid: 00000000-0000-0000-0000-000000000053
       
   :empt_inv_6: 
     :name: e Investigation
     :user: teacher
-    :offerings_count: 5
     :publication_status: published
     :uuid: 00000000-0000-0000-0000-000000000054
       
   :empt_inv_7:
     :name: f Investigation
     :user: teacher
-    :offerings_count: 5
     :publication_status: published
     :uuid: 00000000-0000-0000-0000-000000000055
     
   :empt_inv_8: 
     :name: NewestInv
     :user: teacher
-    :offerings_count: 5
     :created_at: <%=Wed Jan 26 12:00:00 -0500 2111%>
     :publication_status: published
     :uuid: 00000000-0000-0000-0000-000000000056
@@ -421,7 +413,6 @@
   :empt_inv_9:
     :name: MediumInv
     :user: teacher
-    :offerings_count: 10
     :created_at: <%=Wed Jan 23 12:00:00 -0500 2111%>
     :publication_status: published
     :uuid: 00000000-0000-0000-0000-000000000057
@@ -429,7 +420,6 @@
   :empt_inv_10:
     :name: OldestInv
     :user: teacher
-    :offerings_count: 20
     :created_at: <%=Wed Jan 20 12:00:00 -0500 2111%>
     :publication_status: published
     :uuid: 00000000-0000-0000-0000-000000000058
@@ -626,7 +616,6 @@
   :l_inv_1:
     :name: WithLinksInv
     :user: author
-    :offerings_count: 5
     :created_at: <%= Wed Jan 25 12:00:00 -0500 2011 %>
     :publication_status: published
     :uuid: 00000000-0000-0000-0000-000000000120
