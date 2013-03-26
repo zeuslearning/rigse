@@ -186,8 +186,8 @@ First creating admin user account for: #{APP_CONFIG[:admin_email]} from site par
         user.save!
         user.unsuspend! if user.state == 'suspended'
         unless user.state == 'active'
-          user.register!
-          user.activate!
+          user.save!
+          user.confirm!
         end
         user.roles.clear
       end
